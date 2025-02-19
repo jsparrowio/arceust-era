@@ -23,8 +23,5 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run Seed
-        run: npm run seed
-
       - name: Run Build
         run: npm run build
