@@ -46,7 +46,7 @@ export const Cave = () => {
 
 
     useEffect(() => {
-    }, [])
+    }, [narration])
 
     // const shinyChance = () => {
         // const shinyChance = Math.random()
@@ -72,14 +72,18 @@ export const Cave = () => {
                     setShiny(false)
                 }
                 console.log(isShiny)
+                setNarration(`A wild ${pokemon.name} appeared!`)
+                    
             })
             setItem({})
         } else if (randomNum === 2) {
-            getItem().then((item) => { setItem(item); console.log(item) })
+            getItem().then((item) => { setItem(item); console.log(item);  setNarration(`You found a(n) ${(item.name)}`) })
             setPoke({})
+            // setNarration(`You found a(n) ${item.name}`)
         } else if (randomNum === 3) {
             setPoke({})
             setItem({})
+            setNarration("Nothing appeared...")
         }
         //also get random item
 
@@ -98,15 +102,15 @@ export const Cave = () => {
                 {!loading && poke && isShiny && <img className='pokeimg' src={poke?.sprites?.front_shiny} alt={poke.name} />}
                 {!loading && item && <img className='itemimg' src={item?.sprites?.default} alt={item.name} />}
                 <button onClick={() => {roll()
-                    let newNarration = ""
-                    if (num === 1) {
-                        newNarration = `A wild ${poke.name} appeared!`
-                    } else if (num === 2) {
-                        newNarration = `You found a(n) ${item.name}`
-                    } else if (num === 3) {
-                        newNarration = "Nothing appeared..."
-                    }
-                    setNarration(newNarration)
+                    // let newNarration = ""
+                    // if (num === 1) {
+                    //     newNarration = `A wild ${poke.name} appeared!`
+                    // } else if (num === 2) {
+                    //     newNarration = `You found a(n) ${item.name}`
+                    // } else if (num === 3) {
+                    //     newNarration = "Nothing appeared..."
+                    // }
+                    // setNarration(newNarration)
                 }
                     
                 }>Get Random Pokemon or Item or Nothing</button>
