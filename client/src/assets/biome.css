@@ -1,0 +1,61 @@
+body {
+    justify-content: center;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.biomediv {
+    display: flex;
+    flex-direction: column;
+    background-image: 'https://cdnb.artstation.com/p/assets/images/images/019/585/585/large/ritesh-pawar-caveaa.jpg?1564145923';
+    max-width: 600px;
+    max-height: 400px;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    text-align: center;
+}
+.nav-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.btndiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.biomeimg {
+    max-width: 600px;
+    max-height: 400px;   
+    margin: auto;
+}
+
+.itemimg {
+    bottom: 100px;
+    left: 200px;
+    position: absolute;
+    width: 100px;
+    height: auto;
+}
+
+.pokeimg {
+    bottom: 100px;
+    left: 200px;
+    position: absolute;
+    width: 200px;
+    height: auto;
+}
+
+.headerdiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
