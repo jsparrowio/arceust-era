@@ -2,6 +2,8 @@ import { useState } from 'react';
 import "../styles/Party.css";
 
 export const Party = () => {
+
+  
   const [selectedSpot, setSelectedSpot] = useState<number | null>(null);
   return (
     <div className="team-pokemon">
