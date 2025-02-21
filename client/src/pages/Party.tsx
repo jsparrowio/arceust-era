@@ -28,8 +28,8 @@ export const Party = () => {
           <span id="team-spot4"
           onClick={() => setSelectedSpot(4)} 
           className={selectedSpot === 4 ? 'selected' : ''}>
-          </span>
             <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/493.png"/>
+          </span>
           <span id="team-spot5"
           onClick={() => setSelectedSpot(5)} 
           className={selectedSpot === 5 ? 'selected' : ''}>
