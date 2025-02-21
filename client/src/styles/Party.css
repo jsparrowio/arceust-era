@@ -6,9 +6,9 @@
     grid-row-gap: 0px;
 }
 
-.team-spot {
+/* .team-spot { */
     /* Your existing styles */
-}
+/* } */
 
 .selected {
     border: 2px solid blue; /* Or any color and thickness you like */
