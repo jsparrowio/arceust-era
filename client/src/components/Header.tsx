@@ -2,11 +2,9 @@
 import { Link } from "react-router-dom";
 
 
-export const Header: React.FC= () => {
-  // const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  // const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
-  // const {currentUser, setCurrentUser} = useUser();
+export const Header: React.FC = () => {
 
+<<<<<<< HEAD
   // const openLoginModal = () => {
   //   setIsLoginModalOpen(true);
   // };
@@ -74,4 +72,21 @@ export const Header: React.FC= () => {
 
         </div>
     );
+=======
+  return (
+    <div className="headerdiv">
+      <header>
+        <h1>Arceust Era</h1>
+        <nav className='nav-bar'>
+          <Link to="/">Home</Link>
+          <Link to="/cave">Cave</Link>
+          <Link to="/beach">Beach</Link>
+          <Link to="/grass">Grass</Link>
+          <Link to="/party">Party</Link>
+          <Link to="pokecenter">Pokecenter</Link>
+        </nav>
+      </header>
+    </div>
+  );
+>>>>>>> 535e9624b9151106e5253a4490cd0cd460546b2f
 } 
