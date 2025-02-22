@@ -38,16 +38,29 @@ export const Beach = () => {
     }
 
 
-    const getItem = async () => {
-        try {
-            const itemArr = ["potion", "poke-ball"]
-            const randomItem = itemArr[Math.floor(Math.random() * itemArr.length)]
-            const find = await fetch(`https://pokeapi.co/api/v2/item/${randomItem}`)
-            const response = find.json()
-            console.log(response)
-            return response
-        } catch (err) {
-            console.error("Item not found!")
+    const getItem = async (id: any) => {
+        if (id === 'walk') {
+            try {
+                const itemArr = ["potion", "poke-ball"]
+                const randomItem = itemArr[Math.floor(Math.random() * itemArr.length)]
+                const find = await fetch(`https://pokeapi.co/api/v2/item/${randomItem}`)
+                const response = find.json()
+                console.log(response)
+                return response
+            } catch (err) {
+                console.error("Item not found!")
+            }
+        } else if (id === 'fish') {
+            try {
+                const itemArr = ["expert-belt", "amulet-coin", "choice-band", "choice-scarf", "silk-scarf"]
+                const randomItem = itemArr[Math.floor(Math.random() * itemArr.length)]
+                const find = await fetch(`https://pokeapi.co/api/v2/item/${randomItem}`)
+                const response = find.json()
+                console.log(response)
+                return response
+            } catch (err) {
+                console.error("Item not found!")
+            }
         }
     }
 
@@ -90,8 +103,8 @@ export const Beach = () => {
 
             })
             setItem({})
-        } else if (randomNum === 2 && event.target.id === 'walk') {
-            getItem().then((item) => { setItem(item); console.log(item); setNarration(`You found a(n) ${item.name}`) })
+        } else if (randomNum === 2) {
+            getItem(event.target.id).then((item) => { setItem(item); console.log(item); setNarration(`You found a(n) ${item.name}`) })
             setPoke({})
             // setNarration(`You found a(n) ${item.name}`)
         } else if (randomNum === 3 && event.target.id === 'walk') {
