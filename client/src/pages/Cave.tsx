@@ -109,8 +109,8 @@ export const Cave = () => {
     }
     return (
         <div>
-            {!clicked && <h1>You enter the cave.</h1>}
-            {clicked && <h1>{narration}</h1>}
+            {!clicked && <h1 className='narration'>You enter the cave.</h1>}
+            {clicked && <h1 className='narration'>{narration}</h1>}
             <div className="biomediv">
                 <img className="biomeimg" src='https://cdnb.artstation.com/p/assets/images/images/019/585/585/large/ritesh-pawar-caveaa.jpg?1564145923' />
                 {!loading && poke && !isShiny && <img className='pokeimg' src={poke?.sprites?.front_default} alt={poke.name} />}

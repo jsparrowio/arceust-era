@@ -1,11 +1,21 @@
-
-
-
+import { useState } from "react"
+import { useQuery } from "@apollo/client/react/hooks/useQuery"
+import { useMutation } from "@apollo/client"
 export const Pokecenter = () => {
-    return (
-        <div>
-            <h1>This is gonna be a pokecenter someday</h1>
+    const viewBox = () => {
+
+    }
+
+    const changeParty = () => {
+
+    }
+     return (
+        <>
+         <h1>Pokecenter</h1>
+         <div className='biomediv'>
+            <button>View Box</button>
         </div>
+        </>
     )
 
 }
