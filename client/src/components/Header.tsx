@@ -43,7 +43,7 @@ export const Header: React.FC= () => {
                <Link to="/beach">Beach</Link>
                <Link to="/grass">Grass</Link>
                <Link to="/party">Party</Link>
-               <Link to="pokecenter">Pokecenter</Link>
+               <Link to="/pokecenter">Pokecenter</Link>
             </nav>
             </header>
           {/* <div className='top-header'> 
