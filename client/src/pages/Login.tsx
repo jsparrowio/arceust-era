@@ -232,7 +232,7 @@ export default function LoginPage() {
             setPasswordConfirm('');
         } catch (err: any) {
             if (err.graphQLErrors.length > 0) {
-                console.error('Failed to sigup', err.graphQLErrors[0].message);
+                console.error('Failed to signup', err.graphQLErrors[0].message);
                 if (err.graphQLErrors[0].message.includes("email_1 dup key")) {
                     showError('Email already exist, please use another');
                 } else if (err.graphQLErrors[0].message.includes("username_1 dup key")) {
@@ -282,8 +282,8 @@ export default function LoginPage() {
                             value={loginData.password || ''}
                             onChange={handleLoginChange}
                         />
-                        <br />
-                        <Button size="large" type="primary" htmlType="submit">Login</Button>
+                        <div style={{ margin: "3px" }}></div>
+                        <Button size="large" variant="solid" color="default" htmlType="submit">Login</Button>
                     </form>}
                 {current === 'signup' &&
                     <form className='form' onSubmit={handleSignupSubmit} style={{ 'display': 'flex', 'flexDirection': 'column', 'justifyContent': 'center', 'alignItems': 'center' }}>
@@ -376,8 +376,8 @@ export default function LoginPage() {
                             onChange={handleInputChange}
                             onBlur={handlePasswordConfirmBlur}
                         />
-                        <br />
-                        <Button size="large" type="primary" htmlType="submit">Signup!</Button>
+                       <div style={{ margin: "3px" }}></div>
+                       <Button size="large" variant="solid" color="default" htmlType="submit">Sign Up!</Button>
                     </form>}
             </Card>
         </div>

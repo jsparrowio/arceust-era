@@ -4,12 +4,36 @@ import { gql } from '@apollo/client';
 
 export const QUERY_ME = gql`
   query Me {
-    Me {
+   Me {
+    _id
+    first_name
+    email
+    last_name
+    username
+    box {
+      name
+      pokemonId
+      front_sprite
+      back_sprite
       _id
-      first_name
-      last_name
-      username
-      email
     }
+    inventory {
+      itemId
+      name
+      sprite
+      _id
+      quantity
+    }
+    team {
+      back_sprite
+      front_sprite
+      name
+      pokemonId
+      _id
+    }
+    boxCount
+    teamCount
+    inventoryCount
+  }
   }
 `;

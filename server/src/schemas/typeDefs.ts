@@ -11,6 +11,9 @@ type User {
     team: [Pokemon]!
     box: [Pokemon]!
     inventory: [Item]!
+    teamCount: Int
+    boxCount: Int
+    inventoryCount: Int
 }
 
 input UserInput {
@@ -19,6 +22,13 @@ input UserInput {
     last_name: String!
     email: String!
     password: String!
+}
+
+input UserProfile {
+    username: String!
+    first_name: String!
+    last_name: String!
+    email: String!
 }
 
 type Pokemon {
@@ -62,14 +72,21 @@ type Query {
 type Mutation {
     login(username: String!, password: String!): Auth
     addUser(input: UserInput!): Auth
+    updateProfile(input: UserProfile!): User
+    updatePassword(password: String!): String
+    confirmPassword(currentPassword: String!): Boolean
+    deleteUser(_id: ID!): String
     catchPokemon(input: PokemonInput!): User
     releasePokemon(_id: ID!): User
+    resetBox(_id: ID!): User
     addToTeam(input: PokemonInput!, _id: ID!): User
     removeFromTeam(input: PokemonInput!, _id: ID!): User
+    resetTeam(_id: ID!): User
     saveItem(input: ItemInput!): User
     useItem(itemId: String!): User
     removeOneOfItem(itemId: String!): User
     removeAllOfItem(itemId: String!): User
+    resetInventory(_id: ID!): User
 }
 `;
 

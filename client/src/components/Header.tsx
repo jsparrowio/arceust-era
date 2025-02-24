@@ -34,7 +34,7 @@ export const Header: React.FC = () => {
   const logout = () => {
     Auth.logout();
     setIsLoggedIn(false);
-    navigate('/Login');
+    navigate('/login');
   }
 
   return (
@@ -42,7 +42,7 @@ export const Header: React.FC = () => {
       <h1 className='header'>Arceust Era</h1>
       {isLoggedIn && loading === false && reload === false? (
         <div className="user">
-          <h2>Welcome, {activeUser.first_name}!</h2>
+          <h2>Welcome,<Link className='link' to="/usersettings">{activeUser.first_name}</Link>!</h2>
           <Button
             key='logout'
             variant="solid"

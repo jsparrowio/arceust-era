@@ -11,6 +11,7 @@ import { Party } from './pages/Party.tsx'
 import { Pokecenter } from './pages/Pokecenter.tsx'
 import { Cave } from './pages/Cave.tsx'
 import Login from './pages/Login.tsx'
+import UserSettingsPage from './pages/UserSettingsPage.tsx'
 
 
 const router = createBrowserRouter([
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
       {
         path: '/login',
         element: <Login />
+      },
+      {
+        path: '/usersettings',
+        element: <UserSettingsPage />
       }
     ]
   }

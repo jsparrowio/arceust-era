@@ -42,14 +42,11 @@ class AuthService {
   login(idToken: string) {
     // set the token to localStorage 
     localStorage.setItem('id_token', idToken);
-    const userInfo = JSON.stringify(jwtDecode<UserData>(idToken));
-    localStorage.setItem('user_info', userInfo);
   }
 
   logout() {
     // remove the token from localStorage
     localStorage.removeItem('id_token');
-    localStorage.removeItem('user_info');
   }
 }
 
