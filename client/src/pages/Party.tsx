@@ -7,8 +7,11 @@ export const Party = () => {
   const [selectedSpot, setSelectedSpot] = useState<number | null>(null);
   return (
     <div className="team-pokemon">
+
       <div>
+
         <h2>My Team</h2>
+
         <div id="team-row1">
           <span id="team-spot1"
           onClick={() => setSelectedSpot(1)} 
@@ -26,6 +29,7 @@ export const Party = () => {
             <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/493.png"/>
           </span>
         </div>
+
         <div id="team-row2">
           <span id="team-spot4"
           onClick={() => setSelectedSpot(4)} 
@@ -43,7 +47,9 @@ export const Party = () => {
             <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/493.png"/>
           </span>
         </div>
+
       </div>
+
     </div>
   );
 };
