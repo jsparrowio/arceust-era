@@ -28,8 +28,8 @@ export const authenticateToken = ({ req }: any) => {
 };
 
 // signs a new token using JWT and returns it to the query service
-export const signToken = (username: string, email: string, _id: unknown) => {
-  const payload = { username, email, _id };
+export const signToken = (username: string, first_name: string, last_name: string, email: string, _id: unknown) => {
+  const payload = { username, first_name, last_name, email, _id };
   const secretKey: any = process.env.JWT_SECRET_KEY; 
   return jwt.sign({ data: payload }, secretKey, { expiresIn: '2h' });
 };
