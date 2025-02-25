@@ -1,8 +1,19 @@
 // import { getPokemon } from "../api/PokeAPI"
 import { useEffect } from "react"
 import { useState } from "react"
+import { useQuery } from "@apollo/client"
+import { useMutation } from "@apollo/client"
+import { CATCH_POKEMON, SAVE_ITEM } from "../utils/mutations"
+import { QUERY_ME } from "../utils/queries"
 import '../assets/biome.css'
 export const Cave = () => {
+    const [catchPkmn, {error}] = useMutation(CATCH_POKEMON)
+    const [saveItem, states] = useMutation(SAVE_ITEM)
+    const {data, refetch} = useQuery(QUERY_ME)
+    useEffect(() => {
+      refetch()
+    }, [data] )
+  
     const pokeArr = ["Zubat", "Golbat", "Geodude", "Graveler", "Gastly", "Dunsparce", "Cubone", "Deino"]
     const itemArr = ["potion", "poke-ball"]
     const getPokemon = async () => {
@@ -37,32 +48,32 @@ export const Cave = () => {
     // }
     const [loading, setloading] = useState(true)
     const [poke, setPoke] = useState<Record<string, any>>({})
-    const [isShiny, setShiny] = useState<boolean>(false)
     const [item, setItem] = useState<Record<string, any>>({})
     const [narration, setNarration] = useState<string>('')
+    const [isShiny, setShiny] = useState<boolean>(false)
     // const [num, setNum] = useState<number>()
     const [clicked, setClicked] = useState<boolean>(false)
-
-
+    
+    
     useEffect(() => {
     }, [narration])
-
+    
     // const shinyChance = () => {
-    // const shinyChance = Math.random()
-    // if (shinyChance > .80) {
-    //     shiny = true
-    // }
-    // return shiny
-    // }
-    const roll = () => {
-        setClicked(true)
-        const chances = [1, 2, 3]
-        const randomNum = chances[Math.floor(Math.random() * chances.length)]
-        // setNum(randomNum)
-        console.log(randomNum)
-        if (randomNum === 1) {
-            setloading(true)
-            getPokemon().then((pokemon) => {
+        // const shinyChance = Math.random()
+        // if (shinyChance > .80) {
+            //     shiny = true
+            // }
+            // return shiny
+            // }
+            const roll = () => {
+                setClicked(true)
+                const chances = [1, 2, 3]
+                const randomNum = chances[Math.floor(Math.random() * chances.length)]
+                // setNum(randomNum)
+                console.log(randomNum)
+                if (randomNum === 1) {
+                    setloading(true)
+                    getPokemon().then((pokemon) => {
                 setPoke(pokemon); console.log(pokemon)
                 const shinyChance = Math.random()
                 if (shinyChance > .8) {
@@ -91,7 +102,7 @@ export const Cave = () => {
         setloading(false)
 
     }
-    const catchPkmn = async () => {
+    const handleCatchPokemon = async () => {
         const coinFlip = Math.random()
         if (coinFlip >= .5) {
             setNarration(`Congratulations! You caught the ${poke.name}!`)
@@ -100,24 +111,68 @@ export const Cave = () => {
             setNarration(`Get some better pokeballs dweeb`)
         }
         // TODO: Set up graphql mutations to handle catching and storing pokemon in database
+        let storedPokemon;
+        if (isShiny) {
+            storedPokemon = {
+                name: poke.name,
+                pokemonId: poke.id,
+                front_sprite: poke.sprites.front_shiny,
+                back_sprite: poke.sprites.back_shiny
+            }
+        } else {
+            storedPokemon = {
+                name: poke.name,
+                pokemonId: poke.id,
+                front_sprite: poke.sprites.front_default,
+                back_sprite: poke.sprites.back_default
+            }
+        }
+        try {
+            await catchPkmn({
+                variables: { input: {...storedPokemon } },
+            });
+            if (error) {
+                throw new Error(`Couldn't catch pokemon!`)
+            }
+        } catch (err) {
+            console.error(err);
+        }
     }
 
-    const grabItem = () => {
+    const grabItem = async () => {
         setNarration(`You picked up the ${item.name}.`)
         setItem({})
         // TODO: Set up graphql mutations to handle adding items to inventory
+        try {
+            const itemInfo = {
+                name: item.name,
+                itemId: item.id,
+                sprite: item.sprites.default
+            }
+            
+            await saveItem({
+                variables: {input: {...itemInfo}}
+            })
+            if (states.error) {
+                throw new Error('Nice try butterfingers')
+            } 
+            
+        } catch (error) {
+            console.error(error)
+        }
     }
     return (
         <div>
             {!clicked && <h1 className='narration'>You enter the cave.</h1>}
             {clicked && <h1 className='narration'>{narration}</h1>}
             <div className="biomediv">
-                <img className="biomeimg" src='https://cdnb.artstation.com/p/assets/images/images/019/585/585/large/ritesh-pawar-caveaa.jpg?1564145923' />
-                {!loading && poke && !isShiny && <img className='pokeimg' src={poke?.sprites?.front_default} alt={poke.name} />}
-                {!loading && poke && isShiny && <img className='pokeimg' src={poke?.sprites?.front_shiny} alt={poke.name} />}
+                <img className="biomeimg" src='https://archives.bulbagarden.net/media/upload/7/7e/HGSS_Cerulean_Cave-Morning.png' />
+                {!loading && poke && !isShiny && <img className='wildpokeimg' src={poke?.sprites?.front_default} alt={poke.name} />}
+                {!loading && poke && isShiny && <img className='wildpokeimg' src={poke?.sprites?.front_shiny} alt={poke.name} />}
+                {data.Me && <img className='mypokemon' src={data.Me.team[0].back_sprite}/>}
                 {!loading && item && <img className='itemimg' src={item?.sprites?.default} alt={item.name} />}
                 <div className="btndiv">
-                    <button onClick={() => {
+                    <button className='acnbtn' onClick={() => {
                         roll()
                         // let newNarration = ""
                         // if (num === 1) {
@@ -130,10 +185,10 @@ export const Cave = () => {
                         // setNarration(newNarration)
                     }
                     }>Continue!</button>
-                    {clicked && poke.name && <button onClick={() => {
-                        catchPkmn()
+                    {clicked && poke.name && <button className='acnbtn' onClick={() => {
+                        handleCatchPokemon()
                     }}>Catch it!</button>}
-                    {clicked && item.name && <button onClick={() => {
+                    {clicked && item.name && <button className='acnbtn' onClick={() => {
                         grabItem()
                     }}
                     >Pick up!</button>}
