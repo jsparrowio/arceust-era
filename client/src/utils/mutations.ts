@@ -79,3 +79,34 @@ mutation ResetInventory($id: ID!) {
   }
 }
 `
+
+export const SAVE_ITEM = gql`
+mutation SaveItem($input: ItemInput!) {
+  saveItem(input: $input) {
+    inventoryCount
+  }
+}`
+
+export const USE_ITEM = gql`
+mutation UseItem($itemId: String!) {
+  useItem(itemId: $itemId) {
+    inventory
+  }
+}
+`
+
+export const CATCH_POKEMON = gql`
+mutation CatchPokemon($input: PokemonInput!) {
+  catchPokemon(input: $input) {
+    teamCount
+  }
+}
+`
+
+export const RELEASE_POKEMON = gql`
+mutation ReleasePokemon($id: ID!) {
+  releasePokemon(_id: $id) {
+    boxCount
+  }
+}
+`
