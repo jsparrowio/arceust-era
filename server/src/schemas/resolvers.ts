@@ -133,14 +133,25 @@ const resolvers = {
         catchPokemon: async (_parent: any, { input }: any, context: any) => {
             if (!context.user) throw new AuthenticationError('You must be logged in');
             try {
-                console.log(`Catching Pokemon under PokemonId ${input.pokemonId} for user ${context.user._id}`)
-                const updatedUser = await User.findByIdAndUpdate(
-                    context.user._id,
-                    { $addToSet: { box: input } },
-                    { new: true, runValidators: true }
-                );
-                console.log("Pokemon caught!");
-                return updatedUser;
+                console.log(`Catching Pokemon under PokemonId ${input.pokemonId} for user ${context.user._id}`);
+                const user = await User.findById(context.user._id);
+                if (user!.team.length >= 6) {
+                    const updatedUser = await User.findByIdAndUpdate(
+                        context.user._id,
+                        { $addToSet: { box: input } },
+                        { new: true, runValidators: true }
+                    );
+                    console.log("Pokemon caught!");
+                    return updatedUser;
+                } else {
+                    const updatedUser = await User.findByIdAndUpdate(
+                        context.user._id,
+                        { $addToSet: { team: input } },
+                        { new: true, runValidators: true }
+                    );
+                    console.log("Pokemon caught!");
+                    return updatedUser;
+                }
             } catch (err) {
                 console.error(err);
                 throw new Error('Error catching Pokemon');
