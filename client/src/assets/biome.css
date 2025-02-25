@@ -52,6 +52,8 @@ header {
 }
 
 .biomeimg {
+    position: relative;
+    top: 20px;
     min-width: 600px;
     min-height: 400px;
     max-width: 600px;
@@ -61,18 +63,27 @@ header {
 }
 
 .itemimg {
-    bottom: 100px;
-    left: 200px;
+    bottom: 75px;
+    left: 270px;
     position: absolute;
-    width: 100px;
+    width: 125px;
     height: auto;
 }
 
-.pokeimg {
-    bottom: 100px;
-    left: 200px;
+.wildpokeimg {
+    bottom: 50px;
+    left: 270px;
     position: absolute;
     width: 200px;
+    height: auto;
+}
+
+.mypokemon {
+    bottom: 5px;
+    top: 150px;
+    left: 20px;
+    position: absolute;
+    width: 300px;
     height: auto;
 }
 
@@ -121,4 +132,26 @@ header {
 
   .toast {
     z-index: 99999;
+  }
+
+  .acnbtn {
+    z-index: 2
+  }
+
+  .boxdiv {
+    position: relative;
+    top: 150px;
+    width: 800px;
+    height: auto;
+    background-color: aliceblue;
+    border: 10px solid black;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    color: black;
+  }
+
+  .pkctrmenudiv {
+    display: flex;
+    flex-direction: row;
   }

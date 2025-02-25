@@ -42,7 +42,7 @@ type Pokemon {
 
 input PokemonInput {
     name: String!
-    pokemonId: String!
+    pokemonId: Int!
     front_sprite: String!
     back_sprite: String!
 }
@@ -50,14 +50,14 @@ input PokemonInput {
 type Item {
     _id: ID
     name: String
-    itemId: String
+    itemId: Int
     sprite: String
     quantity: Int
 }
 
 input ItemInput {
     name: String!
-    itemId: String!
+    itemId: Int!
     sprite: String!
 }
 

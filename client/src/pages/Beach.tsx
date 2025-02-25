@@ -2,8 +2,18 @@
 import { gql, useMutation } from "@apollo/client"
 import { useEffect } from "react"
 import { useState } from "react"
+import { useQuery } from "@apollo/client"
+import { CATCH_POKEMON, SAVE_ITEM } from "../utils/mutations"
+import { QUERY_ME } from "../utils/queries"
 import '../assets/biome.css'
 export const Beach = () => {
+     const [catchPkmn, {error}] = useMutation(CATCH_POKEMON)
+        const [saveItem, states] = useMutation(SAVE_ITEM)
+        const {data, refetch} = useQuery(QUERY_ME)
+        useEffect(() => {
+          refetch()
+        }, [data] )
+      
     const [loading, setloading] = useState(true)
     const [poke, setPoke] = useState<Record<string, any>>({})
     const [isShiny, setShiny] = useState<boolean>(false)
@@ -124,7 +134,7 @@ export const Beach = () => {
         setloading(false)
 
     }
-    const catchPkmn = async () => {
+    const handleCatchPokemon = async () => {
         const coinFlip = Math.random()
         if (coinFlip >= .5) {
             setNarration(`Congratulations! You caught the ${poke.name}!`)
@@ -133,13 +143,55 @@ export const Beach = () => {
             setNarration(`Get some better pokeballs dweeb`)
         }
         // TODO: Set up graphql mutations to handle catching and storing pokemon in database
-        
+        let storedPokemon;
+        if (isShiny) {
+            storedPokemon = {
+                name: poke.name,
+                pokemonId: poke.id,
+                front_sprite: poke.sprites.front_shiny,
+                back_sprite: poke.sprites.back_shiny
+            }
+        } else {
+            storedPokemon = {
+                name: poke.name,
+                pokemonId: poke.id,
+                front_sprite: poke.sprites.front_default,
+                back_sprite: poke.sprites.back_default
+            }
+        }
+        try {
+            await catchPkmn({
+                variables: { input: {...storedPokemon } },
+            });
+            if (error) {
+                throw new Error(`Couldn't catch pokemon!`)
+            }
+        } catch (err) {
+            console.error(err);
+        }
     }
 
-    const grabItem = () => {
+    const grabItem = async () => {
         setNarration(`You picked up the ${item.name}.`)
         setItem({})
         // TODO: Set up graphql mutations to handle adding items to inventory
+        try {
+            const itemInfo = {
+                name: item.name,
+                itemId: item.id,
+                sprite: item.sprites.default
+            }
+            
+            await saveItem({
+                variables: {input: {...itemInfo}}
+            })
+            if (states.error) {
+                throw new Error('Nice try butterfingers')
+            } 
+            
+        } catch (error) {
+            console.error(error)
+        }
     }
     return (
         <div>
@@ -147,20 +199,21 @@ export const Beach = () => {
             {clicked && <h1>{narration}</h1>}
             <div className="biomediv">
                 <img className="biomeimg" src='https://st5.depositphotos.com/3584053/65993/i/450/depositphotos_659935466-stock-photo-sea-background-nature-tropical-summer.jpg' />
-                {!loading && poke && !isShiny && <img className='pokeimg' src={poke?.sprites?.front_default} alt={poke.name} />}
-                {!loading && poke && isShiny && <img className='pokeimg' src={poke?.sprites?.front_shiny} alt={poke.name} />}
+                {!loading && poke && !isShiny && <img className='wildpokeimg' src={poke?.sprites?.front_default} alt={poke.name} />}
+                {!loading && poke && isShiny && <img className='wildpokeimg' src={poke?.sprites?.front_shiny} alt={poke.name} />}
+                {!loading && data.Me && <img className='mypokemon' src={data?.Me?.team[0]?.back_sprite}/>}
                 {!loading && item && <img className='itemimg' src={item?.sprites?.default} alt={item.name} />}
                 <div className="btndiv">
-                    <button id="walk" onClick={(event) => roll(event)
+                    <button className='acnbtn' id="walk" onClick={(event) => roll(event)
                     }>Walk</button>
 
-                    <button id="fish" onClick={(event) => roll(event)
+                    <button className='acnbtn' id="fish" onClick={(event) => roll(event)
                     }>Fish</button> 
 
-                    {clicked && poke.name && <button onClick={() => {
-                        catchPkmn()
+                    {clicked && poke.name && <button className='acnbtn' onClick={() => {
+                        handleCatchPokemon()
                     }}>Catch it!</button>}
-                    {clicked && item.name && <button onClick={() => {
+                    {clicked && item.name && <button className='acnbtn' onClick={() => {
                         grabItem()
                     }}
                     >Pick up!</button>}
