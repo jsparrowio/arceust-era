@@ -1,6 +1,7 @@
 // set up type definitions for GraphQL/Apollo
 // also sets up input types, queries, and mutations, which allow for the modification of data in the database
-const typeDefs = `
+const gql = String.raw
+const typeDefs = gql`
 type User {
     _id: ID
     username: String
@@ -34,7 +35,7 @@ input UserProfile {
 type Pokemon {
     _id: ID
     name: String
-    pokemonId: String
+    pokemonId: Int
     front_sprite: String
     back_sprite: String
 }

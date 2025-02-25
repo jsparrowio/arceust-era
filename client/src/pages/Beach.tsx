@@ -1,4 +1,5 @@
 // import { getPokemon } from "../api/PokeAPI"
+import { gql, useMutation } from "@apollo/client"
 import { useEffect } from "react"
 import { useState } from "react"
 import '../assets/biome.css'
@@ -132,6 +133,7 @@ export const Beach = () => {
             setNarration(`Get some better pokeballs dweeb`)
         }
         // TODO: Set up graphql mutations to handle catching and storing pokemon in database
+        
     }
 
     const grabItem = () => {
