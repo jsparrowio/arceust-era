@@ -169,7 +169,7 @@ export const Cave = () => {
                 <img className="biomeimg" src='https://archives.bulbagarden.net/media/upload/7/7e/HGSS_Cerulean_Cave-Morning.png' />
                 {!loading && poke && !isShiny && <img className='wildpokeimg' src={poke?.sprites?.front_default} alt={poke.name} />}
                 {!loading && poke && isShiny && <img className='wildpokeimg' src={poke?.sprites?.front_shiny} alt={poke.name} />}
-                {data.Me && <img className='mypokemon' src={data.Me.team[0].back_sprite}/>}
+                {!loading && data.Me && <img className='mypokemon' src={data.Me.team[0].back_sprite}/>}
                 {!loading && item && <img className='itemimg' src={item?.sprites?.default} alt={item.name} />}
                 <div className="btndiv">
                     <button className='acnbtn' onClick={() => {
