@@ -16,9 +16,9 @@ export const Pokecenter = () => {
     // }
     return (
         <>
-            <div className='pkctrmenudiv'>
+            <div className='menudiv'>
                 <h1>Pokecenter</h1>
-                    <button onClick={() => {
+                    <button className='boxbtn' onClick={() => {
                         if (showBox) {
                             setShowBox(false)
                             toggleBtnText('Show Box')
@@ -29,16 +29,14 @@ export const Pokecenter = () => {
                     }
                     }>{btntext}</button>
             </div>
-            <div className='biomediv'>
                 <div className='boxdiv'>
                     {!loading && showBox && data.Me.box.map((pokemon: any) =>
                         <div className='boxpkmn'>
                             <img src={pokemon.front_sprite} />
-                            <p>{pokemon.name}</p>
+                            <p className='boxpkmnname'>{pokemon.name}</p>
                         </div>
                     )}
                 </div>
-            </div>
         </>
     )
 
