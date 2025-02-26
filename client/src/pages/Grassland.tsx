@@ -7,14 +7,13 @@ import { CATCH_POKEMON, SAVE_ITEM } from "../utils/mutations"
 import { QUERY_ME } from "../utils/queries"
 import '../assets/biome.css'
 export const Grassland = () => {
-    const [catchPkmn, {error}] = useMutation(CATCH_POKEMON)
+    const [catchPkmn, { error }] = useMutation(CATCH_POKEMON)
     const [saveItem, states] = useMutation(SAVE_ITEM)
-    const {data, refetch} = useQuery(QUERY_ME)
+    const { data, refetch } = useQuery(QUERY_ME)
     useEffect(() => {
-      refetch()
-    }, [data] )
-  
-    const pokeArr = ["Budew", "Turtwig", "Grotle", "Torterra", "Shaymin", "Gossifleur", "Smoliv", "Snivy", "Servine", "Serperior", "Kricketot", "Kricketune", "Pidgey", "Pidgeotto", "Pidgeot",]
+        refetch()
+    }, [data])
+    const pokeArr = ["Budew", "Turtwig", "Grotle", "Torterra", "Shaymin", "Gossifleur", "Smoliv", "Snivy", "Servine", "Serperior", "Kricketot", "Kricketune", "Pidgey", "Pidgeotto", "Pidgeot", "Eevee", "Leafeon", "Rattata", "Raticate", "Mankey", "Primeape", "Spearow", "Fearow", "Shinx", "Luxio", "Luxray", "Zorua", "Grubin", "Charjabug", "Vikavolt", "Exeggcute", "Carnivine", "Oddish", "Gloom", "Pinsir", "Heracross", "Scyther", "Rowlet", "Dartrix", "Decidueye"]
     const itemArr = ["potion", "poke-ball"]
     const getPokemon = async () => {
         try {
@@ -83,7 +82,6 @@ export const Grassland = () => {
                 }
                 console.log(isShiny)
                 setNarration(`A wild ${pokemon.name} appeared!`)
-
             })
             setItem({})
         } else if (randomNum === 2) {
@@ -129,7 +127,7 @@ export const Grassland = () => {
         }
         try {
             await catchPkmn({
-                variables: { input: {...storedPokemon } },
+                variables: { input: { ...storedPokemon } },
             });
             if (error) {
                 throw new Error(`Couldn't catch pokemon!`)
@@ -149,14 +147,14 @@ export const Grassland = () => {
                 itemId: item.id,
                 sprite: item.sprites.default
             }
-            
+
             await saveItem({
-                variables: {input: {...itemInfo}}
+                variables: { input: { ...itemInfo } }
             })
             if (states.error) {
                 throw new Error('Nice try butterfingers')
-            } 
-            
+            }
+
         } catch (error) {
             console.error(error)
         }
@@ -169,29 +167,33 @@ export const Grassland = () => {
                 <img className="biomeimg" src='https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/fb8431de-9631-4ad2-b8fc-667b063d7471/d6dkaxe-15a2de20-5e6a-4284-bf8d-cffd2827ee75.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2ZiODQzMWRlLTk2MzEtNGFkMi1iOGZjLTY2N2IwNjNkNzQ3MVwvZDZka2F4ZS0xNWEyZGUyMC01ZTZhLTQyODQtYmY4ZC1jZmZkMjgyN2VlNzUucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.6T6EQtyjY2BSdMFQyAjdplBJVn_VMBrV2nX8vlpVqnM' />
                 {!loading && poke && !isShiny && <img className='wildpokeimg' src={poke?.sprites?.front_default} alt={poke.name} />}
                 {!loading && poke && isShiny && <img className='wildpokeimg' src={poke?.sprites?.front_shiny} alt={poke.name} />}
-                {!loading && data.Me && <img className='mypokemon' src={data.Me.team[0].back_sprite}/>}
+                {!loading && data.Me && <img className='mypokemon' src={data.Me.team[0].back_sprite} />}
                 {!loading && item && <img className='itemimg' src={item?.sprites?.default} alt={item.name} />}
                 <div className="btndiv">
-                    <button className='acnbtn' onClick={() => {
-                        roll()
-                        // let newNarration = ""
-                        // if (num === 1) {
-                        //     newNarration = `A wild ${poke.name} appeared!`
-                        // } else if (num === 2) {
-                        //     newNarration = `You found a(n) ${item.name}`
-                        // } else if (num === 3) {
-                        //     newNarration = "Nothing appeared..."
-                        // }
-                        // setNarration(newNarration)
-                    }
-                    }>Continue!</button>
-                    {clicked && poke.name && <button className='acnbtn' onClick={() => {
-                        handleCatchPokemon()
-                    }}>Catch it!</button>}
-                    {clicked && item.name && <button className='acnbtn' onClick={() => {
-                        grabItem()
-                    }}
-                    >Pick up!</button>}
+                    <div className='priacndiv'>
+                        <button className='acnbtn' onClick={() => {
+                            roll()
+                            // let newNarration = ""
+                            // if (num === 1) {
+                            //     newNarration = `A wild ${poke.name} appeared!`
+                            // } else if (num === 2) {
+                            //     newNarration = `You found a(n) ${item.name}`
+                            // } else if (num === 3) {
+                            //     newNarration = "Nothing appeared..."
+                            // }
+                            // setNarration(newNarration)
+                        }
+                        }>Continue!</button>
+                    </div>
+                    <div className='secacndiv'>
+                        {clicked && poke.name && <button className='acnbtn' onClick={() => {
+                            handleCatchPokemon()
+                        }}>Catch it!</button>}
+                        {clicked && item.name && <button className='acnbtn' onClick={() => {
+                            grabItem()
+                        }}
+                        >Pick up!</button>}
+                    </div>
                 </div>
             </div>
         </div>

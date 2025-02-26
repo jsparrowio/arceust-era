@@ -14,8 +14,8 @@ export const Cave = () => {
       refetch()
     }, [data] )
   
-    const pokeArr = ["Zubat", "Golbat", "Geodude", "Graveler", "Gastly", "Dunsparce", "Cubone", "Deino"]
-    const itemArr = ["potion", "poke-ball"]
+    const pokeArr = ["Zubat", "Golbat", "Crobat", "Geodude", "Graveler", "Gastly", "Haunter", "Dunsparce", "Dudunsparce", "Cubone", "Marowak", "Deino", "Zweilous", "Hydreigon", "Gible", "Gabite", "Garchomp", "Roggenrola", "Boldore", "Carbink", "Bronzor", "Machop", "Machoke", "Onix", "Steelix", "Drilbur", "Excadrill", "Diglett", "Dugtrio", "Noibat", "Noivern", "Umbreon", "Nosepass", "Sableye", "Mawile", "Aron", "Lairon", "Aggron", "Larvitar", "Pupitar", "Tyranitar"]
+    const itemArr = ["potion", "poke-ball", "gold-nugget", "fire-stone", "water-stone", "thunder-stone", "hard-rock", "revive"]
     const getPokemon = async () => {
         try {
             const randomPokemon = pokeArr[Math.floor(Math.random() * pokeArr.length)]
@@ -142,7 +142,7 @@ export const Cave = () => {
     const grabItem = async () => {
         setNarration(`You picked up the ${item.name}.`)
         setItem({})
-        // TODO: Set up graphql mutations to handle adding items to inventory
+       
         try {
             const itemInfo = {
                 name: item.name,
@@ -172,26 +172,30 @@ export const Cave = () => {
                 {!loading && data.Me && <img className='mypokemon' src={data.Me.team[0].back_sprite}/>}
                 {!loading && item && <img className='itemimg' src={item?.sprites?.default} alt={item.name} />}
                 <div className="btndiv">
-                    <button className='acnbtn' onClick={() => {
-                        roll()
-                        // let newNarration = ""
-                        // if (num === 1) {
-                        //     newNarration = `A wild ${poke.name} appeared!`
-                        // } else if (num === 2) {
-                        //     newNarration = `You found a(n) ${item.name}`
-                        // } else if (num === 3) {
-                        //     newNarration = "Nothing appeared..."
-                        // }
-                        // setNarration(newNarration)
-                    }
-                    }>Continue!</button>
-                    {clicked && poke.name && <button className='acnbtn' onClick={() => {
-                        handleCatchPokemon()
-                    }}>Catch it!</button>}
-                    {clicked && item.name && <button className='acnbtn' onClick={() => {
-                        grabItem()
-                    }}
-                    >Pick up!</button>}
+                    <div className='priacndiv'>
+                        <button className='acnbtn' onClick={() => {
+                            roll()
+                            // let newNarration = ""
+                            // if (num === 1) {
+                            //     newNarration = `A wild ${poke.name} appeared!`
+                            // } else if (num === 2) {
+                            //     newNarration = `You found a(n) ${item.name}`
+                            // } else if (num === 3) {
+                            //     newNarration = "Nothing appeared..."
+                            // }
+                            // setNarration(newNarration)
+                        }
+                        }>Continue!</button>
+                    </div>
+                    <div className='secacndiv'>
+                        {clicked && poke.name && <button className='acnbtn' onClick={() => {
+                            handleCatchPokemon()
+                        }}>Catch it!</button>}
+                        {clicked && item.name && <button className='acnbtn' onClick={() => {
+                            grabItem()
+                        }}
+                        >Pick up!</button>}
+                    </div>
                 </div>
             </div>
         </div>

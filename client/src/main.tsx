@@ -10,6 +10,7 @@ import { Grassland } from './pages/Grassland.tsx'
 import { Party } from './pages/Party.tsx'
 import { Pokecenter } from './pages/Pokecenter.tsx'
 import { Cave } from './pages/Cave.tsx'
+import { Bag } from './pages/Bag.tsx'
 import Login from './pages/Login.tsx'
 import UserSettingsPage from './pages/UserSettingsPage.tsx'
 
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
       {
         path: '/usersettings',
         element: <UserSettingsPage />
+      },
+      {
+        path: '/bag',
+        element: <Bag />
       }
     ]
   }
