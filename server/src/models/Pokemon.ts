@@ -1,8 +1,8 @@
 import { Schema, type Document } from 'mongoose';
 
 export interface PokemonDocument extends Document {
-  id: String;
-  pokemonId: string;
+  id: string;
+  pokemonId: number;
   name: string;
   front_sprite: string;
   back_sprite: string;
@@ -14,7 +14,7 @@ const pokemonSchema = new Schema<PokemonDocument>({
     required: true,
   },
   pokemonId: {
-    type: String,
+    type: Number,
     required: true,
   },
   front_sprite: {
