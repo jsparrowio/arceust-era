@@ -5,8 +5,25 @@ import { useQuery } from "@apollo/client"
 import { useMutation } from "@apollo/client"
 import { CATCH_POKEMON, SAVE_ITEM } from "../utils/mutations"
 import { QUERY_ME } from "../utils/queries"
+import Auth from "../utils/auth";
 import '../assets/biome.css'
+import { useLocation, useNavigate } from "react-router-dom"
+import { Card } from "antd"
 export const Grassland = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const [loggedIn, setLoggedIn] = useState<boolean>(false);
+      useEffect(() => {
+        const loggedIn = Auth.loggedIn();
+        if (loggedIn === true) {
+          setLoggedIn(true);
+        } else {
+          setLoggedIn(false);
+          Auth.logout();
+          navigate('/login');
+        }
+      }, [location]);
+
     const [catchPkmn, { error }] = useMutation(CATCH_POKEMON)
     const [saveItem, states] = useMutation(SAVE_ITEM)
     const { data, refetch } = useQuery(QUERY_ME)
@@ -160,6 +177,8 @@ export const Grassland = () => {
         }
     }
     return (
+        <>
+        { loggedIn && 
         <div>
             {!clicked && <h1>You enter the forest.</h1>}
             {clicked && <h1>{narration}</h1>}
@@ -197,6 +216,18 @@ export const Grassland = () => {
                 </div>
             </div>
         </div>
+        }
+        {!loggedIn &&
+            <div style={{ 'display': 'flex', 'justifyContent': 'center', 'alignItems': 'center', 'margin': '3rem' }}>
+                <Card variant={"outlined"} style={{ width: 300 }}>
+                    <p>
+                        You must be logged in to view this page!
+                        <br />
+                        Redirecting...
+                    </p>
+                </Card>
+            </div>
+        }   
+    </>
     )
-
 }
