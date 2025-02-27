@@ -2,7 +2,7 @@ import { Schema, type Document } from 'mongoose';
 
 export interface ItemDocument extends Document {
   id: String;
-  itemId: string;
+  itemId: Number;
   name: string;
   sprite: string;
   quantity: number;
@@ -14,7 +14,7 @@ const itemSchema = new Schema<ItemDocument>({
     required: true,
   },
   itemId: {
-    type: String,
+    type: Number,
     required: true,
   },
   sprite: {
