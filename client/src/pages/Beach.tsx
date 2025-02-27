@@ -5,15 +5,34 @@ import { useQuery } from "@apollo/client"
 import { useMutation } from "@apollo/client"
 import { CATCH_POKEMON, SAVE_ITEM } from "../utils/mutations"
 import { QUERY_ME } from "../utils/queries"
+import Auth from "../utils/auth";
 import '../assets/biome.css'
-export const Beach = () => {
-    const [catchPkmn, { error }] = useMutation(CATCH_POKEMON)
-    const [saveItem, states] = useMutation(SAVE_ITEM)
-    const { data, refetch } = useQuery(QUERY_ME)
-    useEffect(() => {
-        refetch()
-    }, [data])
+import { useLocation, useNavigate } from "react-router-dom"
+import { Card } from "antd"
 
+
+export const Beach = () => {
+        const location = useLocation();
+        const navigate = useNavigate();
+        const [loggedIn, setLoggedIn] = useState<boolean>(false);
+          useEffect(() => {
+            const loggedIn = Auth.loggedIn();
+            if (loggedIn === true) {
+              setLoggedIn(true);
+            } else {
+              setLoggedIn(false);
+              Auth.logout();
+              navigate('/login');
+            }
+          }, [location]);
+    
+     const [catchPkmn, {error}] = useMutation(CATCH_POKEMON)
+        const [saveItem, states] = useMutation(SAVE_ITEM)
+        const {data, refetch} = useQuery(QUERY_ME)
+        useEffect(() => {
+          refetch()
+        }, [data] )
+      
     const [loading, setloading] = useState(true)
     const [poke, setPoke] = useState<Record<string, any>>({})
     const [isShiny, setShiny] = useState<boolean>(false)
@@ -213,6 +232,8 @@ export const Beach = () => {
         }
     }
     return (
+        <>
+        { loggedIn && 
         <div>
             {!clicked && <h1>You went to the beach.</h1>}
             {clicked && <h1>{narration}</h1>}
@@ -251,6 +272,18 @@ export const Beach = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div>}
+         {!loggedIn &&
+             <div style={{ 'display': 'flex', 'justifyContent': 'center', 'alignItems': 'center', 'margin': '3rem' }}>
+                 <Card variant={"outlined"} style={{ width: 300 }}>
+                     <p>
+                         You must be logged in to view this page!
+                         <br />
+                         Redirecting...
+                     </p>
+                 </Card>
+             </div>
+         }   
+     </>
     )
 }
