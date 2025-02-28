@@ -1,6 +1,7 @@
 // import user model and authentication functions
 import { User } from '../models/index.js';
 import { signToken, AuthenticationError } from '../services/auth.js';
+import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 
 //interfaces to set up object type structures for user, user input, and login 
@@ -189,33 +190,59 @@ const resolvers = {
                 throw new Error('Error resetting the users box');
             }
         },
-        addToTeam: async (_parent: any, { input, _id }: any, context: any) => {
+        addToTeam: async (_parent: any, { _id }: any, context: any) => {
             if (!context.user) throw new AuthenticationError('You must be logged in');
             try {
-                console.log(`Adding PokemonId ${input.pokemonId} to user ${context.user._id}'s team`)
-                const updatedUser = await User.findByIdAndUpdate(
-                    context.user._id,
-                    { $addToSet: { team: input }, $pull: { box: { _id } } },
-                    { new: true, runValidators: true }
-                );
-                console.log("The Pokemon was added to the team!");
-                return updatedUser;
+                const foundUser = await User.findById(context.user._id);
+                let findPokemon;
+                const pkObjectId = new mongoose.Types.ObjectId(_id as string);
+                for (let i = 0; i < foundUser!.box.length; i++) {
+                    if (JSON.stringify(pkObjectId) === JSON.stringify(foundUser!.box[i]._id)) {
+                        findPokemon = foundUser!.box[i];
+                    }
+                }
+                if (findPokemon) {
+                    console.log(`Adding Pokemon ${_id} to user ${context.user._id}'s team`)
+                    const updatedUser = await User.findByIdAndUpdate(
+                        context.user._id,
+                        { $addToSet: { team: findPokemon }, $pull: { box: { _id } } },
+                        { new: true, runValidators: true }
+                    );
+                    console.log("The Pokemon was added to the team!");
+                    return updatedUser;
+                } else {
+                    console.log("Pokemon not found!");
+                    return;
+                }
             } catch (err) {
                 console.error(err);
                 throw new Error('Error adding Pokemon to the users team');
             }
         },
-        removeFromTeam: async (_parent: any, { input, _id }: any, context: any) => {
+        removeFromTeam: async (_parent: any, { _id }: any, context: any) => {
             if (!context.user) throw new Error('You must be logged in');
             try {
-                console.log(`Removing Pokemon ${input.pokemonId} from user ${context.user._id}'s team`)
-                const updatedUser = await User.findByIdAndUpdate(
-                    context.user._id,
-                    { $pull: { team: { _id } }, $addToSet: { box: input } },
-                    { new: true }
-                );
-                console.log("Pokemon removed from team!");
-                return updatedUser;
+                const foundUser = await User.findById(context.user._id);
+                let findPokemon;
+                const pkObjectId = new mongoose.Types.ObjectId(_id as string);
+                for (let i = 0; i < foundUser!.team.length; i++) {
+                    if (JSON.stringify(pkObjectId) === JSON.stringify(foundUser!.team[i]._id)) {
+                        findPokemon = foundUser!.team[i];
+                    }
+                }
+                if (findPokemon) {
+                    console.log(`Removing Pokemon ${_id} from user ${context.user._id}'s team`)
+                    const updatedUser = await User.findByIdAndUpdate(
+                        context.user._id,
+                        { $pull: { team: { _id } }, $addToSet: { box: findPokemon } },
+                        { new: true }
+                    );
+                    console.log("Pokemon removed from team!");
+                    return updatedUser;
+                } else {
+                    console.log("Pokemon not found!");
+                    return;
+                }
             } catch (err) {
                 console.error(err);
                 throw new Error('Error releasing Pokemon');
