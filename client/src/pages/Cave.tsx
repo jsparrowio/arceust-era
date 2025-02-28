@@ -31,9 +31,9 @@ export const Cave = () => {
     const [saveItem, states] = useMutation(SAVE_ITEM)
     const { data, refetch } = useQuery(QUERY_ME)
     useEffect(() => {
-      refetch()
-    }, [data] )
-  
+        refetch()
+    }, [data])
+
     const pokeArr = ["Zubat", "Golbat", "Crobat", "Geodude", "Graveler", "Gastly", "Haunter", "Dunsparce", "Dudunsparce", "Cubone", "Marowak", "Deino", "Zweilous", "Hydreigon", "Gible", "Gabite", "Garchomp", "Roggenrola", "Boldore", "Carbink", "Bronzor", "Machop", "Machoke", "Onix", "Steelix", "Drilbur", "Excadrill", "Diglett", "Dugtrio", "Noibat", "Noivern", "Umbreon", "Nosepass", "Sableye", "Mawile", "Aron", "Lairon", "Aggron", "Larvitar", "Pupitar", "Tyranitar"]
     const itemArr = ["potion", "poke-ball", "gold-nugget", "fire-stone", "water-stone", "thunder-stone", "hard-rock", "revive"]
     const getPokemon = async () => {
@@ -127,6 +127,32 @@ export const Cave = () => {
         if (coinFlip >= .5) {
             setNarration(`Congratulations! You caught the ${poke.name}!`)
             setPoke({})
+            let storedPokemon;
+            if (isShiny) {
+                storedPokemon = {
+                    name: poke.name,
+                    pokemonId: poke.id,
+                    front_sprite: poke.sprites.front_shiny,
+                    back_sprite: poke.sprites.back_shiny
+                }
+            } else {
+                storedPokemon = {
+                    name: poke.name,
+                    pokemonId: poke.id,
+                    front_sprite: poke.sprites.front_default,
+                    back_sprite: poke.sprites.back_default
+                }
+            }
+            try {
+                await catchPkmn({
+                    variables: { input: { ...storedPokemon } },
+                });
+                if (error) {
+                    throw new Error(`Couldn't catch pokemon!`)
+                }
+            } catch (err) {
+                console.error(err);
+            }
         } else {
             setNarration(`Get some better pokeballs dweeb`)
         }
@@ -162,7 +188,7 @@ export const Cave = () => {
     const grabItem = async () => {
         setNarration(`You picked up the ${item.name}.`)
         setItem({})
-       
+
         try {
             const itemInfo = {
                 name: item.name,
@@ -192,6 +218,7 @@ export const Cave = () => {
                 {!loading && poke && !isShiny && <img className='wildpokeimg' src={poke?.sprites?.front_default} alt={poke.name} />}
                 {!loading && poke && isShiny && <img className='wildpokeimg' src={poke?.sprites?.front_shiny} alt={poke.name} />}
                 {!loading && data.Me && <img className='mypokemon' src={data.Me.team[0].back_sprite} />}
+                {!loading && data.Me && <img className='mypokemon' src={data?.Me?.team[0]?.back_sprite} />}
                 {!loading && item && <img className='itemimg' src={item?.sprites?.default} alt={item.name} />}
                 <div className="btndiv">
                     <div className='priacndiv'>
