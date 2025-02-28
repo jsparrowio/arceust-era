@@ -46,13 +46,19 @@ header {
     margin-top: 10px
 }
 .btndiv {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    top: 425px;
+}
+.priacndiv, .secacndiv {
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
-
 .biomeimg {
-    position: relative;
+    position: absolute;
     top: 20px;
     min-width: 600px;
     min-height: 400px;
@@ -130,6 +136,20 @@ header {
     z-index: 99998;
   }
 
+  .boxpkmn, .item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 3px solid black;
+    align-items: center;
+    min-width: 50px;
+    min-height: 75px;
+  }
+
+  .boxpkmnname {
+    position: relative;
+    bottom: 20px;
+  }
   .toast {
     z-index: 99999;
   }
@@ -138,7 +158,11 @@ header {
     z-index: 2
   }
 
-  .boxdiv {
+  .secacndiv {
+    z-index: 3
+  }
+  .boxdiv, .bagdiv {
+    display: flex;
     position: relative;
     top: 150px;
     width: 800px;
@@ -149,9 +173,19 @@ header {
     flex-direction: row;
     flex-wrap: wrap;
     color: black;
+    justify-content: space-evenly
   }
 
-  .pkctrmenudiv {
+  .bagdiv {
+    top: 50px; 
+  }
+
+  .menudiv {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+  }
+
+  .boxbtn {
+    margin-left: 200px;
   }
