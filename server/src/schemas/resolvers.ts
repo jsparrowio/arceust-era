@@ -197,7 +197,7 @@ const resolvers = {
                 let findPokemon;
                 const pkObjectId = new mongoose.Types.ObjectId(_id as string);
                 for (let i = 0; i < foundUser!.box.length; i++) {
-                    if (JSON.stringify(pkObjectId) === JSON.stringify(foundUser!.box[i]._id)) {
+                    if (pkObjectId.equals(foundUser!.box[i]._id as mongoose.Types.ObjectId)) {
                         findPokemon = foundUser!.box[i];
                     }
                 }
@@ -226,7 +226,7 @@ const resolvers = {
                 let findPokemon;
                 const pkObjectId = new mongoose.Types.ObjectId(_id as string);
                 for (let i = 0; i < foundUser!.team.length; i++) {
-                    if (JSON.stringify(pkObjectId) === JSON.stringify(foundUser!.team[i]._id)) {
+                    if (pkObjectId.equals(foundUser!.team[i]._id as mongoose.Types.ObjectId)) {
                         findPokemon = foundUser!.team[i];
                     }
                 }
@@ -262,6 +262,36 @@ const resolvers = {
             } catch (err) {
                 console.error(err);
                 throw new Error('Error resetting the users team');
+            }
+        },
+        updateTeam: async (_parent: any, { _id }: any, context: any) => {
+            if (!context.user) throw new AuthenticationError('You must be logged in');
+            try {
+                const foundUser = await User.findById(context.user._id);
+                let findTeamMember;
+                const pkObjectId = new mongoose.Types.ObjectId(_id as string);
+                for (let i = 0; i < foundUser!.team.length; i++) {
+                    if (pkObjectId.equals(foundUser!.team[i]._id as mongoose.Types.ObjectId)) {
+                        findTeamMember = foundUser!.team[i];
+                    }
+                }
+                console.log(findTeamMember);
+                console.log(`Updating user ${context.user._id}'s team`);
+                await User.findByIdAndUpdate(
+                    context.user._id,
+                    { $pull: { team: { _id } } },
+                    { new: true, runValidators: true }
+                );
+                const updatedUser = await User.findByIdAndUpdate(
+                    context.user._id,
+                    { $push: { team: { $each: [ findTeamMember ], $position: 0 } } },
+                    { new: true, runValidators: true }
+                );
+                console.log('The users team was updated!');
+                return updatedUser;
+            } catch (err) {
+                console.error(err);
+                throw new Error('Error updating the users team');
             }
         },
         saveItem: async (_parent: any, { input }: any, context: any) => {
