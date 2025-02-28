@@ -80,8 +80,9 @@ type Mutation {
     catchPokemon(input: PokemonInput!): User
     releasePokemon(_id: ID!): User
     resetBox(_id: ID!): User
-    addToTeam(input: PokemonInput!, _id: ID!): User
-    removeFromTeam(input: PokemonInput!, _id: ID!): User
+    addToTeam(_id: ID!): User
+    removeFromTeam(_id: ID!): User
+    updateTeam(_id: ID!): User
     resetTeam(_id: ID!): User
     saveItem(input: ItemInput!): User
     useItem(itemId: String!): User
