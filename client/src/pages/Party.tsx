@@ -59,7 +59,6 @@ export const Party = () => {
     }
   };
 
-
   return (
     <div className="team-pokemon">
     <div>
@@ -98,9 +97,9 @@ export const Party = () => {
     </div>
 
     <div className="team-controls">
-      <button onClick={() => movePokemon('up')}>↑</button>
+      {/* <button onClick={() => movePokemon('up')}>↑</button> */}
       <button onClick={() => movePokemon('left')}>←</button>
-      <button onClick={() => movePokemon('down')}>↓</button>
+      {/* <button onClick={() => movePokemon('down')}>↓</button> */}
       <button onClick={() => movePokemon('right')}>→</button>
     </div>
   </div>
