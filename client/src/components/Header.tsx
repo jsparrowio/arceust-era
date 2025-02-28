@@ -70,7 +70,7 @@ export const Header: React.FC = () => {
             <Link className='link' to="/grass">Grass</Link>
             <Link className='link' to="/party">Party</Link>
             <Link className='link' to="/pokecenter">Pokecenter</Link>
-            {/* <Link className='link' to="/bag">Bag</Link> */}
+            <Link className='link' to="/bag">Bag</Link>
           </>
         ) 
       }
