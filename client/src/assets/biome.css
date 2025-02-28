@@ -46,12 +46,20 @@ header {
     margin-top: 10px
 }
 .btndiv {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    top: 425px;
+}
+.priacndiv, .secacndiv {
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
-
 .biomeimg {
+    position: absolute;
+    top: 20px;
     min-width: 600px;
     min-height: 400px;
     max-width: 600px;
@@ -61,18 +69,27 @@ header {
 }
 
 .itemimg {
-    bottom: 100px;
-    left: 200px;
+    bottom: 75px;
+    left: 270px;
     position: absolute;
-    width: 100px;
+    width: 125px;
     height: auto;
 }
 
-.pokeimg {
-    bottom: 100px;
-    left: 200px;
+.wildpokeimg {
+    bottom: 50px;
+    left: 270px;
     position: absolute;
     width: 200px;
+    height: auto;
+}
+
+.mypokemon {
+    bottom: 5px;
+    top: 150px;
+    left: 20px;
+    position: absolute;
+    width: 300px;
     height: auto;
 }
 
@@ -119,6 +136,56 @@ header {
     z-index: 99998;
   }
 
+  .boxpkmn, .item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 3px solid black;
+    align-items: center;
+    min-width: 50px;
+    min-height: 75px;
+  }
+
+  .boxpkmnname {
+    position: relative;
+    bottom: 20px;
+  }
   .toast {
     z-index: 99999;
+  }
+
+  .acnbtn {
+    z-index: 2
+  }
+
+  .secacndiv {
+    z-index: 3
+  }
+  .boxdiv, .bagdiv {
+    display: flex;
+    position: relative;
+    top: 150px;
+    width: 800px;
+    height: auto;
+    background-color: aliceblue;
+    border: 10px solid black;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    color: black;
+    justify-content: space-evenly
+  }
+
+  .bagdiv {
+    top: 50px; 
+  }
+
+  .menudiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .boxbtn {
+    margin-left: 200px;
   }

@@ -1,9 +1,36 @@
 // import { getPokemon } from "../api/PokeAPI"
 import { useEffect } from "react"
 import { useState } from "react"
+import { useQuery } from "@apollo/client"
+import { useMutation } from "@apollo/client"
+import { CATCH_POKEMON, SAVE_ITEM } from "../utils/mutations"
+import { QUERY_ME } from "../utils/queries"
+import Auth from "../utils/auth";
 import '../assets/biome.css'
+import { useLocation, useNavigate } from "react-router-dom"
+import { Card } from "antd"
 export const Grassland = () => {
-    const pokeArr = ["Budew", "Turtwig", "Grotle", "Torterra", "Shaymin", "Gossifleur", "Smoliv", "Snivy", "Servine", "Serperior", "Kricketot", "Kricketune", "Pidgey", "Pidgeotto", "Pidgeot",]
+    const location = useLocation();
+    const navigate = useNavigate();
+    const [loggedIn, setLoggedIn] = useState<boolean>(false);
+      useEffect(() => {
+        const loggedIn = Auth.loggedIn();
+        if (loggedIn === true) {
+          setLoggedIn(true);
+        } else {
+          setLoggedIn(false);
+          Auth.logout();
+          navigate('/login');
+        }
+      }, [location]);
+
+    const [catchPkmn, { error }] = useMutation(CATCH_POKEMON)
+    const [saveItem, states] = useMutation(SAVE_ITEM)
+    const { data, refetch } = useQuery(QUERY_ME)
+    useEffect(() => {
+        refetch()
+    }, [data])
+    const pokeArr = ["Budew", "Turtwig", "Grotle", "Torterra", "Shaymin", "Gossifleur", "Smoliv", "Snivy", "Servine", "Serperior", "Kricketot", "Kricketune", "Pidgey", "Pidgeotto", "Pidgeot", "Eevee", "Leafeon", "Rattata", "Raticate", "Mankey", "Primeape", "Spearow", "Fearow", "Shinx", "Luxio", "Luxray", "Zorua", "Grubin", "Charjabug", "Vikavolt", "Exeggcute", "Carnivine", "Oddish", "Gloom", "Pinsir", "Heracross", "Scyther", "Rowlet", "Dartrix", "Decidueye"]
     const itemArr = ["potion", "poke-ball"]
     const getPokemon = async () => {
         try {
@@ -72,7 +99,6 @@ export const Grassland = () => {
                 }
                 console.log(isShiny)
                 setNarration(`A wild ${pokemon.name} appeared!`)
-
             })
             setItem({})
         } else if (randomNum === 2) {
@@ -91,55 +117,116 @@ export const Grassland = () => {
         setloading(false)
 
     }
-    const catchPkmn = async () => {
+    const handleCatchPokemon = async () => {
         const coinFlip = Math.random()
         if (coinFlip >= .5) {
             setNarration(`Congratulations! You caught the ${poke.name}!`)
             setPoke({})
+            let storedPokemon;
+            if (isShiny) {
+                storedPokemon = {
+                    name: poke.name,
+                    pokemonId: poke.id,
+                    front_sprite: poke.sprites.front_shiny,
+                    back_sprite: poke.sprites.back_shiny
+                }
+            } else {
+                storedPokemon = {
+                    name: poke.name,
+                    pokemonId: poke.id,
+                    front_sprite: poke.sprites.front_default,
+                    back_sprite: poke.sprites.back_default
+                }
+            }
+            try {
+                await catchPkmn({
+                    variables: { input: { ...storedPokemon } },
+                });
+                if (error) {
+                    throw new Error(`Couldn't catch pokemon!`)
+                }
+            } catch (err) {
+                console.error(err);
+            }
         } else {
             setNarration(`Get some better pokeballs dweeb`)
         }
-        // TODO: Set up graphql mutations to handle catching and storing pokemon in database
     }
 
-    const grabItem = () => {
+    const grabItem = async () => {
         setNarration(`You picked up the ${item.name}.`)
         setItem({})
         // TODO: Set up graphql mutations to handle adding items to inventory
+        try {
+            const itemInfo = {
+                name: item.name,
+                itemId: item.id,
+                sprite: item.sprites.default
+            }
+
+            await saveItem({
+                variables: { input: { ...itemInfo } }
+            })
+            if (states.error) {
+                throw new Error('Nice try butterfingers')
+            }
+
+        } catch (error) {
+            console.error(error)
+        }
     }
     return (
+        <>
+        { loggedIn && 
         <div>
             {!clicked && <h1>You enter the forest.</h1>}
             {clicked && <h1>{narration}</h1>}
             <div className="biomediv">
                 <img className="biomeimg" src='https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/fb8431de-9631-4ad2-b8fc-667b063d7471/d6dkaxe-15a2de20-5e6a-4284-bf8d-cffd2827ee75.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2ZiODQzMWRlLTk2MzEtNGFkMi1iOGZjLTY2N2IwNjNkNzQ3MVwvZDZka2F4ZS0xNWEyZGUyMC01ZTZhLTQyODQtYmY4ZC1jZmZkMjgyN2VlNzUucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.6T6EQtyjY2BSdMFQyAjdplBJVn_VMBrV2nX8vlpVqnM' />
-                {!loading && poke && !isShiny && <img className='pokeimg' src={poke?.sprites?.front_default} alt={poke.name} />}
-                {!loading && poke && isShiny && <img className='pokeimg' src={poke?.sprites?.front_shiny} alt={poke.name} />}
+                {!loading && poke && !isShiny && <img className='wildpokeimg' src={poke?.sprites?.front_default} alt={poke.name} />}
+                {!loading && poke && isShiny && <img className='wildpokeimg' src={poke?.sprites?.front_shiny} alt={poke.name} />}
+                {!loading && data?.Me && <img className='mypokemon' src={data?.Me?.team[0]?.back_sprite} />}
                 {!loading && item && <img className='itemimg' src={item?.sprites?.default} alt={item.name} />}
                 <div className="btndiv">
-                    <button onClick={() => {
-                        roll()
-                        // let newNarration = ""
-                        // if (num === 1) {
-                        //     newNarration = `A wild ${poke.name} appeared!`
-                        // } else if (num === 2) {
-                        //     newNarration = `You found a(n) ${item.name}`
-                        // } else if (num === 3) {
-                        //     newNarration = "Nothing appeared..."
-                        // }
-                        // setNarration(newNarration)
-                    }
-                    }>Continue!</button>
-                    {clicked && poke.name && <button onClick={() => {
-                        catchPkmn()
-                    }}>Catch it!</button>}
-                    {clicked && item.name && <button onClick={() => {
-                        grabItem()
-                    }}
-                    >Pick up!</button>}
+                    <div className='priacndiv'>
+                        <button className='acnbtn' onClick={() => {
+                            roll()
+                            // let newNarration = ""
+                            // if (num === 1) {
+                            //     newNarration = `A wild ${poke.name} appeared!`
+                            // } else if (num === 2) {
+                            //     newNarration = `You found a(n) ${item.name}`
+                            // } else if (num === 3) {
+                            //     newNarration = "Nothing appeared..."
+                            // }
+                            // setNarration(newNarration)
+                        }
+                        }>Continue!</button>
+                    </div>
+                    <div className='secacndiv'>
+                        {clicked && poke.name && <button className='acnbtn' onClick={() => {
+                            handleCatchPokemon()
+                        }}>Catch it!</button>}
+                        {clicked && item.name && <button className='acnbtn' onClick={() => {
+                            grabItem()
+                        }}
+                        >Pick up!</button>}
+                    </div>
                 </div>
             </div>
         </div>
+        }
+        {!loggedIn &&
+            <div style={{ 'display': 'flex', 'justifyContent': 'center', 'alignItems': 'center', 'margin': '3rem' }}>
+                <Card variant={"outlined"} style={{ width: 300 }}>
+                    <p>
+                        You must be logged in to view this page!
+                        <br />
+                        Redirecting...
+                    </p>
+                </Card>
+            </div>
+        }   
+    </>
     )
-
 }

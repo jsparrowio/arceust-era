@@ -40,7 +40,7 @@ export const Header: React.FC = () => {
   return (
     <header className='headerdiv'>
       <h1 className='header'>Arceust Era</h1>
-      {isLoggedIn && loading === false && reload === false? (
+      {isLoggedIn && loading === false && reload === false ? (
         <div className="user">
           <h2>Welcome,<Link className='link' to="/usersettings">{activeUser.first_name}</Link>!</h2>
           <Button
@@ -63,13 +63,17 @@ export const Header: React.FC = () => {
       )}
       <nav className='nav-bar'>
         <Link className='link' to="/">Home</Link>
-        <Link className='link' to="/cave">Cave</Link>
-        <Link className='link' to="/beach">Beach</Link>
-        <Link className='link' to="/grass">Grass</Link>
-        <Link className='link' to="/party">Party</Link>
-        <Link className='link' to="/pokecenter">Pokecenter</Link>
-        {/* <Link className='link' to="/bag">Bag</Link> */}
-
+        {isLoggedIn && (
+          <>
+            <Link className='link' to="/cave">Cave</Link>
+            <Link className='link' to="/beach">Beach</Link>
+            <Link className='link' to="/grass">Grass</Link>
+            <Link className='link' to="/party">Party</Link>
+            <Link className='link' to="/pokecenter">Pokecenter</Link>
+            <Link className='link' to="/bag">Bag</Link>
+          </>
+        ) 
+      }
       </nav>
     </header>
   );
