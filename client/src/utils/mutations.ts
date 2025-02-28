@@ -71,6 +71,24 @@ mutation ResetTeam($id: ID!) {
   }
 }
 `
+export const ADD_TO_TEAM = gql`
+  mutation AddToTeam($input: PokemonInput!, $_id: ID!) {
+    addToTeam(input: $input, _id: $_id) {
+      team {
+        _id
+        name
+        front_sprite
+        back_sprite
+      }
+      box {
+        _id
+        name
+        front_sprite
+        back_sprite
+      }
+    }
+  }
+`;
 
 export const RESET_INVENTORY = gql`
 mutation ResetInventory($id: ID!) {
