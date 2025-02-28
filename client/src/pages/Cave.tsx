@@ -153,35 +153,19 @@ export const Cave = () => {
             } catch (err) {
                 console.error(err);
             }
+            // TODO: Set up graphql mutations to handle catching and storing pokemon in database
+            try {
+                await catchPkmn({
+                    variables: { input: { ...storedPokemon } },
+                });
+                if (error) {
+                    throw new Error(`Couldn't catch pokemon!`)
+                }
+            } catch (err) {
+                console.error(err);
+            }
         } else {
             setNarration(`Get some better pokeballs dweeb`)
-        }
-        // TODO: Set up graphql mutations to handle catching and storing pokemon in database
-        let storedPokemon;
-        if (isShiny) {
-            storedPokemon = {
-                name: poke.name,
-                pokemonId: poke.id,
-                front_sprite: poke.sprites.front_shiny,
-                back_sprite: poke.sprites.back_shiny
-            }
-        } else {
-            storedPokemon = {
-                name: poke.name,
-                pokemonId: poke.id,
-                front_sprite: poke.sprites.front_default,
-                back_sprite: poke.sprites.back_default
-            }
-        }
-        try {
-            await catchPkmn({
-                variables: { input: { ...storedPokemon } },
-            });
-            if (error) {
-                throw new Error(`Couldn't catch pokemon!`)
-            }
-        } catch (err) {
-            console.error(err);
         }
     }
 
@@ -217,7 +201,7 @@ export const Cave = () => {
                 <img className="biomeimg" src='https://archives.bulbagarden.net/media/upload/7/7e/HGSS_Cerulean_Cave-Morning.png' />
                 {!loading && poke && !isShiny && <img className='wildpokeimg' src={poke?.sprites?.front_default} alt={poke.name} />}
                 {!loading && poke && isShiny && <img className='wildpokeimg' src={poke?.sprites?.front_shiny} alt={poke.name} />}
-                {!loading && data.Me && <img className='mypokemon' src={data.Me.team[0].back_sprite} />}
+                {/* {!loading && data.Me && <img className='mypokemon' src={data.Me.team[0].back_sprite} />} */}
                 {!loading && data.Me && <img className='mypokemon' src={data?.Me?.team[0]?.back_sprite} />}
                 {!loading && item && <img className='itemimg' src={item?.sprites?.default} alt={item.name} />}
                 <div className="btndiv">
