@@ -177,35 +177,35 @@ export const Beach = () => {
         if (coinFlip >= .5) {
             setNarration(`Congratulations! You caught the ${poke.name}!`)
             setPoke({})
+            // TODO: Set up graphql mutations to handle catching and storing pokemon in database
+            let storedPokemon;
+            if (isShiny) {
+                storedPokemon = {
+                    name: poke.name,
+                    pokemonId: poke.id,
+                    front_sprite: poke.sprites.front_shiny,
+                    back_sprite: poke.sprites.back_shiny
+                }
+            } else {
+                storedPokemon = {
+                    name: poke.name,
+                    pokemonId: poke.id,
+                    front_sprite: poke.sprites.front_default,
+                    back_sprite: poke.sprites.back_default
+                }
+            }
+            try {
+                await catchPkmn({
+                    variables: { input: { ...storedPokemon } },
+                });
+                if (error) {
+                    throw new Error(`Couldn't catch pokemon!`)
+                }
+            } catch (err) {
+                console.error(err);
+            }
         } else {
             setNarration(`Get some better pokeballs dweeb`)
-        }
-        // TODO: Set up graphql mutations to handle catching and storing pokemon in database
-        let storedPokemon;
-        if (isShiny) {
-            storedPokemon = {
-                name: poke.name,
-                pokemonId: poke.id,
-                front_sprite: poke.sprites.front_shiny,
-                back_sprite: poke.sprites.back_shiny
-            }
-        } else {
-            storedPokemon = {
-                name: poke.name,
-                pokemonId: poke.id,
-                front_sprite: poke.sprites.front_default,
-                back_sprite: poke.sprites.back_default
-            }
-        }
-        try {
-            await catchPkmn({
-                variables: { input: { ...storedPokemon } },
-            });
-            if (error) {
-                throw new Error(`Couldn't catch pokemon!`)
-            }
-        } catch (err) {
-            console.error(err);
         }
     }
 
