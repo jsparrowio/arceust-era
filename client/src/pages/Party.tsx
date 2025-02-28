@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_ME } from "../utils/queries";
 import { ADD_TO_TEAM } from "../utils/mutations";
@@ -17,9 +17,17 @@ export const Party = () => {
   const { data, refetch } = useQuery(QUERY_ME);
 
   const [selectedPokemon, setSelectedPokemon] = useState<string | null>(null);
+  const [team, setTeam] = useState<IPokemon[]>([]);
+
+  useEffect(() => {
+    if (data?.Me?.team) {
+      setTeam(data.Me.team);
+    }
+  }, [data]);
 
   const user = data?.Me;
-  const team: IPokemon[] = user?.team || [];
+  // const team: IPokemon[] = user?.team || [];
+  console.log("team");
   console.log(team);
   // const box: IPokemon[] = user?.box || [];
 
@@ -50,6 +58,7 @@ export const Party = () => {
         if (newIndex !== index) {
           const newTeam = [...team];
           [newTeam[index], newTeam[newIndex]] = [newTeam[newIndex], newTeam[index]];
+          setTeam(newTeam);
           // Update the team state and refetch the data
           // This part depends on how we update the team on the server
           // For now, just log the new team
@@ -80,7 +89,7 @@ export const Party = () => {
         ))}
       </div>
       <div id="team-row2">
-        {team.map((pokemon, index) => (
+        {team.slice(3, 6).map((pokemon, index) => (
           <span
             key={pokemon._id}
             id={`team-spot${index + 4}`}
@@ -97,12 +106,17 @@ export const Party = () => {
     </div>
 
     <div className="team-controls">
-      {/* <button onClick={() => movePokemon('up')}>↑</button> */}
+      <button onClick={() => movePokemon('up')}>↑</button>
       <button onClick={() => movePokemon('left')}>←</button>
-      {/* <button onClick={() => movePokemon('down')}>↓</button> */}
+      <button onClick={() => movePokemon('down')}>↓</button>
       <button onClick={() => movePokemon('right')}>→</button>
     </div>
   </div>
+
+  //TODO - store query response team in a state variable
+  //TODO - use that team state in the move arrow logic
+  //TODO - use team state in the return
+
   //   <div className="team-pokemon">
   //     <div>
   //       <h2>My Team</h2>
