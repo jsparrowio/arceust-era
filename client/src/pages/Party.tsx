@@ -23,7 +23,7 @@ export const Party = () => {
   console.log(team);
   // const box: IPokemon[] = user?.box || [];
 
-  const addToTeam = async (pokemonId: string) => {
+  const handleAddToTeam = async (pokemonId: string) => {
     if (selectedPokemon !== null) {
       try {
         await addToTeam({
@@ -51,8 +51,8 @@ export const Party = () => {
           const newTeam = [...team];
           [newTeam[index], newTeam[newIndex]] = [newTeam[newIndex], newTeam[index]];
           // Update the team state and refetch the data
-          // This part depends on how you update the team on the server
-          // For now, we just log the new team
+          // This part depends on how we update the team on the server
+          // For now, just log the new team
           console.log(newTeam);
         }
       }
@@ -81,7 +81,7 @@ export const Party = () => {
         ))}
       </div>
       <div id="team-row2">
-        {team.slice(3, 6).map((pokemon, index) => (
+        {team.map((pokemon, index) => (
           <span
             key={pokemon._id}
             id={`team-spot${index + 4}`}
@@ -97,7 +97,7 @@ export const Party = () => {
       </div>
     </div>
 
-    <div className="controls">
+    <div className="team-controls">
       <button onClick={() => movePokemon('up')}>↑</button>
       <button onClick={() => movePokemon('left')}>←</button>
       <button onClick={() => movePokemon('down')}>↓</button>
