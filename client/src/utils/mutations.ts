@@ -72,8 +72,8 @@ mutation ResetTeam($id: ID!) {
 }
 `
 export const ADD_TO_TEAM = gql`
-  mutation AddToTeam($input: PokemonInput!, $_id: ID!) {
-    addToTeam(input: $input, _id: $_id) {
+  mutation AddToTeam($_id: ID!) {
+    addToTeam(_id: $_id) {
       team {
         _id
         name

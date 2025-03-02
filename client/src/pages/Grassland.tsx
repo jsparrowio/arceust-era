@@ -9,6 +9,14 @@ import Auth from "../utils/auth";
 import '../assets/biome.css'
 import { useLocation, useNavigate } from "react-router-dom"
 import { Card } from "antd"
+
+// Function found at https://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript
+function toTitleCase(str: string) {
+    return str.replace(
+      /\w\S*/g,
+      text => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()
+    );
+  }
 export const Grassland = () => {
     const location = useLocation();
     const navigate = useNavigate();
@@ -30,8 +38,8 @@ export const Grassland = () => {
     useEffect(() => {
         refetch()
     }, [data])
-    const pokeArr = ["Budew", "Turtwig", "Grotle", "Torterra", "Shaymin", "Gossifleur", "Smoliv", "Snivy", "Servine", "Serperior", "Kricketot", "Kricketune", "Pidgey", "Pidgeotto", "Pidgeot", "Eevee", "Leafeon", "Rattata", "Raticate", "Mankey", "Primeape", "Spearow", "Fearow", "Shinx", "Luxio", "Luxray", "Zorua", "Grubin", "Charjabug", "Vikavolt", "Exeggcute", "Carnivine", "Oddish", "Gloom", "Pinsir", "Heracross", "Scyther", "Rowlet", "Dartrix", "Decidueye"]
-    const itemArr = ["potion", "poke-ball"]
+    const pokeArr = ["Budew", "Turtwig", "Grotle", "Torterra", "Shaymin", "Gossifleur", "Smoliv", "Snivy", "Servine", "Serperior", "Kricketot", "Kricketune", "Pidgey", "Pidgeotto", "Pidgeot", "Eevee", "Leafeon", "Rattata", "Raticate", "Mankey", "Primeape", "Spearow", "Fearow", "Shinx", "Luxio", "Luxray", "Zorua", "Grubin", "Charjabug", "Vikavolt", "Exeggcute", "Carnivine", "Oddish", "Gloom", "Pinsir", "Heracross", "Scyther", "Rowlet", "Dartrix", "Decidueye", "Slakoth", "Vigoroth", "Slaking", "Snubbull", "Granbull", "Archen", "Archeops", "Yanma", "Yanmega", "Weedle", "Kakuna", "Beedrill", "Wurmple", "Silcoon", "Cascoon", "Beautifly", "Dustox", "Caterpie", "Metapod", "Butterfree", "Missingno.", "Spinarak", "Ariados", "Munchlax", "Snorlax", "Pikachu", "Bonsly", "Sudowoodo", "Shroomish", "Breloom"]
+    const itemArr = ["potion", "poke-ball", "silver-powder", "miracle-seed", "big-root"]
     const getPokemon = async () => {
         try {
             const randomPokemon = pokeArr[Math.floor(Math.random() * pokeArr.length)]
@@ -67,6 +75,7 @@ export const Grassland = () => {
     const [isShiny, setShiny] = useState<boolean>(false)
     const [item, setItem] = useState<Record<string, any>>({})
     const [narration, setNarration] = useState<string>('')
+    // const [narration2, setNarration2] = useState<string>('')
     // const [num, setNum] = useState<number>()
     const [clicked, setClicked] = useState<boolean>(false)
 
@@ -98,11 +107,11 @@ export const Grassland = () => {
                     setShiny(false)
                 }
                 console.log(isShiny)
-                setNarration(`A wild ${pokemon.name} appeared!`)
+                setNarration(`A wild ${toTitleCase(pokemon.name)} appeared! Go, ${toTitleCase(data.Me.team[0].name)}!`)
             })
             setItem({})
         } else if (randomNum === 2) {
-            getItem().then((item) => { setItem(item); console.log(item); setNarration(`You found a(n) ${(item.name)}`) })
+            getItem().then((item) => { setItem(item); console.log(item); setNarration(`You found a(n) ${toTitleCase(item.name)}!`) })
             setPoke({})
             // setNarration(`You found a(n) ${item.name}`)
         } else if (randomNum === 3) {
@@ -120,7 +129,7 @@ export const Grassland = () => {
     const handleCatchPokemon = async () => {
         const coinFlip = Math.random()
         if (coinFlip >= .5) {
-            setNarration(`Congratulations! You caught the ${poke.name}!`)
+            setNarration(`Congratulations! You caught the ${toTitleCase(poke.name)}!`)
             setPoke({})
             let storedPokemon;
             if (isShiny) {
@@ -154,7 +163,7 @@ export const Grassland = () => {
     }
 
     const grabItem = async () => {
-        setNarration(`You picked up the ${item.name}.`)
+        setNarration(`You picked up the ${toTitleCase(item.name)}.`)
         setItem({})
         // TODO: Set up graphql mutations to handle adding items to inventory
         try {
@@ -181,13 +190,14 @@ export const Grassland = () => {
         <div>
             {!clicked && <h1>You enter the forest.</h1>}
             {clicked && <h1>{narration}</h1>}
+            {/* {clicked && <h1>{narration2}</h1>} */}
             <div className="biomediv">
                 <img className="biomeimg" src='https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/fb8431de-9631-4ad2-b8fc-667b063d7471/d6dkaxe-15a2de20-5e6a-4284-bf8d-cffd2827ee75.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2ZiODQzMWRlLTk2MzEtNGFkMi1iOGZjLTY2N2IwNjNkNzQ3MVwvZDZka2F4ZS0xNWEyZGUyMC01ZTZhLTQyODQtYmY4ZC1jZmZkMjgyN2VlNzUucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.6T6EQtyjY2BSdMFQyAjdplBJVn_VMBrV2nX8vlpVqnM' />
                 {!loading && poke && !isShiny && <img className='wildpokeimg' src={poke?.sprites?.front_default} alt={poke.name} />}
                 {!loading && poke && isShiny && <img className='wildpokeimg' src={poke?.sprites?.front_shiny} alt={poke.name} />}
                 {!loading && data?.Me && <img className='mypokemon' src={data?.Me?.team[0]?.back_sprite} />}
                 {!loading && item && <img className='itemimg' src={item?.sprites?.default} alt={item.name} />}
-                <div className="btndiv">
+                <div className="acnbtndiv">
                     <div className='priacndiv'>
                         <button className='acnbtn' onClick={() => {
                             roll()
