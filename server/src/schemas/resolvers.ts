@@ -248,6 +248,7 @@ const resolvers = {
                 throw new Error('Error releasing Pokemon');
             }
         },
+        // TODO: ADD reset Team button to party page
         resetTeam: async (_parent: any, { _id }: any, context: any) => {
             if (!context.user) throw new AuthenticationError('You must be logged in');
             try {
