@@ -1,0 +1,51 @@
+import './src/App.css';
+import { Menu } from 'antd';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import { 
+    HomeOutlined,
+    CompassOutlined,
+    TeamOutlined,
+    MedicineBoxOutlined,
+    UserOutlined,
+    PoweroffOutlined, 
+    FilterOutlined,
+    SunOutlined,
+    WechatOutlined
+} from "@ant-design/icons"
+
+function Sidebar () {
+    const nav = useNavigate()
+    return (
+        <div style={{ display: "flex", flexDirection: "row"}}>
+            <Menu
+            onClick={({key}) => {
+                if (key === "signout") {
+                    // TODO: sign out feature here
+                } else {
+                    nav(key);
+                }
+            }}
+            items={[
+                {label: "Home", key:'/', icon: <HomeOutlined />},
+                {
+                    label: "Safari Zone", 
+                    key:'safari-zone', 
+                    icon: <CompassOutlined />,
+                    children: [
+                        {label: "Cave", key: '/safari-zone/cave', icon: <FilterOutlined />},
+                        {label: "Beach", key: '/safari-zone/beach', icon: <SunOutlined />},
+                        {label: "Grass", key: '/safari-zone/grass', icon: <WechatOutlined />},
+                    ]
+                },
+                
+                {label: "Pokemon Boxes", key:'/pokemon-boxes', icon: <TeamOutlined />},
+                {label: "Pokemon Center", key:'/pokemon-center', icon: <MedicineBoxOutlined />},
+                {label: "Profile", key:'/profile', icon: <UserOutlined />},
+                {label: "Signout", key: 'signout',icon: <PoweroffOutlined />, danger: true}
+            ]}
+            ></Menu>
+        </div>
+    );
+}
+
+export default Sidebar;
