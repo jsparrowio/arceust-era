@@ -128,10 +128,10 @@ mutation ReleasePokemon($id: ID!) {
   }
 }
 `
-
+//ANCHOR - MARKER UP
 export const UPDATE_TEAM = gql`
-mutation UpdateTeam($id: ID!, $team: [PokemonInput!]!) {
-  updateTeam(_id: $id, team: $team) {
+mutation UpdateTeam($id: ID!) {
+  updateTeam(_id: $id) {
     teamCount
   }
 }
