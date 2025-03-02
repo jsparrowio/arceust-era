@@ -9,7 +9,13 @@ import Auth from "../utils/auth";
 import '../assets/biome.css'
 import { useLocation, useNavigate } from "react-router-dom"
 import { Card } from "antd"
-
+// Function found at https://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript
+function toTitleCase(str: string) {
+    return str.replace(
+      /\w\S*/g,
+      text => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()
+    );
+  }
 
 export const Beach = () => {
         const location = useLocation();
@@ -38,6 +44,7 @@ export const Beach = () => {
     const [isShiny, setShiny] = useState<boolean>(false)
     const [item, setItem] = useState<Record<string, any>>({})
     const [narration, setNarration] = useState<string>('')
+    // const [narration2, setNarration2] = useState<string>('')
     const [clicked, setClicked] = useState<boolean>(false)
     const [setting, setSetting] = useState('beach')
     // FFR, call 'get' functions 'fetches' instead
@@ -152,12 +159,13 @@ export const Beach = () => {
                     setShiny(false)
                 }
                 console.log(isShiny)
-                setNarration(`A wild ${pokemon.name} appeared!`)
+                setNarration(`A wild ${toTitleCase(pokemon.name)} appeared!
+                Go, ${toTitleCase(data.Me.team[0].name)}!`)
 
             })
             setItem({})
         } else if (randomNum === 2) {
-            getItem(event.target.id).then((item) => { setItem(item); console.log(item); setNarration(`You found a(n) ${item.name}`) })
+            getItem(event.target.id).then((item) => { setItem(item); console.log(item); setNarration(`You found a(n) ${toTitleCase(item.name)}!`) })
             setPoke({})
             // setNarration(`You found a(n) ${item.name}`)
         } else if (randomNum === 3 && event.target.id === 'walk' || event.target.id === 'surf' || event.target.id === 'fish') {
@@ -175,7 +183,7 @@ export const Beach = () => {
     const handleCatchPokemon = async () => {
         const coinFlip = Math.random()
         if (coinFlip >= .5) {
-            setNarration(`Congratulations! You caught the ${poke.name}!`)
+            setNarration(`Congratulations! You caught the ${toTitleCase(poke.name)}!`)
             setPoke({})
             // TODO: Set up graphql mutations to handle catching and storing pokemon in database
             let storedPokemon;
@@ -210,7 +218,7 @@ export const Beach = () => {
     }
 
     const grabItem = async () => {
-        setNarration(`You picked up the ${item.name}.`)
+        setNarration(`You picked up the ${toTitleCase(item.name)}.`)
         setItem({})
         // TODO: Set up graphql mutations to handle adding items to inventory
         try {
@@ -237,6 +245,7 @@ export const Beach = () => {
         <div>
             {!clicked && <h1>You went to the beach.</h1>}
             {clicked && <h1>{narration}</h1>}
+            {/* {clicked && <h1>{narration2}</h1>} */}
             <div className="biomediv">
                 {setting === 'beach' && <img className="biomeimg" src='https://st5.depositphotos.com/3584053/65993/i/450/depositphotos_659935466-stock-photo-sea-background-nature-tropical-summer.jpg' />}
                 {setting === 'ocean' && <img className="biomeimg" src='https://images.unsplash.com/photo-1468581264429-2548ef9eb732?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' />}
@@ -244,11 +253,13 @@ export const Beach = () => {
                 {!loading && poke && isShiny && <img className='wildpokeimg' src={poke?.sprites?.front_shiny} alt={poke.name} />}
                 {!loading && data.Me && <img className='mypokemon' src={data?.Me?.team[0]?.back_sprite} />}
                 {!loading && item && <img className='itemimg' src={item?.sprites?.default} alt={item.name} />}
-                <div className="btndiv">
+                <div className="acnbtndiv">
                     <div className='priacndiv'>
                         <button className='acnbtn' id="walk" onClick={(event) => {
                             roll(event)
                             setSetting('beach')
+                            // setNarration2('')
+
                         }
                         }>Walk</button>
 
@@ -258,6 +269,8 @@ export const Beach = () => {
                         <button className='acnbtn' id="surf" onClick={(event) => {
                             roll(event)
                             setSetting('ocean')
+                            // setNarration2('')
+
                         }
                         }>Surf</button>
                     </div>

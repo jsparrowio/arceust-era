@@ -9,7 +9,13 @@ import Auth from "../utils/auth";
 import '../assets/biome.css'
 import { Card } from "antd"
 import { useLocation, useNavigate } from "react-router-dom"
-
+// Function found at https://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript
+function toTitleCase(str: string) {
+    return str.replace(
+      /\w\S*/g,
+      text => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()
+    );
+  }
 
 export const Cave = () => {
     const location = useLocation();
@@ -70,6 +76,7 @@ export const Cave = () => {
     const [poke, setPoke] = useState<Record<string, any>>({})
     const [item, setItem] = useState<Record<string, any>>({})
     const [narration, setNarration] = useState<string>('')
+    const [narration2, setNarration2] = useState<string>('')
     const [isShiny, setShiny] = useState<boolean>(false)
     // const [num, setNum] = useState<number>()
     const [clicked, setClicked] = useState<boolean>(false)
@@ -102,12 +109,11 @@ export const Cave = () => {
                     setShiny(false)
                 }
                 console.log(isShiny)
-                setNarration(`A wild ${pokemon.name} appeared!`)
-
+                setNarration(`A wild ${toTitleCase(pokemon.name)} appeared! Go, ${toTitleCase(data.Me.team[0].name)}!`)
             })
             setItem({})
         } else if (randomNum === 2) {
-            getItem().then((item) => { setItem(item); console.log(item); setNarration(`You found a(n) ${(item.name)}`) })
+            getItem().then((item) => { setItem(item); console.log(item); setNarration(`You found a(n) ${toTitleCase(item.name)}!`) })
             setPoke({})
             // setNarration(`You found a(n) ${item.name}`)
         } else if (randomNum === 3) {
@@ -125,7 +131,7 @@ export const Cave = () => {
     const handleCatchPokemon = async () => {
         const coinFlip = Math.random()
         if (coinFlip >= .5) {
-            setNarration(`Congratulations! You caught the ${poke.name}!`)
+            setNarration(`Congratulations! You caught the ${toTitleCase(poke.name)}!`)
             setPoke({})
             let storedPokemon;
             if (isShiny) {
@@ -159,7 +165,7 @@ export const Cave = () => {
     }
 
     const grabItem = async () => {
-        setNarration(`You picked up the ${item.name}.`)
+        setNarration(`You picked up the ${toTitleCase(item.name)}.`)
         setItem({})
 
         try {
@@ -186,6 +192,8 @@ export const Cave = () => {
             <div>
             {!clicked && <h1 className='narration'>You enter the cave.</h1>}
             {clicked && <h1 className='narration'>{narration}</h1>}
+            {clicked && <h1>{narration2}</h1>}
+
             <div className="biomediv">
                 <img className="biomeimg" src='https://archives.bulbagarden.net/media/upload/7/7e/HGSS_Cerulean_Cave-Morning.png' />
                 {!loading && poke && !isShiny && <img className='wildpokeimg' src={poke?.sprites?.front_default} alt={poke.name} />}
@@ -193,7 +201,7 @@ export const Cave = () => {
                 {/* {!loading && data.Me && <img className='mypokemon' src={data.Me.team[0].back_sprite} />} */}
                 {!loading && data.Me && <img className='mypokemon' src={data?.Me?.team[0]?.back_sprite} />}
                 {!loading && item && <img className='itemimg' src={item?.sprites?.default} alt={item.name} />}
-                <div className="btndiv">
+                <div className="acnbtndiv">
                     <div className='priacndiv'>
                         <button className='acnbtn' onClick={() => {
                             roll()
@@ -206,15 +214,18 @@ export const Cave = () => {
                             //     newNarration = "Nothing appeared..."
                             // }
                             // setNarration(newNarration)
+                            setNarration2('')
                         }
                         }>Continue!</button>
                     </div>
                     <div className='secacndiv'>
                         {clicked && poke.name && <button className='acnbtn' onClick={() => {
                             handleCatchPokemon()
+                            setNarration2('')
                         }}>Catch it!</button>}
                         {clicked && item.name && <button className='acnbtn' onClick={() => {
                             grabItem()
+                            setNarration2('')
                         }}
                         >Pick up!</button>}
                     </div>

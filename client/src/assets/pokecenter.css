@@ -13,8 +13,14 @@
 
 
 .party {
+    display: flex;
+    flex-direction: row;
+    align-content: flex-start;
+    flex-wrap: wrap;
     min-height: 600px;
-    min-width: 200px;
+    max-height: 600px;
+    max-width: 300px;
+    min-width: 300px;
 }
 
 .partyandbox {
@@ -38,9 +44,53 @@
 }
 
 .box {
-    max-width: 500px;
+    max-width: 900px;
     min-width: 500px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    position: relative;
 }
+
+.partypkmn {
+    position: relative;
+    top: 5px;
+}
+
+.menudiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.btndiv {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    position: absolute;
+    top: 175px;
+    right: 500px;
+    max-height: 80px;
+    max-width: 100px;
+    justify-content: space-around;
+}
+
+.acnbtndiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    justify-content: center;
+    top: 425px;
+    max-height: 80px;
+    max-width: 100px;
+    justify-content: space-around;
+}
+
+.boxbtn {
+    min-height: 100px;
+    min-width: 100px;
+    max-height: 100px;
+    max-width: 100px;
+  } 

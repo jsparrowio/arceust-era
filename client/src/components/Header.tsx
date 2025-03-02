@@ -67,7 +67,7 @@ export const Header: React.FC = () => {
           <>
             <Link className='link' to="/cave">Cave</Link>
             <Link className='link' to="/beach">Beach</Link>
-            <Link className='link' to="/grass">Grass</Link>
+            <Link className='link' to="/grass">Forest</Link>
             <Link className='link' to="/party">Party</Link>
             <Link className='link' to="/pokecenter">Pokecenter</Link>
             <Link className='link' to="/bag">Bag</Link>
