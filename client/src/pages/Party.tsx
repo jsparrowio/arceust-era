@@ -93,6 +93,10 @@ export const Party = () => {
       <button onClick={() => movePokemon('down')}>↓</button>
       <button onClick={() => movePokemon('right')}>→</button>
     </div>
+
+    <div className="update-team">
+      <button onClick={() => updateTeam('Save Team')}>Save Team</button>
+    </div>
   </div>
 
   //TODO - store query response team in a state variable

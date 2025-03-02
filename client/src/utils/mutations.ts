@@ -130,8 +130,8 @@ mutation ReleasePokemon($id: ID!) {
 `
 
 export const UPDATE_TEAM = gql`
-mutation UpdateTeam($id: ID!) {
-  updateTeam(_id: $id) {
+mutation UpdateTeam($id: ID!, $team: [PokemonInput!]!) {
+  updateTeam(_id: $id, team: $team) {
     teamCount
   }
 }
