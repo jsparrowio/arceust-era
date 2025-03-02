@@ -128,3 +128,20 @@ mutation ReleasePokemon($id: ID!) {
   }
 }
 `
+
+export const UPDATE_TEAM = gql`
+mutation UpdateTeam($id: ID!) {
+  updateTeam(_id: $id) {
+    teamCount
+  }
+}
+`
+
+export const REMOVE_FROM_TEAM = gql`
+mutation RemoveFromTeam($id: ID!) {
+  removeFromTeam(_id: $id) {
+    teamCount
+  }
+}
+`
+
