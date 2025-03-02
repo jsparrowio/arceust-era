@@ -243,7 +243,7 @@ export const Beach = () => {
         <>
         { loggedIn && 
         <div>
-            {!clicked && <h1>You went to the beach.</h1>}
+            {!clicked && <h1>You go to the beach.</h1>}
             {clicked && <h1>{narration}</h1>}
             {/* {clicked && <h1>{narration2}</h1>} */}
             <div className="biomediv">
