@@ -1,4 +1,4 @@
-import './src/App.css';
+import '../App.css';
 import { Menu } from 'antd';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { 
@@ -38,8 +38,8 @@ function Sidebar () {
                     ]
                 },
                 
-                {label: "Pokemon Boxes", key:'/pokemon-boxes', icon: <TeamOutlined />},
-                {label: "Pokemon Center", key:'/pokemon-center', icon: <MedicineBoxOutlined />},
+                {label: "Party", key:'/party', icon: <TeamOutlined />},
+                {label: "Pokecenter", key:'/pokecenter', icon: <MedicineBoxOutlined />},
                 {label: "Profile", key:'/profile', icon: <UserOutlined />},
                 {label: "Signout", key: 'signout',icon: <PoweroffOutlined />, danger: true}
             ]}

@@ -27,15 +27,15 @@ const router = createBrowserRouter([
         element: <Home />
       }, 
       {
-        path: '/cave',
+        path: '/safari-zone/cave',
         element: <Cave />
       },
       {
-        path: '/beach',
+        path: '/safari-zone/beach',
         element: <Beach />
       },
       {
-        path: '/grass',
+        path: '/safari-zone/grass',
         element: <Grassland />
       },
       {

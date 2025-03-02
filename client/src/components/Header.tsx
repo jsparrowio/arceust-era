@@ -44,8 +44,8 @@ export const Header: React.FC = () => {
       className="headerdiv"
       style={{ display: "flex", flexDirection: "row", alignItems: "center" }}
     >
-      <Sidebar />
       {/* Main Header Content */}
+      {isLoggedIn && <Sidebar />}
       <div style={{ flexGrow: 1, paddingLeft: "20px" }}>
         <h1 className="header">Arceust Era</h1>
         {/* Login Validation */}
@@ -81,13 +81,13 @@ export const Header: React.FC = () => {
           </Link>
           {isLoggedIn && (
             <>
-              <Link className="link" to="/cave">
+              <Link className="link" to="/safari-zone/cave">
                 Cave
               </Link>
-              <Link className="link" to="/beach">
+              <Link className="link" to="/safari-zone/beach">
                 Beach
               </Link>
-              <Link className="link" to="/grass">
+              <Link className="link" to="/safari-zone/grass">
                 Grass
               </Link>
               <Link className="link" to="/party">
