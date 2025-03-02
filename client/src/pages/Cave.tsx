@@ -153,17 +153,6 @@ export const Cave = () => {
             } catch (err) {
                 console.error(err);
             }
-            // TODO: Set up graphql mutations to handle catching and storing pokemon in database
-            try {
-                await catchPkmn({
-                    variables: { input: { ...storedPokemon } },
-                });
-                if (error) {
-                    throw new Error(`Couldn't catch pokemon!`)
-                }
-            } catch (err) {
-                console.error(err);
-            }
         } else {
             setNarration(`Get some better pokeballs dweeb`)
         }
