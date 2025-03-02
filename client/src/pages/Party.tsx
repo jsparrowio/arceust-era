@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_ME } from "../utils/queries";
-import { ADD_TO_TEAM } from "../utils/mutations";
+import { UPDATE_TEAM } from "../utils/mutations";
 import "../styles/Party.css";
 
 interface IPokemon {
@@ -13,9 +13,8 @@ interface IPokemon {
 }
 
 export const Party = () => {
-  const [addToTeam] = useMutation(ADD_TO_TEAM);
-  const { data, refetch } = useQuery(QUERY_ME);
-
+  const { data } = useQuery(QUERY_ME);
+  const [ updateTeam, { error }] = useMutation(UPDATE_TEAM)
   const [selectedPokemon, setSelectedPokemon] = useState<string | null>(null);
   const [team, setTeam] = useState<IPokemon[]>([]);
 
@@ -25,25 +24,8 @@ export const Party = () => {
     }
   }, [data]);
 
-  const user = data?.Me;
-  // const team: IPokemon[] = user?.team || [];
   console.log("team");
   console.log(team);
-  // const box: IPokemon[] = user?.box || [];
-
-  const handleAddToTeam = async (pokemonId: string) => {
-    if (selectedPokemon !== null) {
-      try {
-        await addToTeam({
-          variables: { input: { pokemonId }, _id: pokemonId },
-        });
-        refetch();
-        setSelectedPokemon(null);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-  };
 
   const movePokemon = (direction: string) => {
     if (selectedPokemon !== null) {
