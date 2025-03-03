@@ -9,6 +9,7 @@ import { Outlet } from "react-router-dom";
 import { Header } from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import { useState } from "react";
+// import auth from "./utils/auth";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -31,6 +32,7 @@ const client = new ApolloClient({
 
 function App() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  // const isLoggedIn = auth.loggedIn();
   return (
     <ApolloProvider client={client}>
       <div
@@ -39,7 +41,8 @@ function App() {
           minHeight: "100vh",
         }}
       >
-        {/* Sidebar Component */}
+        {/* Sidebar Component, supposed to hide if the user is not logged in */}
+        {/* {isLoggedIn && <Sidebar onToggle={setSidebarCollapsed} />} */}
         <Sidebar onToggle={setSidebarCollapsed} />
 
         <div
@@ -47,8 +50,9 @@ function App() {
             flexGrow: 1,
             display: "flex",
             flexDirection: "column",
-            marginLeft: sidebarCollapsed ? "80px" : "175px",
+            alignItems: "center",
             transition: "margin-left 0.3s ease-in-out",
+            paddingLeft: sidebarCollapsed ? "0px" : "80px",
           }}
         >
           {/* Header Component */}
@@ -57,8 +61,8 @@ function App() {
           {/* Main Content */}
           <main
             style={{
-              marginLeft: sidebarCollapsed ? "80px" : "175px",
-              transition: "margin 0.3s ease-in-out",
+              width: "100%",
+              maxWidth: "1200px",
               padding: "15px",
             }}
           >
