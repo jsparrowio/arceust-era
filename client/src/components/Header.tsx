@@ -40,13 +40,21 @@ export const Header: React.FC = () => {
 
   return (
     // SideBar Format
+    <>
+      {isLoggedIn && <Sidebar />}
     <header
       className="headerdiv"
-      style={{ display: "flex", flexDirection: "row", alignItems: "center" }}
+      style={{
+        display: "flex",  
+        alignItems: "center", 
+      }}
     >
       {/* Main Header Content */}
-      {isLoggedIn && <Sidebar />}
-      <div style={{ flexGrow: 1, paddingLeft: "20px" }}>
+      <div style={{ 
+        flexGrow: 1, 
+        paddingLeft: "20px" 
+        }}
+        >
         <h1 className="header">Arceust Era</h1>
         {/* Login Validation */}
         {isLoggedIn && loading === false && reload === false ? (
@@ -104,5 +112,6 @@ export const Header: React.FC = () => {
         </nav>
       </div>
     </header>
+    </>
   );
 };

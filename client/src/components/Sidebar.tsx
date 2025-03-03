@@ -1,6 +1,6 @@
 import '../App.css';
 import { Menu } from 'antd';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { 
     HomeOutlined,
     CompassOutlined,
@@ -16,7 +16,14 @@ import {
 function Sidebar () {
     const nav = useNavigate()
     return (
-        <div style={{ display: "flex", flexDirection: "row"}}>
+        <div style={{ 
+            display: "flex",
+            alignItems: "center", 
+            position: "fixed",
+            top: "15px",
+            left: "15px"
+            }}
+            >
             <Menu
             onClick={({key}) => {
                 if (key === "signout") {
@@ -27,8 +34,7 @@ function Sidebar () {
             }}
             items={[
                 {label: "Home", key:'/', icon: <HomeOutlined />},
-                {
-                    label: "Safari Zone", 
+                {label: "Safari Zone", 
                     key:'safari-zone', 
                     icon: <CompassOutlined />,
                     children: [
@@ -37,7 +43,6 @@ function Sidebar () {
                         {label: "Grass", key: '/safari-zone/grass', icon: <WechatOutlined />},
                     ]
                 },
-                
                 {label: "Party", key:'/party', icon: <TeamOutlined />},
                 {label: "Pokecenter", key:'/pokecenter', icon: <MedicineBoxOutlined />},
                 {label: "Profile", key:'/profile', icon: <UserOutlined />},
