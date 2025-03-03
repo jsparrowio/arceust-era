@@ -17,8 +17,7 @@ function Sidebar () {
     const nav = useNavigate()
     return (
         <div style={{ 
-            display: "flex",
-            alignItems: "center", 
+            display: "flex", 
             position: "fixed",
             top: "15px",
             left: "15px"
