@@ -55,7 +55,13 @@ function App() {
           <Header />
 
           {/* Main Content */}
-          <main style={{ padding: "20px" }}>
+          <main
+            style={{
+              marginLeft: sidebarCollapsed ? "80px" : "175px",
+              transition: "margin 0.3s ease-in-out",
+              padding: "15px",
+            }}
+          >
             <Outlet />
           </main>
         </div>

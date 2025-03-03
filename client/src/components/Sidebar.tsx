@@ -1,14 +1,13 @@
 import "../App.css";
 import { Menu } from "antd";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import {
   HomeOutlined,
   CompassOutlined,
   TeamOutlined,
   MedicineBoxOutlined,
   UserOutlined,
-  PoweroffOutlined,
   FilterOutlined,
   SunOutlined,
   WechatOutlined,
@@ -23,15 +22,20 @@ import {
 
 function Sidebar({ onToggle }: { onToggle: (collapsed: boolean) => void }) {
   const nav = useNavigate();
-  const location = useLocation();
-  const [closed, setClosed] = useState(false);
+  const [closed, setClosed] = useState(window.innerWidth <= 768);
 
   const toggleSidebar = () => {
     setClosed(!closed);
     onToggle(!closed);
   };
 
-//   const isSafariSelected = location.pathname.startsWith("/safari-zone");
+  //   const isSafariSelected = location.pathname.startsWith("/safari-zone");
+
+  useEffect(() => {
+    const handleResize = () => setClosed(window.innerWidth <= 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <div
@@ -47,6 +51,7 @@ function Sidebar({ onToggle }: { onToggle: (collapsed: boolean) => void }) {
         flexDirection: "column",
         alignItems: "center",
         overflow: "hidden",
+        zIndex: "1000",
       }}
     >
       {/* Menu Icon for Collapsing the Sidebar */}
@@ -71,11 +76,7 @@ function Sidebar({ onToggle }: { onToggle: (collapsed: boolean) => void }) {
           className="custom-menu"
           inlineCollapsed={closed}
           onClick={({ key }) => {
-            if (key === "signout") {
-              // TODO: sign out feature here
-            } else {
               nav(key);
-            }
           }}
           style={{
             width: "100%",
@@ -87,10 +88,7 @@ function Sidebar({ onToggle }: { onToggle: (collapsed: boolean) => void }) {
           items={
             !closed
               ? [
-                  { label: "Home", 
-                    key: "/", 
-                    icon: <HomeOutlined /> 
-                },
+                  { label: "Home", key: "/", icon: <HomeOutlined /> },
                   {
                     label: "Safari Zone",
                     key: "safari-zone",
@@ -100,7 +98,7 @@ function Sidebar({ onToggle }: { onToggle: (collapsed: boolean) => void }) {
                         label: "Cave",
                         key: "/safari-zone/cave",
                         style: {
-                            backgroundColor: "#682222",
+                          backgroundColor: "#682222",
                         },
                         icon: <FilterOutlined />,
                       },
@@ -108,7 +106,7 @@ function Sidebar({ onToggle }: { onToggle: (collapsed: boolean) => void }) {
                         label: "Beach",
                         key: "/safari-zone/beach",
                         style: {
-                            backgroundColor: "#682222",
+                          backgroundColor: "#682222",
                         },
                         icon: <SunOutlined />,
                       },
@@ -116,36 +114,34 @@ function Sidebar({ onToggle }: { onToggle: (collapsed: boolean) => void }) {
                         label: "Grass",
                         key: "/safari-zone/grass",
                         style: {
-                            backgroundColor: "#682222",
+                          backgroundColor: "#682222",
                         },
                         icon: <WechatOutlined />,
                       },
                     ],
                     // Will apply the parent background only when the user selects the submenu item
-                    // style: isSafariSelected 
-                    //      { 
+                    // style: isSafariSelected
+                    //      {
                     //         backgroundColor: "#682222",
                     //         borderRadius: "8px"
                     //     } : {},
                   },
-                  { label: "Party", 
-                    key: "/party", 
-                    icon: <TeamOutlined /> 
-                },
+                  { label: "Party", key: "/party", icon: <TeamOutlined /> },
                   {
                     label: "Pokecenter",
                     key: "/pokecenter",
-                    icon: <MedicineBoxOutlined />
+                    icon: <MedicineBoxOutlined />,
                   },
                   {
                     label: "Inventory",
                     key: "/bag",
-                    icon: <ShoppingOutlined />
+                    icon: <ShoppingOutlined />,
                   },
-                  { label: "Profile", 
-                    key: "/usersettings", 
-                    icon: <UserOutlined /> 
-                },
+                  {
+                    label: "Profile",
+                    key: "/usersettings",
+                    icon: <UserOutlined />,
+                  },
                 ]
               : []
           }
