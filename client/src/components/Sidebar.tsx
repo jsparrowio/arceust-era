@@ -13,12 +13,17 @@ import {
   SunOutlined,
   WechatOutlined,
   MenuOutlined,
+  ShoppingOutlined,
 } from "@ant-design/icons";
 
-function Sidebar() {
+function Sidebar({ onToggle }: { onToggle: (collapsed: boolean) => void }) {
   const nav = useNavigate();
   const [closed, setClosed] = useState(false);
 
+  const toggleSidebar = () => {
+    setClosed(!closed);
+    onToggle(!closed);
+  };
   return (
     <div
       style={{
@@ -37,7 +42,7 @@ function Sidebar() {
     >
       {/* Menu Icon for Collapsing the Sidebar */}
       <MenuOutlined
-        onClick={() => setClosed(!closed)}
+        onClick={toggleSidebar}
         style={{
           fontSize: "24px",
           color: "#af4848",
@@ -69,45 +74,62 @@ function Sidebar() {
             borderRight: "none",
             backgroundColor: "transparent",
           }}
-          items={[
-            { label: "Home", key: "/", icon: <HomeOutlined /> },
-            {
-              label: "Safari Zone",
-              key: "safari-zone",
-              icon: <CompassOutlined />,
-              children: [
-                {
-                  label: "Cave",
-                  key: "/safari-zone/cave",
-                  icon: <FilterOutlined />,
+          items={
+            !closed
+              ? [
+                  { label: "Home", 
+                    key: "/", 
+                    icon: <HomeOutlined /> 
                 },
-                {
-                  label: "Beach",
-                  key: "/safari-zone/beach",
-                  icon: <SunOutlined />,
+                  {
+                    label: "Safari Zone",
+                    key: "safari-zone",
+                    icon: <CompassOutlined />,
+                    children: [
+                      {
+                        label: "Cave",
+                        key: "/safari-zone/cave",
+                        icon: <FilterOutlined />,
+                      },
+                      {
+                        label: "Beach",
+                        key: "/safari-zone/beach",
+                        icon: <SunOutlined />,
+                      },
+                      {
+                        label: "Grass",
+                        key: "/safari-zone/grass",
+                        icon: <WechatOutlined />,
+                      },
+                    ],
+                  },
+                  { label: "Party", 
+                    key: "/party", 
+                    icon: <TeamOutlined /> 
                 },
-                {
-                  label: "Grass",
-                  key: "/safari-zone/grass",
-                  icon: <WechatOutlined />,
-                },
-              ],
-            },
-            { label: "Party", key: "/party", icon: <TeamOutlined /> },
-            {
-              label: "Pokecenter",
-              key: "/pokecenter",
-              icon: <MedicineBoxOutlined />,
-            },
-            { label: "Profile", key: "/profile", icon: <UserOutlined /> },
-            {
-              label: "Signout",
-              key: "signout",
-              icon: <PoweroffOutlined />,
-              danger: true,
-            },
-          ]}
-        ></Menu>
+                  {
+                    label: "Pokecenter",
+                    key: "/pokecenter",
+                    icon: <MedicineBoxOutlined />
+                  },
+                  {
+                    label: "Inventory",
+                    key: "/bag",
+                    icon: <ShoppingOutlined />
+                  },
+                  { label: "Profile", 
+                    key: "/usersettings", 
+                    icon: <UserOutlined /> },
+                  {
+                    label: "Signout",
+                    key: "signout",
+                    icon: <PoweroffOutlined />,
+                    danger: true,
+                  },
+                ]
+              : []
+          }
+        />
       )}
     </div>
   );
