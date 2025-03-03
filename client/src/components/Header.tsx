@@ -5,6 +5,7 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import { Button } from "antd";
 import { useQuery } from "@apollo/client";
 import { QUERY_ME } from "../utils/queries";
+import Sidebar from "./Sidebar";
 
 export const Header: React.FC = () => {
   const { loading, data, refetch } = useQuery(QUERY_ME);
@@ -17,7 +18,9 @@ export const Header: React.FC = () => {
 
   useEffect(() => {
     refetch();
-  }, [])
+  }, []);
+  // }, [refetch]);
+  // in case this causes issues with Render
 
   useLayoutEffect(() => {
     setReload(true);
@@ -34,47 +37,110 @@ export const Header: React.FC = () => {
   const logout = () => {
     Auth.logout();
     setIsLoggedIn(false);
-    navigate('/login');
-  }
+    navigate("/login");
+  };
 
   return (
-    <header className='headerdiv'>
-      <h1 className='header'>Arceust Era</h1>
-      {isLoggedIn && loading === false && reload === false ? (
-        <div className="user">
-          <h2>Welcome,<Link className='link' to="/usersettings">{activeUser.first_name}</Link>!</h2>
-          <Button
-            key='logout'
-            variant="solid"
-            color="default"
-            onClick={() => logout()}
-          >
-            Logout
-          </Button>
-        </div>
-      ) : (
-        <Link to="/login">
-          <Button
-            key='login'
-            variant="solid"
-            color="default"
-          >Login</Button>
-        </Link>
+    // SideBar Format
+    <>
+      {isLoggedIn && (
+        <Sidebar onToggle={(collapsed) => console.log("Sidebar toggled:", collapsed)} />
       )}
-      <nav className='nav-bar'>
-        <Link className='link' to="/">Home</Link>
-        {isLoggedIn && (
-          <>
-            <Link className='link' to="/cave">Cave</Link>
-            <Link className='link' to="/beach">Beach</Link>
-            <Link className='link' to="/grass">Forest</Link>
-            <Link className='link' to="/party">Party</Link>
-            <Link className='link' to="/pokecenter">Pokecenter</Link>
-            <Link className='link' to="/bag">Bag</Link>
-          </>
-        ) 
-      }
-      </nav>
-    </header>
+
+      <header
+        className="headerdiv"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "10px",
+          flexWrap: "wrap",
+        }}
+      >
+        {/* Main Header Content */}
+        <div
+          style={{
+            flexGrow: 1,
+            paddingLeft: "20px",
+          }}
+        >
+          <h1
+            className="header"
+            style={{
+              fontSize: "1.8rem",
+              flexGrow: 1,
+            }}
+          >
+            Arceust Era
+          </h1>
+
+          {/* Login Validation */}
+          {isLoggedIn && loading === false && reload === false ? (
+            <div
+              className="user"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+              }}
+            >
+              <h2
+                style={{
+                  fontSize: "1rem",
+                }}
+              >
+                Welcome,
+                <Link className="link" to="/usersettings">
+                  {activeUser.first_name}
+                </Link>
+                !
+              </h2>
+              <Button
+                key="logout"
+                variant="solid"
+                color="default"
+                onClick={() => logout()}
+              >
+                Logout
+              </Button>
+            </div>
+          ) : (
+            <Link to="/login">
+              <Button key="login" variant="solid" color="default">
+                Login
+              </Button>
+            </Link>
+          )}
+          {/* Navigation Links */}
+          <nav className="nav-bar">
+            <Link className="link" to="/">
+              Home
+            </Link>
+            {isLoggedIn && (
+              <>
+                <Link className="link" to="/safari-zone/cave">
+                  Cave
+                </Link>
+                <Link className="link" to="/safari-zone/beach">
+                  Beach
+                </Link>
+                <Link className="link" to="/safari-zone/grass">
+                  Grass
+                </Link>
+                <Link className="link" to="/party">
+                  Party
+                </Link>
+                <Link className="link" to="/pokecenter">
+                  Pokecenter
+                </Link>
+                <Link className="link" to="/bag">
+                  Bag
+                </Link>
+              </>
+            )}
+          </nav>
+        </div>
+      </header>
+    </>
   );
-} 
+};
