@@ -4,3 +4,25 @@
   padding: 2rem;
   text-align: center;
 }
+
+.custom-menu {
+  background-color: #682222 !important; /* Custom background color */
+  color: #000000 !important; /* Text color */
+  width: 175px; /* Adjust width if needed */
+}
+
+/* Menu Item Hover */
+.custom-menu .ant-menu-item:hover {
+  background-color: #ee7410 !important;
+}
+
+/* Active Item */
+.custom-menu .ant-menu-item-selected {
+  background-color: #af4848 !important;
+  color: #ffcc00 !important;
+}
+
+/* Icon Color */
+.custom-menu .ant-menu-item .anticon {
+  color: #130403 !important; /* Example: Yellow Icons */
+}

@@ -24,6 +24,8 @@ function Sidebar () {
             }}
             >
             <Menu
+            mode='vertical'
+            className='custom-menu'
             onClick={({key}) => {
                 if (key === "signout") {
                     // TODO: sign out feature here
@@ -31,6 +33,7 @@ function Sidebar () {
                     nav(key);
                 }
             }}
+            style={{ width: "175px", textAlign: "left"}}
             items={[
                 {label: "Home", key:'/', icon: <HomeOutlined />},
                 {label: "Safari Zone", 
