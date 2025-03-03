@@ -9,6 +9,7 @@
   background-color: #682222 !important; /* Custom background color */
   color: #000000 !important; /* Text color */
   width: 175px; /* Adjust width if needed */
+  height: 100vh
 }
 
 /* Menu Item Hover */
