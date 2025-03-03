@@ -8,8 +8,7 @@
 .custom-menu {
   background-color: #682222 !important; /* Custom background color */
   color: #000000 !important; /* Text color */
-  width: 175px; /* Adjust width if needed */
-  height: 100vh
+  width: 100%; /* Adjust width if needed */
 }
 
 /* Menu Item Hover */
