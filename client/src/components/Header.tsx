@@ -41,7 +41,9 @@ export const Header: React.FC = () => {
   return (
     // SideBar Format
     <>
-      {isLoggedIn && <Sidebar />}
+      {isLoggedIn && <Sidebar onToggle={function (collapsed: boolean): void {
+        throw new Error("Function not implemented.");
+      } } />}
     <header
       className="headerdiv"
       style={{

@@ -1,6 +1,6 @@
 import "../App.css";
 import { Menu } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import {
   HomeOutlined,
@@ -16,14 +16,23 @@ import {
   ShoppingOutlined,
 } from "@ant-design/icons";
 
+// interface SidebarProps {
+//     onToggle: (collapsed: boolean) => void;
+//     onLogout: () => void;
+// }
+
 function Sidebar({ onToggle }: { onToggle: (collapsed: boolean) => void }) {
   const nav = useNavigate();
+  const location = useLocation();
   const [closed, setClosed] = useState(false);
 
   const toggleSidebar = () => {
     setClosed(!closed);
     onToggle(!closed);
   };
+
+//   const isSafariSelected = location.pathname.startsWith("/safari-zone");
+
   return (
     <div
       style={{
@@ -54,6 +63,7 @@ function Sidebar({ onToggle }: { onToggle: (collapsed: boolean) => void }) {
           textAlign: "center",
         }}
       />
+
       {/* Sidebar Main, hide when collapsed */}
       {!closed && (
         <Menu
@@ -89,19 +99,34 @@ function Sidebar({ onToggle }: { onToggle: (collapsed: boolean) => void }) {
                       {
                         label: "Cave",
                         key: "/safari-zone/cave",
+                        style: {
+                            backgroundColor: "#682222",
+                        },
                         icon: <FilterOutlined />,
                       },
                       {
                         label: "Beach",
                         key: "/safari-zone/beach",
+                        style: {
+                            backgroundColor: "#682222",
+                        },
                         icon: <SunOutlined />,
                       },
                       {
                         label: "Grass",
                         key: "/safari-zone/grass",
+                        style: {
+                            backgroundColor: "#682222",
+                        },
                         icon: <WechatOutlined />,
                       },
                     ],
+                    // Will apply the parent background only when the user selects the submenu item
+                    // style: isSafariSelected 
+                    //      { 
+                    //         backgroundColor: "#682222",
+                    //         borderRadius: "8px"
+                    //     } : {},
                   },
                   { label: "Party", 
                     key: "/party", 
@@ -119,13 +144,8 @@ function Sidebar({ onToggle }: { onToggle: (collapsed: boolean) => void }) {
                   },
                   { label: "Profile", 
                     key: "/usersettings", 
-                    icon: <UserOutlined /> },
-                  {
-                    label: "Signout",
-                    key: "signout",
-                    icon: <PoweroffOutlined />,
-                    danger: true,
-                  },
+                    icon: <UserOutlined /> 
+                },
                 ]
               : []
           }
