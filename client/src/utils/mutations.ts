@@ -71,6 +71,24 @@ mutation ResetTeam($id: ID!) {
   }
 }
 `
+export const ADD_TO_TEAM = gql`
+  mutation AddToTeam($_id: ID!) {
+    addToTeam(_id: $_id) {
+      team {
+        _id
+        name
+        front_sprite
+        back_sprite
+      }
+      box {
+        _id
+        name
+        front_sprite
+        back_sprite
+      }
+    }
+  }
+`;
 
 export const RESET_INVENTORY = gql`
 mutation ResetInventory($id: ID!) {
@@ -110,3 +128,20 @@ mutation ReleasePokemon($id: ID!) {
   }
 }
 `
+//ANCHOR - MARKER UP
+export const UPDATE_TEAM = gql`
+mutation UpdateTeam($id: ID!) {
+  updateTeam(_id: $id) {
+    teamCount
+  }
+}
+`
+
+export const REMOVE_FROM_TEAM = gql`
+mutation RemoveFromTeam($id: ID!) {
+  removeFromTeam(_id: $id) {
+    teamCount
+  }
+}
+`
+
