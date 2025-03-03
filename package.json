@@ -18,6 +18,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@ant-design/icons": "^5.6.1",
     "concurrently": "^8.2.2"
   },
   "devDependencies": {
