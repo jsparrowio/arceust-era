@@ -7,8 +7,6 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import { Outlet } from "react-router-dom";
 import { Header } from "./components/Header";
-import Sidebar from "./components/Sidebar";
-import { useState } from "react";
 // import auth from "./utils/auth";
 
 const httpLink = createHttpLink({
@@ -31,7 +29,7 @@ const client = new ApolloClient({
 });
 
 function App() {
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  
   // const isLoggedIn = auth.loggedIn();
   return (
     <ApolloProvider client={client}>
@@ -43,7 +41,7 @@ function App() {
       >
         {/* Sidebar Component, supposed to hide if the user is not logged in */}
         {/* {isLoggedIn && <Sidebar onToggle={setSidebarCollapsed} />} */}
-        <Sidebar onToggle={setSidebarCollapsed} />
+       
 
         <div
           style={{
@@ -52,7 +50,6 @@ function App() {
             flexDirection: "column",
             alignItems: "center",
             transition: "margin-left 0.3s ease-in-out",
-            paddingLeft: sidebarCollapsed ? "0px" : "80px",
           }}
         >
           {/* Header Component */}

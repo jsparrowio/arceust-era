@@ -1,7 +1,7 @@
 import "../App.css";
 import { Menu } from "antd";
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useLayoutEffect, useState } from "react";
 import {
   HomeOutlined,
   CompassOutlined,
@@ -14,6 +14,9 @@ import {
   MenuOutlined,
   ShoppingOutlined,
 } from "@ant-design/icons";
+import { useQuery } from "@apollo/client";
+import { QUERY_ME } from "../utils/queries";
+import Auth from "../utils/auth";
 
 // interface SidebarProps {
 //     onToggle: (collapsed: boolean) => void;
@@ -21,8 +24,34 @@ import {
 // }
 
 function Sidebar({ onToggle }: { onToggle: (collapsed: boolean) => void }) {
+    const { loading, refetch } = useQuery(QUERY_ME);
+    const location = useLocation();
+    const [_sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+    const [reload, setReload] = useState<boolean>(true);
+  
+     <Sidebar onToggle={setSidebarCollapsed} />
+  
+    useEffect(() => {
+      refetch();
+    }, []);
+    // }, [refetch]);
+    // in case this causes issues with Render
+  
+    useLayoutEffect(() => {
+      setReload(true);
+      refetch();
+      const loggedIn = Auth.loggedIn();
+      if (loggedIn === true) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+      setReload(false);
+    }, [location]);
   const nav = useNavigate();
-  const [closed, setClosed] = useState(window.innerWidth <= 768);
+  const [closed, setClosed] = useState(true);
 
   const toggleSidebar = () => {
     setClosed(!closed);
@@ -40,7 +69,6 @@ function Sidebar({ onToggle }: { onToggle: (collapsed: boolean) => void }) {
   return (
     <div
       style={{
-        position: "fixed",
         top: "15px",
         left: "15px",
         height: "calc(100vh -30px)",
@@ -52,6 +80,7 @@ function Sidebar({ onToggle }: { onToggle: (collapsed: boolean) => void }) {
         alignItems: "center",
         overflow: "hidden",
         zIndex: "1000",
+        position: "absolute"
       }}
     >
       {/* Menu Icon for Collapsing the Sidebar */}
@@ -86,8 +115,7 @@ function Sidebar({ onToggle }: { onToggle: (collapsed: boolean) => void }) {
             backgroundColor: "transparent",
           }}
           items={
-            !closed
-              ? [
+            isLoggedIn && loading === false && reload === false ? [
                   { label: "Home", key: "/", icon: <HomeOutlined /> },
                   {
                     label: "Safari Zone",
@@ -143,7 +171,10 @@ function Sidebar({ onToggle }: { onToggle: (collapsed: boolean) => void }) {
                     icon: <UserOutlined />,
                   },
                 ]
-              : []
+              : [ 
+                { label: "Home", key: "/", icon: <HomeOutlined /> }, 
+              ]
+            
           }
         />
       )}

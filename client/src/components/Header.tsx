@@ -12,9 +12,12 @@ export const Header: React.FC = () => {
   const activeUser = data?.Me || {};
   const navigate = useNavigate();
   const location = useLocation();
+  const [_sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [reload, setReload] = useState<boolean>(true);
+
+  <Sidebar onToggle={setSidebarCollapsed} />
 
   useEffect(() => {
     refetch();
@@ -111,8 +114,15 @@ export const Header: React.FC = () => {
               </Button>
             </Link>
           )}
+          {!isLoggedIn && (
+            <nav className="nav-bar">
+              <Link className="link" to="/">
+                Home
+              </Link>
+            </nav>
+          )}
           {/* Navigation Links */}
-          <nav className="nav-bar">
+          {/* <nav className="nav-bar">
             <Link className="link" to="/">
               Home
             </Link>
@@ -138,7 +148,7 @@ export const Header: React.FC = () => {
                 </Link>
               </>
             )}
-          </nav>
+          </nav> */}
         </div>
       </header>
     </>
