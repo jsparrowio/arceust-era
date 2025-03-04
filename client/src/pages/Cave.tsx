@@ -12,25 +12,25 @@ import { useLocation, useNavigate } from "react-router-dom"
 // Function found at https://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript
 function toTitleCase(str: string) {
     return str.replace(
-      /\w\S*/g,
-      text => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()
+        /\w\S*/g,
+        text => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()
     );
-  }
+}
 
 export const Cave = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const [loggedIn, setLoggedIn] = useState<boolean>(false);
-      useEffect(() => {
+    useEffect(() => {
         const loggedIn = Auth.loggedIn();
         if (loggedIn === true) {
-          setLoggedIn(true);
+            setLoggedIn(true);
         } else {
-          setLoggedIn(false);
-          Auth.logout();
-          navigate('/login');
+            setLoggedIn(false);
+            Auth.logout();
+            navigate('/login');
         }
-      }, [location]);
+    }, [location]);
 
 
     const [catchPkmn, { error }] = useMutation(CATCH_POKEMON)
@@ -76,7 +76,7 @@ export const Cave = () => {
     const [poke, setPoke] = useState<Record<string, any>>({})
     const [item, setItem] = useState<Record<string, any>>({})
     const [narration, setNarration] = useState<string>('')
-    const [narration2, setNarration2] = useState<string>('')
+    // const [narration2, setNarration2] = useState<string>('')
     const [isShiny, setShiny] = useState<boolean>(false)
     // const [num, setNum] = useState<number>()
     const [clicked, setClicked] = useState<boolean>(false)
@@ -188,63 +188,63 @@ export const Cave = () => {
     }
     return (
         <>
-        { loggedIn && 
-            <div>
-            {!clicked && <h1 className='narration'>You enter the cave.</h1>}
-            {clicked && <h1 className='narration'>{narration}</h1>}
-            {clicked && <h1>{narration2}</h1>}
+            {loggedIn &&
+                <div>
+                    {!clicked && <h1 className='narration'>You enter the cave.</h1>}
+                    {clicked && <h1 className='narration'>{narration}</h1>}
+                    {/* {clicked && <h1>{narration2}</h1>} */}
 
-            <div className="biomediv">
-                <img className="biomeimg" src='https://archives.bulbagarden.net/media/upload/7/7e/HGSS_Cerulean_Cave-Morning.png' />
-                {!loading && poke && !isShiny && <img className='wildpokeimg' src={poke?.sprites?.front_default} alt={poke.name} />}
-                {!loading && poke && isShiny && <img className='wildpokeimg' src={poke?.sprites?.front_shiny} alt={poke.name} />}
-                {/* {!loading && data.Me && <img className='mypokemon' src={data.Me.team[0].back_sprite} />} */}
-                {!loading && data.Me && <img className='mypokemon' src={data?.Me?.team[0]?.back_sprite} />}
-                {!loading && item && <img className='itemimg' src={item?.sprites?.default} alt={item.name} />}
-                <div className="acnbtndiv">
-                    <div className='priacndiv'>
-                        <button className='acnbtn' onClick={() => {
-                            roll()
-                            // let newNarration = ""
-                            // if (num === 1) {
-                            //     newNarration = `A wild ${poke.name} appeared!`
-                            // } else if (num === 2) {
-                            //     newNarration = `You found a(n) ${item.name}`
-                            // } else if (num === 3) {
-                            //     newNarration = "Nothing appeared..."
-                            // }
-                            // setNarration(newNarration)
-                            setNarration2('')
-                        }
-                        }>Continue!</button>
-                    </div>
-                    <div className='secacndiv'>
-                        {clicked && poke.name && <button className='acnbtn' onClick={() => {
-                            handleCatchPokemon()
-                            setNarration2('')
-                        }}>Catch it!</button>}
-                        {clicked && item.name && <button className='acnbtn' onClick={() => {
-                            grabItem()
-                            setNarration2('')
-                        }}
-                        >Pick up!</button>}
+                    <div className="biomediv">
+                        <img className="biomeimg" src='https://archives.bulbagarden.net/media/upload/7/7e/HGSS_Cerulean_Cave-Morning.png' />
+                        {!loading && poke && !isShiny && <img className='wildpokeimg' src={poke?.sprites?.front_default} alt={poke.name} />}
+                        {!loading && poke && isShiny && <img className='wildpokeimg' src={poke?.sprites?.front_shiny} alt={poke.name} />}
+                        {/* {!loading && data.Me && <img className='mypokemon' src={data.Me.team[0].back_sprite} />} */}
+                        {!loading && data.Me && <img className='mypokemon' src={data?.Me?.team[0]?.back_sprite} />}
+                        {!loading && item && <img className='itemimg' src={item?.sprites?.default} alt={item.name} />}
+                        <div className="acnbtndiv">
+                            <div className='priacndiv'>
+                                <button className='acnbtn' onClick={() => {
+                                    roll()
+                                    // let newNarration = ""
+                                    // if (num === 1) {
+                                    //     newNarration = `A wild ${poke.name} appeared!`
+                                    // } else if (num === 2) {
+                                    //     newNarration = `You found a(n) ${item.name}`
+                                    // } else if (num === 3) {
+                                    //     newNarration = "Nothing appeared..."
+                                    // }
+                                    // setNarration(newNarration)
+                                    // setNarration2('')
+                                }
+                                }>Continue!</button>
+                            </div>
+                            <div className='secacndiv'>
+                                {clicked && poke.name && <button className='acnbtn' onClick={() => {
+                                    handleCatchPokemon()
+                                    // setNarration2('')
+                                }}>Catch it!</button>}
+                                {clicked && item.name && <button className='acnbtn' onClick={() => {
+                                    grabItem()
+                                    // setNarration2('')
+                                }}
+                                >Pick up!</button>}
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div> 
-    }
-    {!loggedIn &&
-        <div style={{ 'display': 'flex', 'justifyContent': 'center', 'alignItems': 'center', 'margin': '3rem' }}>
-            <Card variant={"outlined"} style={{ width: 300 }}>
-                <p>
-                    You must be logged in to view this page!
-                    <br />
-                    Redirecting...
-                </p>
-            </Card>
-        </div>
-    }   
-</>
-)
+            }
+            {!loggedIn &&
+                <div style={{ 'display': 'flex', 'justifyContent': 'center', 'alignItems': 'center', 'margin': '3rem' }}>
+                    <Card variant={"outlined"} style={{ width: 300 }}>
+                        <p>
+                            You must be logged in to view this page!
+                            <br />
+                            Redirecting...
+                        </p>
+                    </Card>
+                </div>
+            }
+        </>
+    )
 
 }
