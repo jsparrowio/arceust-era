@@ -14,7 +14,7 @@ export const Bag = () => {
             </div>
             <div className='biomediv'>
                 <div className='bagdiv'>
-                    {!loading && data.Me.inventory.map((item: any) =>
+                    {!loading && data?.Me?.inventory?.map((item: any) =>
                         <div className='item'>
                             <img src={item.sprite} />
                             <p>{item.name}</p>
