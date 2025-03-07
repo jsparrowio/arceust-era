@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
+import { ToastContainer, toast, Slide } from 'react-toastify';
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_ME } from "../utils/queries";
 import { UPDATE_TEAM } from "../utils/mutations";
+import Auth from "../utils/auth";
+import { useLocation, useNavigate } from "react-router-dom"
+import { Card } from "antd";
 import "../styles/Party.css";
 
 interface IPokemon {
@@ -12,20 +16,56 @@ interface IPokemon {
   back_sprite: string;
 }
 
+const showError = (err: string) => {
+  toast.dismiss();
+  toast.error(`${err}`,
+    {
+      transition: Slide,
+    });
+}
+
+// const showWarn = (err: string) => {
+//   toast.dismiss();
+//   toast.warn(`${err}`,
+//       {
+//           transition: Slide,
+//       });
+// }
+
+const showSuccess = (msg: string) => {
+  toast.dismiss();
+  toast.success(`${msg}`,
+    {
+      transition: Slide,
+    });
+}
+
 export const Party = () => {
   const { data } = useQuery(QUERY_ME);
   const [updateTeam] = useMutation(UPDATE_TEAM);
   const [selectedPokemon, setSelectedPokemon] = useState<string | null>(null);
   const [team, setTeam] = useState<IPokemon[]>([]);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+
+  useEffect(() => {
+    const loggedIn = Auth.loggedIn();
+    if (loggedIn === true) {
+      setLoggedIn(true);
+    } else {
+      setLoggedIn(false);
+      Auth.logout();
+      navigate('/login');
+    }
+  }, [location]);
+
 
   useEffect(() => {
     if (data?.Me?.team) {
       setTeam(data.Me.team);
     }
   }, [data]);
-
-  // console.log("team");
-  // console.log(team);
 
   const movePokemon = (direction: string) => {
     if (selectedPokemon !== null) {
@@ -59,8 +99,10 @@ export const Party = () => {
     try {
       await updateTeam({ variables: { id: team[0]._id } });
       console.log("Team updated successfully!");
+      showSuccess("Your team was updated successfully!");
     } catch (error) {
       console.error("Error updating team:", error);
+      showError("There was an error updating your team... please contact the site administrator")
     }
   };
 
@@ -74,78 +116,65 @@ export const Party = () => {
   };
 
   return (
-    <div>
-      <div>
-        <h1>My Team</h1>
-        <div id="team-row1">
-          {team.slice(0, 3).map((pokemon, index) => (
-            <span
-              key={pokemon._id}
-              id={`team-spot${index + 1}`}
-              onClick={() => setSelectedPokemon(pokemon._id)}
-              className={selectedPokemon === pokemon._id ? "selected" : ""}
-            >
-              <img src={pokemon.front_sprite} alt={pokemon.name} />
-            </span>
-          ))}
+    <>
+      {loggedIn &&
+        <div>
+          <ToastContainer position="top-center" />
+          <div className="team">
+            <h1>My Team</h1>
+            <div id="team-row1">
+              {team.slice(0, 3).map((pokemon, index) => (
+                <div
+                  key={pokemon._id}
+                  id={`team-spot${index + 1}`}
+                  onClick={() => setSelectedPokemon(pokemon._id)}
+                  className={selectedPokemon === pokemon._id ? "team-selected party-member" : "party-member"}
+                >
+                  <img src={pokemon.front_sprite} alt={pokemon.name} />
+                </div>
+              ))}
+            </div>
+            <div id="team-row2">
+              {team.slice(3, 6).map((pokemon, index) => (
+                <div
+                  key={pokemon._id}
+                  id={`team-spot${index + 4}`}
+                  onClick={() => setSelectedPokemon(pokemon._id)}
+                  className={selectedPokemon === pokemon._id ? "team-selected party-member" : "party-member"}
+                >
+                  <img src={pokemon.front_sprite} alt={pokemon.name} />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="team-controls">
+            <button onClick={() => movePokemon("up")}>↑</button>
+            <button onClick={() => movePokemon("left")}>←</button>
+            <button onClick={() => movePokemon("down")}>↓</button>
+            <button onClick={() => movePokemon("right")}>→</button>
+          </div>
+
+          <div className="update-team">
+            <button onClick={handleUpdateTeam}>Save Team</button>
+          </div>
+
+          <div className="reset-team">
+            <button onClick={handleResetTeam}>Reset Team</button>
+          </div>
         </div>
-        <div id="team-row2">
-          {team.slice(3, 6).map((pokemon, index) => (
-            <span
-              key={pokemon._id}
-              id={`team-spot${index + 4}`}
-              onClick={() => setSelectedPokemon(pokemon._id)}
-              className={selectedPokemon === pokemon._id ? "selected" : ""}
-            >
-              <img src={pokemon.front_sprite} alt={pokemon.name} />
-            </span>
-          ))}
+      }
+      {!loggedIn &&
+        <div style={{ 'display': 'flex', 'justifyContent': 'center', 'alignItems': 'center', 'margin': '3rem' }}>
+          <Card variant={"outlined"} style={{ width: 300 }}>
+            <p>
+              You must be logged in to view this page!
+              <br />
+              Redirecting...
+            </p>
+          </Card>
         </div>
-      </div>
-
-      <div className="team-controls">
-        <button onClick={() => movePokemon("up")}>↑</button>
-        <button onClick={() => movePokemon("left")}>←</button>
-        <button onClick={() => movePokemon("down")}>↓</button>
-        <button onClick={() => movePokemon("right")}>→</button>
-      </div>
-
-      <div className="update-team">
-        <button onClick={handleUpdateTeam}>Save Team</button>
-      </div>
-
-      <div className="reset-team">
-        <button onClick={handleResetTeam}>Reset Team</button>
-      </div>
-    </div>
-
-    //   <div className="header">
-
-    //     <div>
-    //       <h2>My Team</h2>
-
-    //       <div id="team-row1">
-    //         {team.map(
-    //           (
-    //             pokemon
-    //             // index: number
-    //           ) => (
-    //             <span
-    //               key={pokemon._id}
-    //               id={`team-spot${pokemon._id + 1}`}
-    //               onClick={() => setSelectedPokemon(pokemon._id)}
-    //               className={selectedPokemon === pokemon._id ? "selected" : ""}
-    //             >
-    //               <img
-    //                 // src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/493.png"
-    //                 src={pokemon.front_sprite} alt={pokemon.name}
-    //                 onClick={() => handleAddToTeam(pokemon.pokemonId)}
-    //               />
-    //             </span>
-    //           )
-    //         )}
-    //       </div>
-    //     </div>
-    //   </div>
+      }
+    </>
   );
 };

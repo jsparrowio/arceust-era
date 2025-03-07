@@ -25,7 +25,7 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />
-      }, 
+      },
       {
         path: '/safari-zone/cave',
         element: <Cave />
@@ -63,6 +63,6 @@ const router = createBrowserRouter([
 ]);
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <RouterProvider router={router}/>
+    <RouterProvider router={router} />
   </StrictMode>,
 )

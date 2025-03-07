@@ -1,4 +1,3 @@
-// import { getPokemon } from "../api/PokeAPI"
 import { useEffect } from "react"
 import { useState } from "react"
 import { useQuery } from "@apollo/client"
@@ -9,28 +8,29 @@ import Auth from "../utils/auth";
 import '../assets/biome.css'
 import { useLocation, useNavigate } from "react-router-dom"
 import { Card } from "antd"
+import grassimg from "../assets/grass.png";
 
 // Function found at https://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript
 function toTitleCase(str: string) {
     return str.replace(
-      /\w\S*/g,
-      text => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()
+        /\w\S*/g,
+        text => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()
     );
-  }
+}
 export const Grassland = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const [loggedIn, setLoggedIn] = useState<boolean>(false);
-      useEffect(() => {
+    useEffect(() => {
         const loggedIn = Auth.loggedIn();
         if (loggedIn === true) {
-          setLoggedIn(true);
+            setLoggedIn(true);
         } else {
-          setLoggedIn(false);
-          Auth.logout();
-          navigate('/login');
+            setLoggedIn(false);
+            Auth.logout();
+            navigate('/login');
         }
-      }, [location]);
+    }, [location]);
 
     const [catchPkmn, { error }] = useMutation(CATCH_POKEMON)
     const [saveItem, states] = useMutation(SAVE_ITEM)
@@ -42,7 +42,8 @@ export const Grassland = () => {
     const itemArr = ["potion", "poke-ball", "silver-powder", "miracle-seed", "big-root"]
     const getPokemon = async () => {
         try {
-            const randomPokemon = pokeArr[Math.floor(Math.random() * pokeArr.length)]
+            const randomPokemonChoice = pokeArr[Math.floor(Math.random() * pokeArr.length)];
+            const randomPokemon = randomPokemonChoice.toLowerCase();
             const encounter = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomPokemon}`)
             const response = encounter.json()
             console.log(response)
@@ -64,19 +65,11 @@ export const Grassland = () => {
         }
     }
 
-    // const rollThree = () => {
-    //     const chances = [1, 2, 3]
-    //     const randomNum = chances[Math.floor(Math.random() * chances.length)]
-    //     setRoll(randomNum)
-
-    // }
     const [loading, setloading] = useState(true)
     const [poke, setPoke] = useState<Record<string, any>>({})
     const [isShiny, setShiny] = useState<boolean>(false)
     const [item, setItem] = useState<Record<string, any>>({})
     const [narration, setNarration] = useState<string>('')
-    // const [narration2, setNarration2] = useState<string>('')
-    // const [num, setNum] = useState<number>()
     const [clicked, setClicked] = useState<boolean>(false)
 
 
@@ -94,7 +87,6 @@ export const Grassland = () => {
         setClicked(true)
         const chances = [1, 2, 3]
         const randomNum = chances[Math.floor(Math.random() * chances.length)]
-        // setNum(randomNum)
         console.log(randomNum)
         if (randomNum === 1) {
             setloading(true)
@@ -113,14 +105,11 @@ export const Grassland = () => {
         } else if (randomNum === 2) {
             getItem().then((item) => { setItem(item); console.log(item); setNarration(`You found a(n) ${toTitleCase(item.name)}!`) })
             setPoke({})
-            // setNarration(`You found a(n) ${item.name}`)
         } else if (randomNum === 3) {
             setPoke({})
             setItem({})
             setNarration("Nothing appeared...")
         }
-        //also get random item
-
 
         //also get random item
         setloading(false)
@@ -165,7 +154,6 @@ export const Grassland = () => {
     const grabItem = async () => {
         setNarration(`You picked up the ${toTitleCase(item.name)}.`)
         setItem({})
-        // TODO: Set up graphql mutations to handle adding items to inventory
         try {
             const itemInfo = {
                 name: item.name,
@@ -186,57 +174,47 @@ export const Grassland = () => {
     }
     return (
         <>
-        { loggedIn && 
-        <div>
-            {!clicked && <h1>You enter the forest.</h1>}
-            {clicked && <h1>{narration}</h1>}
-            {/* {clicked && <h1>{narration2}</h1>} */}
-            <div className="biomediv">
-                <img className="biomeimg" src='https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/fb8431de-9631-4ad2-b8fc-667b063d7471/d6dkaxe-15a2de20-5e6a-4284-bf8d-cffd2827ee75.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2ZiODQzMWRlLTk2MzEtNGFkMi1iOGZjLTY2N2IwNjNkNzQ3MVwvZDZka2F4ZS0xNWEyZGUyMC01ZTZhLTQyODQtYmY4ZC1jZmZkMjgyN2VlNzUucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.6T6EQtyjY2BSdMFQyAjdplBJVn_VMBrV2nX8vlpVqnM' />
-                {!loading && poke && !isShiny && <img className='wildpokeimg' src={poke?.sprites?.front_default} alt={poke.name} />}
-                {!loading && poke && isShiny && <img className='wildpokeimg' src={poke?.sprites?.front_shiny} alt={poke.name} />}
-                {!loading && data?.Me && <img className='mypokemon' src={data?.Me?.team[0]?.back_sprite} />}
-                {!loading && item && <img className='itemimg' src={item?.sprites?.default} alt={item.name} />}
-                <div className="acnbtndiv">
-                    <div className='priacndiv'>
-                        <button className='acnbtn' onClick={() => {
-                            roll()
-                            // let newNarration = ""
-                            // if (num === 1) {
-                            //     newNarration = `A wild ${poke.name} appeared!`
-                            // } else if (num === 2) {
-                            //     newNarration = `You found a(n) ${item.name}`
-                            // } else if (num === 3) {
-                            //     newNarration = "Nothing appeared..."
-                            // }
-                            // setNarration(newNarration)
-                        }
-                        }>Continue!</button>
-                    </div>
-                    <div className='secacndiv'>
-                        {clicked && poke.name && <button className='acnbtn' onClick={() => {
-                            handleCatchPokemon()
-                        }}>Catch it!</button>}
-                        {clicked && item.name && <button className='acnbtn' onClick={() => {
-                            grabItem()
-                        }}
-                        >Pick up!</button>}
+            {loggedIn &&
+                <div>
+                    {!clicked && <h1>You enter the forest.</h1>}
+                    {clicked && <h1>{narration}</h1>}
+                    <div className="biomediv">
+                        <img className="biomeimg" src={grassimg} alt="grassland" />
+                        {!loading && poke && !isShiny && <img className='wildpokeimg' src={poke?.sprites?.front_default} alt={poke.name} />}
+                        {!loading && poke && isShiny && <img className='wildpokeimg' src={poke?.sprites?.front_shiny} alt={poke.name} />}
+                        {!loading && data?.Me && <img className='mypokemon' src={data?.Me?.team[0]?.back_sprite} />}
+                        {!loading && item && <img className='itemimg' src={item?.sprites?.default} alt={item.name} />}
+                        <div className="acnbtndiv">
+                            <div className='priacndiv'>
+                                <button className='acnbtn' onClick={() => {
+                                    roll()
+                                }
+                                }>Continue!</button>
+                            </div>
+                            <div className='secacndiv'>
+                                {clicked && poke.name && <button className='acnbtn' onClick={() => {
+                                    handleCatchPokemon()
+                                }}>Catch it!</button>}
+                                {clicked && item.name && <button className='acnbtn' onClick={() => {
+                                    grabItem()
+                                }}
+                                >Pick up!</button>}
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        }
-        {!loggedIn &&
-            <div style={{ 'display': 'flex', 'justifyContent': 'center', 'alignItems': 'center', 'margin': '3rem' }}>
-                <Card variant={"outlined"} style={{ width: 300 }}>
-                    <p>
-                        You must be logged in to view this page!
-                        <br />
-                        Redirecting...
-                    </p>
-                </Card>
-            </div>
-        }   
-    </>
+            }
+            {!loggedIn &&
+                <div style={{ 'display': 'flex', 'justifyContent': 'center', 'alignItems': 'center', 'margin': '3rem' }}>
+                    <Card variant={"outlined"} style={{ width: 300 }}>
+                        <p>
+                            You must be logged in to view this page!
+                            <br />
+                            Redirecting...
+                        </p>
+                    </Card>
+                </div>
+            }
+        </>
     )
 }
