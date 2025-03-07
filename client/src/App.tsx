@@ -38,13 +38,15 @@ const client = new ApolloClient({
 
 const App: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const [mobile, setMobile] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   useEffect(() => {
-    const handleResize = () => setCollapsed(window.innerWidth <= 768);
+    const handleResize = () => setMobile(window.innerWidth <= 768);
+
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -82,7 +84,7 @@ const App: React.FC = () => {
               defaultHoverBg: "#FFFFFF",
               defaultHoverBorderColor: "#FFFFFF",
               defaultHoverColor: "#000000"
-            }
+            },
           },
           token: {
             colorBgContainer: "#000000",
@@ -91,38 +93,63 @@ const App: React.FC = () => {
         }}
       >
         <Layout style={{ minHeight: '100vh' }} >
-          <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} style={{ background: "black" }} theme="dark">
+          {mobile ? 
+          <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} style={{ background: "black" }} theme="dark" breakpoint="md" collapsedWidth={0} zeroWidthTriggerStyle={{ background: "#682222", marginTop: "1rem"}}>
             <img src={arecuestlogo} alt="Areuest Era" style={{ width: "4rem", height: "4rem", margin: "1rem" }} />
-            <User />
             {isLoggedIn && !collapsed &&
-              <Button
-                key="logout"
-                variant="solid"
-                style={{ marginLeft: "0.5rem" }}
-                onClick={() => logout()}
-              >
-               <LogoutOutlined /> Logout
-              </Button>
-            }
-            {isLoggedIn && collapsed &&
-              <Button
-                key="logout"
-                variant="solid"
-                style={{ marginLeft: "0.5rem" }}
-                onClick={() => logout()}
-              >
-               <LogoutOutlined />
-              </Button>
+              <>
+                <User />
+                <Button
+                  key="logout"
+                  variant="solid"
+                  style={{ marginLeft: "0.5rem" }}
+                  onClick={() => logout()}
+                >
+                  <LogoutOutlined /> Logout
+                </Button>
+              </>
             }
             <NavOptions />
           </Sider>
+          :
+          <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} style={{ background: "black" }} theme="dark">
+          <img src={arecuestlogo} alt="Areuest Era" style={{ width: "4rem", height: "4rem", margin: "1rem" }} />
+          {isLoggedIn && !collapsed &&
+            <>
+              <User />
+              <Button
+                key="logout"
+                variant="solid"
+                style={{ marginLeft: "0.5rem" }}
+                onClick={() => logout()}
+              >
+                <LogoutOutlined /> Logout
+              </Button>
+            </>
+          }
+          {isLoggedIn && collapsed &&
+              <>
+                <User />
+                <Button
+                  key="logout"
+                  variant="solid"
+                  style={{ marginLeft: "0.5rem" }}
+                  onClick={() => logout()}
+                >
+                  <LogoutOutlined />
+                </Button>
+              </>
+            }
+          <NavOptions />
+        </Sider>
+          }
           <Layout>
             <Content style={{ margin: '0' }}>
               <Outlet />
             </Content>
-            <Footer style={{ background: "black", color: "white", textAlign: 'center' }}>
+            <Footer style={{ background: "black", color: "white", textAlign: 'center', padding: 0, paddingBottom: "1rem" }}>
               Arceust Era © 2025 - {new Date().getFullYear()} <br />
-              Created with love by jsparrowio, zlacore, k3strl, and KTek4
+              Created with love by <a href="https://github.com/jsparrowio">jsparrowio</a>, <a href="https://github.com/zlacore">zlacore</a>, <a href="https://github.com/k3strl">k3strl</a>, and <a href="https://github.com/KTek4">KTek4</a>
             </Footer>
           </Layout>
         </Layout>

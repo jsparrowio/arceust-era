@@ -11,5 +11,22 @@
 /* } */
 
 .selected {
-    border: 2px solid blue; /* Or any color and thickness you like */
+    border: 2px solid rgb(255, 255, 255); /* Or any color and thickness you like */
+}
+
+.party-member {
+    height: fit-content;
+    width: fit-content;
+}
+
+.team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#team-row1, #team-row2{
+    display: flex;
+    flex-direction: row;
 }

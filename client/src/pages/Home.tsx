@@ -3,10 +3,10 @@ import arceustlogo from "../assets/arceusteralogotransparent.png"
 
 export const Home = () => {
     return (
-        <div style={{ 'display': 'flex', 'justifyContent': 'center', 'alignItems': 'center', 'margin': '3rem' }}>
+        <div style={{ 'display': 'flex', 'justifyContent': 'center', 'alignItems': 'center', 'margin': '3rem 5rem', }}>
             <Card variant={'outlined'} style={{ width: "50rem" }}>
                 <div>
-                    <img src={arceustlogo} alt="Arceust Era" style={{ height: "20rem", width: "20rem" }} />
+                    <img src={arceustlogo} alt="Arceust Era" style={{ height: "20vw", width: "20vw" }} />
                     <h1>
                         Welcome to the Poké-safari! 
                     </h1>

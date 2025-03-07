@@ -167,11 +167,26 @@ main {
   .acnbtn {
     z-index: 2;
     max-height: 75px; 
+    color: #FFFFFF;
+    margin: 0.25rem;
   }
+
+  .acnbtndiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    justify-content: center;
+    top: 425px;
+    max-height: 80px;
+    max-width: 100px;
+  
+}
 
   .secacndiv {
     z-index: 3
   }
+
   .boxdiv, .bagdiv {
     display: flex;
     position: relative;
@@ -195,4 +210,88 @@ main {
     display: flex;
     flex-direction: row;
     justify-content: center;
+  }
+
+  @media (max-width: 650px)
+  { 
+    h1 {
+      margin-top: 5rem;
+      font-size: 2rem;
+    }
+    .biomeimg {
+      min-width: 85vw;
+      min-height: 70vw;
+      max-width: 85vw;
+      max-height: 70vw;
+    }
+
+    .biomediv {
+      min-width: 85vw;
+      min-height: 70vw;
+      max-width: 85vw;
+      max-height: 70vw;
+    }
+
+    .mypokemon {
+      bottom: 5px;
+      top: 150px;
+      left: 20px;
+      width: 150px;
+    }
+
+    .itemimg {
+      bottom: 40px;
+      left: 170px;
+      width: 75px;
+  }
+  
+    .wildpokeimg {
+      bottom: 25px;
+      left: 170px;
+      width: 100px;
+  }
+  }
+
+  @media screen and (max-height: 650px) {
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0;
+    }
+    .biomeimg {
+      max-width: 400px;
+      max-height: 250px;
+      min-width: 400px;
+      min-height: 250px;
+    }
+
+    .biomediv {
+      max-width: 400px;
+      max-height: 250px;
+      min-width: 400px;
+      min-height: 250px;
+    }
+
+    .acnbtndiv {
+      top: 35vw;
+      flex-direction: row;
+    }
+
+    .mypokemon {
+      bottom: 5px;
+      top: 100px;
+      left: 20px;
+      width: 175px;
+    }
+
+    .itemimg {
+      bottom: 40px;
+      left: 225px;
+      width: 80px;
+  }
+  
+    .wildpokeimg {
+      bottom: 25px;
+      left: 200px;
+      width: 120px;
+  }
   }

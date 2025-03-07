@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { ToastContainer, toast, Slide } from 'react-toastify';
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_ME } from "../utils/queries";
 import { UPDATE_TEAM } from "../utils/mutations";
@@ -10,6 +11,30 @@ interface IPokemon {
   name: string;
   front_sprite: string;
   back_sprite: string;
+}
+
+const showError = (err: string) => {
+  toast.dismiss();
+  toast.error(`${err}`,
+      {
+          transition: Slide,
+      });
+}
+
+// const showWarn = (err: string) => {
+//   toast.dismiss();
+//   toast.warn(`${err}`,
+//       {
+//           transition: Slide,
+//       });
+// }
+
+const showSuccess = (msg: string) => {
+  toast.dismiss();
+  toast.success(`${msg}`,
+      {
+          transition: Slide,
+      });
 }
 
 export const Party = () => {
@@ -59,8 +84,10 @@ export const Party = () => {
     try {
       await updateTeam({ variables: { id: team[0]._id } });
       console.log("Team updated successfully!");
+      showSuccess("Your team was updated successfully!");
     } catch (error) {
       console.error("Error updating team:", error);
+      showError("There was an error updating your team... please contact the site administrator")
     }
   };
 
@@ -75,30 +102,31 @@ export const Party = () => {
 
   return (
     <div>
-      <div>
+      <ToastContainer position="top-center" />
+      <div className="team">
         <h1>My Team</h1>
         <div id="team-row1">
           {team.slice(0, 3).map((pokemon, index) => (
-            <span
+            <div
               key={pokemon._id}
               id={`team-spot${index + 1}`}
               onClick={() => setSelectedPokemon(pokemon._id)}
-              className={selectedPokemon === pokemon._id ? "selected" : ""}
+              className={selectedPokemon === pokemon._id ? "selected party-member" : "party-member"}
             >
               <img src={pokemon.front_sprite} alt={pokemon.name} />
-            </span>
+            </div>
           ))}
         </div>
         <div id="team-row2">
           {team.slice(3, 6).map((pokemon, index) => (
-            <span
+            <div
               key={pokemon._id}
               id={`team-spot${index + 4}`}
               onClick={() => setSelectedPokemon(pokemon._id)}
               className={selectedPokemon === pokemon._id ? "selected" : ""}
             >
               <img src={pokemon.front_sprite} alt={pokemon.name} />
-            </span>
+            </div>
           ))}
         </div>
       </div>

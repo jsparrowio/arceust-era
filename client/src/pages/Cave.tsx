@@ -45,13 +45,14 @@ export const Cave = () => {
     const itemArr = ["potion", "poke-ball", "gold-nugget", "fire-stone", "water-stone", "thunder-stone", "hard-rock", "revive"]
     const getPokemon = async () => {
         try {
-            const randomPokemon = pokeArr[Math.floor(Math.random() * pokeArr.length)]
-            const encounter = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomPokemon}`)
-            const response = encounter.json()
-            console.log(response)
-            return response
+            const randomPokemonChoice = pokeArr[Math.floor(Math.random() * pokeArr.length)];
+            const randomPokemon = randomPokemonChoice.toLowerCase();
+            const encounter = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomPokemon}`);
+            const response = encounter.json();
+            console.log(response);
+            return response;
         } catch (err) {
-            console.error("Pokemon not found!")
+            console.error("Pokemon not found!");
         }
     }
 

@@ -42,7 +42,8 @@ export const Grassland = () => {
     const itemArr = ["potion", "poke-ball", "silver-powder", "miracle-seed", "big-root"]
     const getPokemon = async () => {
         try {
-            const randomPokemon = pokeArr[Math.floor(Math.random() * pokeArr.length)]
+            const randomPokemonChoice = pokeArr[Math.floor(Math.random() * pokeArr.length)];
+            const randomPokemon = randomPokemonChoice.toLowerCase();
             const encounter = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomPokemon}`)
             const response = encounter.json()
             console.log(response)

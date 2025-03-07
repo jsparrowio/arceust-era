@@ -1,5 +1,5 @@
 // import { getPokemon } from "../api/PokeAPI"
-import { gql, useMutation } from "@apollo/client"
+import { useMutation } from "@apollo/client"
 import { useEffect } from "react"
 import { useState } from "react"
 import { useQuery } from "@apollo/client"
@@ -32,56 +32,59 @@ export const Beach = () => {
             }
           }, [location]);
     
-     const [catchPkmn, {error}] = useMutation(CATCH_POKEMON)
-        const [saveItem, states] = useMutation(SAVE_ITEM)
-        const {data, refetch} = useQuery(QUERY_ME)
+     const [catchPkmn, {error}] = useMutation(CATCH_POKEMON);
+        const [saveItem, states] = useMutation(SAVE_ITEM);
+        const {data, refetch} = useQuery(QUERY_ME);
         useEffect(() => {
-          refetch()
-        }, [data] )
+          refetch();
+        }, [data] );
       
-    const [loading, setloading] = useState(true)
-    const [poke, setPoke] = useState<Record<string, any>>({})
-    const [isShiny, setShiny] = useState<boolean>(false)
-    const [item, setItem] = useState<Record<string, any>>({})
-    const [narration, setNarration] = useState<string>('')
+    const [loading, setloading] = useState(true);
+    const [poke, setPoke] = useState<Record<string, any>>({});
+    const [isShiny, setShiny] = useState<boolean>(false);
+    const [item, setItem] = useState<Record<string, any>>({});
+    const [narration, setNarration] = useState<string>('');
     // const [narration2, setNarration2] = useState<string>('')
-    const [clicked, setClicked] = useState<boolean>(false)
-    const [setting, setSetting] = useState('beach')
+    const [clicked, setClicked] = useState<boolean>(false);
+    const [setting, setSetting] = useState('beach');
     // FFR, call 'get' functions 'fetches' instead
     const getPokemon = async (id: any) => {
         if (id === 'walk') {
             try {
                 const pokeArr = ["Krabby", "Kingler", "Sandygast", "Palossand", "Staryu", "Slowpoke", "Stunfisk", "Tirtouga", "Carracosta", "Pyukumuku", "Wimpod", "Golisopod", "Gimmighoul", "Wigglet", "Wugtrio"]
-                const randomPokemon = pokeArr[Math.floor(Math.random() * pokeArr.length)]
-                console.log(`Random pokemon: ${randomPokemon}`)
-                const encounter = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomPokemon}`)
-                const response = encounter.json()
-                console.log(response)
-                return response
+                const randomPokemonChoice = pokeArr[Math.floor(Math.random() * pokeArr.length)]
+                const randomPokemon = randomPokemonChoice.toLowerCase();
+                console.log(`Random pokemon: ${randomPokemon}`);
+                const encounter = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomPokemon}`);
+                const response = encounter.json();
+                console.log(response);
+                return response;
             } catch (err) {
-                console.error("Pokemon not found!")
+                console.error("Pokemon not found!");
             }
         } else if (id === 'fish') {
             try {
                 const pokeArr = ["Magikarp", "Gyarados", "Horsea", "Seadra", "Kingdra", "Dratini", "Dragonair", "Dhelmise", "Mareanie", "Toxapex", "Feebas", "Milotic", "Goldeen", "Seaking", "Tentacool", "Tentacruel", "Chinchou", "Lanturn", "Kabuto", "Kabutops", "Bruxish", "Veluza", "Luvdisc", "Remoraid", "Octillery", "Clamperl", "Huntail", "Gorebyss"]
-                const randomPokemon = pokeArr[Math.floor(Math.random() * pokeArr.length)]
-                const encounter = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomPokemon}`)
-                const response = encounter.json()
-                console.log(response)
-                return response
+                const randomPokemonChoice = pokeArr[Math.floor(Math.random() * pokeArr.length)];
+                const randomPokemon = randomPokemonChoice.toLowerCase();
+                const encounter = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomPokemon}`);
+                const response = encounter.json();
+                console.log(response);
+                return response;
             } catch (err) {
-                console.error("Pokemon not found!")
+                console.error("Pokemon not found!");
             }
         } else if (id === 'surf') {
             try {
                 const pokeArr = ["Basculin", "Basculegion", "Frillish", "Jellicent", "Froakie", "Frogadier", "Greninja", "Piplup", "Prinplup", "Empoleon", "Seel", "Dewgong", "Lapras", "Vaporeon", "Tentacool", "Tentacruel", "Mantyke", "Mantine", "Wailmer", "Wailord"]
-                const randomPokemon = pokeArr[Math.floor(Math.random() * pokeArr.length)]
+                const randomPokemonChoice = pokeArr[Math.floor(Math.random() * pokeArr.length)];
+                const randomPokemon = randomPokemonChoice.toLowerCase();
                 const encounter = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomPokemon}`)
-                const response = encounter.json()
-                console.log(response)
-                return response
+                const response = encounter.json();
+                console.log(response);
+                return response;
             } catch (err) {
-                console.error("Pokemon not found!")
+                console.error("Pokemon not found!");
             }
         }
     }
@@ -90,36 +93,36 @@ export const Beach = () => {
     const getItem = async (id: any) => {
         if (id === 'walk') {
             try {
-                const itemArr = ["potion", "poke-ball", "heart-scale", "soft-sand", "shell-bell"]
-                const randomItem = itemArr[Math.floor(Math.random() * itemArr.length)]
-                const find = await fetch(`https://pokeapi.co/api/v2/item/${randomItem}`)
-                const response = find.json()
-                console.log(response)
-                return response
+                const itemArr = ["potion", "poke-ball", "heart-scale", "soft-sand", "shell-bell"];
+                const randomItem = itemArr[Math.floor(Math.random() * itemArr.length)];
+                const find = await fetch(`https://pokeapi.co/api/v2/item/${randomItem}`);
+                const response = find.json();
+                console.log(response);
+                return response;
             } catch (err) {
-                console.error("Item not found!")
+                console.error("Item not found!");
             }
         } else if (id === 'fish') {
             try {
-                const itemArr = ["expert-belt", "amulet-coin", "choice-band", "choice-scarf", "silk-scarf"]
-                const randomItem = itemArr[Math.floor(Math.random() * itemArr.length)]
-                const find = await fetch(`https://pokeapi.co/api/v2/item/${randomItem}`)
-                const response = find.json()
-                console.log(response)
-                return response
+                const itemArr = ["expert-belt", "amulet-coin", "choice-band", "choice-scarf", "silk-scarf"];
+                const randomItem = itemArr[Math.floor(Math.random() * itemArr.length)];
+                const find = await fetch(`https://pokeapi.co/api/v2/item/${randomItem}`);
+                const response = find.json();
+                console.log(response);
+                return response;
             } catch (err) {
-                console.error("Item not found!")
+                console.error("Item not found!");
             }
         } else if (id === 'surf') {
             try {
-                const itemArr = ["float-stone", "water-gem"]
-                const randomItem = itemArr[Math.floor(Math.random() * itemArr.length)]
-                const find = await fetch(`https://pokeapi.co/api/v2/item/${randomItem}`)
-                const response = find.json()
-                console.log(response)
-                return response
+                const itemArr = ["float-stone", "water-gem"];
+                const randomItem = itemArr[Math.floor(Math.random() * itemArr.length)];
+                const find = await fetch(`https://pokeapi.co/api/v2/item/${randomItem}`);
+                const response = find.json();
+                console.log(response);
+                return response;
             } catch (err) {
-                console.error("Item not found!")
+                console.error("Item not found!");
             }
         }
 

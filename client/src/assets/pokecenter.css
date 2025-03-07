@@ -39,10 +39,6 @@
     bottom: 20px;
 }
 
-.selected {
-    border: 5px solid blue;
-}
-
 .box {
     max-width: 900px;
     min-width: 500px;
@@ -71,18 +67,6 @@
     position: absolute;
     top: 175px;
     right: 500px;
-    max-height: 80px;
-    max-width: 100px;
-    justify-content: space-around;
-}
-
-.acnbtndiv {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: absolute;
-    justify-content: center;
-    top: 425px;
     max-height: 80px;
     max-width: 100px;
     justify-content: space-around;
