@@ -4,26 +4,28 @@
 
 ## Description
 
-  Arceust Era is a browser mini-game using the Pokemon API. Walk through several areas in the Safari Zone, catch Pokemon, and set up your dream team!
+  Arceust Era is a browser mini-game using the Pokemon API. Walk through several areas in the Safari Zone, catch Pokemon, and set up your dream team!\
+
+  Tech used: MERN stack used, as well as TypeScript, GraphQL/Apollo, JWT auth, the Pokemon API, Ant Design and custom CSS, and is automatically deployed on Render using GitHub Actions.
 
 ## Screenshot
 
-  ![Screenshot](Screnshot)
+  <img src="./assets/aess.png" alt="screenshot">
 
 ## Table of Contents
 
 - [Arceust Era](#arceust-era)
-- [Description](#description)
-- [Screenshot](#screenshot)
-- [Table of Contents](#table-of-contents)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Credits](#credits)
-- [License](#license)
-- [How to Contribute](#how-to-contribute)
-- [Tests](#tests)
-- [Questions?](#questions)
-- [Disclaimer/Legal](#disclaimer)
+  - [Description](#description)
+  - [Screenshot](#screenshot)
+  - [Table of Contents](#table-of-contents)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Credits](#credits)
+  - [License](#license)
+  - [How to Contribute](#how-to-contribute)
+  - [Tests](#tests)
+  - [Questions?](#questions)
+  - [Disclaimer](#disclaimer)
 
 ## Installation
 
@@ -35,11 +37,36 @@ Go to the webpage and sign up for a new account, then log in. Navigate to one of
 
 ## Credits
 
-MERN stack used, as well as TypeScript, GraphQL/Apollo, JWT auth, the Pokemon API, Ant Design and custom CSS, and is automatically deployed on Render using GitHub Actions.
+Josh (jsparrowio):
+<ul>
+  <li>Admin</li>
+  <li>Backend servers, typedefs, & resolvers</li>
+  <li>User system (auth), login page, user settings page</li>
+  <li>Render deployment</li>
+  <li>Final CSS Design</li>
+</ul>
+Zach (zlacore):
+<ul>
+  <li>Concept</li>
+  <li>Biome, Bag & Pokécenter pages</li>
+  <li>Front end mutations</li>
+</ul>
+Nic (k3strl):
+<ul>
+  <li>Party page</li>
+  <li>Front end mutations</li>
+  <li>Wrote README.md</li>
+</ul>
+Kalana (KTek4):
+<ul>
+  <li>CSS Revisions</li>
+  <li>Github Actions</li>
+</ul>
 
 ## License
 
-This project is licensed under the ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg) [MIT](https://opensource.org/licenses/MIT) license.
+This project is licensed under the [MIT](https://opensource.org/licenses/MIT) license.\
+Refer to LICENSE file for more info
 
 ## How to Contribute
 
@@ -56,4 +83,4 @@ Contact one of us on Github!
 
 ## Disclaimer
 
-Pokémon © 1995–2025 Nintendo/Creatures Inc./GAME FREAK Inc. Pokémon, Pokémon character names, & sprites are trademarks of Nintendo. (Please don’t sue! 👀)
+Pokémon © 1995–2025 Nintendo/Creatures Inc./GAME FREAK Inc./The Pokemon Company Pokémon, Pokémon character names, & sprites are trademarks of Nintendo & The Pokemon Company. (Please don’t sue! 👀)

@@ -6,6 +6,7 @@ import { useMutation } from "@apollo/client"
 import { CATCH_POKEMON, SAVE_ITEM } from "../utils/mutations"
 import { QUERY_ME } from "../utils/queries"
 import Auth from "../utils/auth";
+import cavebckgrnd from "../assets/cave.png"
 import '../assets/biome.css'
 import { Card } from "antd"
 import { useLocation, useNavigate } from "react-router-dom"
@@ -195,7 +196,7 @@ export const Cave = () => {
                     {/* {clicked && <h1>{narration2}</h1>} */}
 
                     <div className="biomediv">
-                        <img className="biomeimg" src='https://archives.bulbagarden.net/media/upload/7/7e/HGSS_Cerulean_Cave-Morning.png' />
+                        <img className="biomeimg" src={cavebckgrnd} />
                         {!loading && poke && !isShiny && <img className='wildpokeimg' src={poke?.sprites?.front_default} alt={poke.name} />}
                         {!loading && poke && isShiny && <img className='wildpokeimg' src={poke?.sprites?.front_shiny} alt={poke.name} />}
                         {/* {!loading && data.Me && <img className='mypokemon' src={data.Me.team[0].back_sprite} />} */}
