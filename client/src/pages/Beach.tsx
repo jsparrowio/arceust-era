@@ -9,6 +9,8 @@ import Auth from "../utils/auth";
 import '../assets/biome.css'
 import { useLocation, useNavigate } from "react-router-dom"
 import { Card } from "antd"
+import beachimg from "../assets/beach.jpg";
+import oceanimg from "../assets/ocean.jpg";
 // Function found at https://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript
 function toTitleCase(str: string) {
     return str.replace(
@@ -250,8 +252,8 @@ export const Beach = () => {
             {clicked && <h1>{narration}</h1>}
             {/* {clicked && <h1>{narration2}</h1>} */}
             <div className="biomediv">
-                {setting === 'beach' && <img className="biomeimg" src='https://st5.depositphotos.com/3584053/65993/i/450/depositphotos_659935466-stock-photo-sea-background-nature-tropical-summer.jpg' />}
-                {setting === 'ocean' && <img className="biomeimg" src='https://images.unsplash.com/photo-1468581264429-2548ef9eb732?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' />}
+                {setting === 'beach' && <img className="biomeimg" src={beachimg} alt="beach"/>}
+                {setting === 'ocean' && <img className="biomeimg" src={oceanimg} alt="ocean" />}
                 {!loading && poke && !isShiny && <img className='wildpokeimg' src={poke?.sprites?.front_default} alt={poke.name} />}
                 {!loading && poke && isShiny && <img className='wildpokeimg' src={poke?.sprites?.front_shiny} alt={poke.name} />}
                 {!loading && data.Me && <img className='mypokemon' src={data?.Me?.team[0]?.back_sprite} />}

@@ -17,10 +17,10 @@ import '../assets/pokecenter.css'
 // Function found at https://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript
 function toTitleCase(str: string) {
     return str.replace(
-      /\w\S*/g,
-      text => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()
+        /\w\S*/g,
+        text => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()
     );
-  }
+}
 
 export const Pokecenter = () => {
     const [selectedBoxSpot, setSelectedBoxSpot] = useState<number | null>(null);
@@ -134,67 +134,73 @@ export const Pokecenter = () => {
         <>
             {loggedIn &&
                 <>
-                    <div className='menudiv'>
-                        <h1>Pokecenter</h1>
-                        <div className='btndiv'>
-                            <button className='boxbtn' onClick={() => {
-                                if (showBox) {
-                                    setShowBox(false)
-                                    setSelectedBoxSpot(null)
-                                    toggleBtnText('Show Box')
-                                } else {
-                                    setShowBox(true)
-                                    toggleBtnText('Hide Box')
-                                }
-                            }
-                            }>{btntext}</button>
-                            {data?.Me?.team?.length < 6 && <button className='boxbtn' onClick={() => {
-                                addPkmn()
-                            }}
-                            >Add To Team</button>
-                            }
-                            {selectedPartySpot !== null && <button className='boxbtn' onClick={() => {
-                                removePkmn()
-                            }}
-                            >Add to Box</button>}
-
-                            {selectedBoxSpot !== null && <button className='boxbtn' onClick={() => {
-                                releasePokemon()
-                            }}
-                            >Release</button>
-                            }
-                        </div>
-
-
-                    </div>
+                    <div><h1>Pokecenter</h1></div>
                     <div className='partyandbox'>
-                        <div className='party'>
-                            {!loading && data.Me.team.map((pokemon: any, index: number) =>
-                                <div className='partyslot'>
-                                    <div onClick={() => setSelectedPartySpot(index)}
-                                        className={selectedPartySpot === index ? 'partyslot selected' : 'partyslot'} >
-                                        <img className='partypkmn' src={pokemon.front_sprite} />
-                                        <p className='partypkmnname'>{toTitleCase(pokemon.name)}</p>
-                                        {/* <p>{index}</p> */}
+                        <div className="party-container">
+                            <h2>My Party</h2>
+                            <div className='party'>
+                                {!loading && data.Me.team.map((pokemon: any, index: number) =>
+                                    <div className='partyslot'>
+                                        <div onClick={() => setSelectedPartySpot(index)}
+                                            className={selectedPartySpot === index ? 'partyslot selected' : 'partyslot'} >
+                                            <img className='partypkmn' src={pokemon.front_sprite} />
+                                            <p className='partypkmnname'>{toTitleCase(pokemon.name)}</p>
+                                            {/* <p>{index}</p> */}
+                                        </div>
                                     </div>
-                                </div>
-                            )
-                            }
-                            {data?.Me?.team?.length < 6 && emptyTeamSlots()}
+                                )
+                                }
+                                {data?.Me?.team?.length < 6 && emptyTeamSlots()}
+                            </div>
                         </div>
-                        <div className='box'>
-                            {!loading && showBox && data.Me.box.map((pokemon: any, index: number) =>
-                                <div className="boxslot">
-                                    <div onClick={() => setSelectedBoxSpot(index)}
-                                        className={selectedBoxSpot === index ? 'boxslot selected' : 'boxslot'} >
-                                        <img src={pokemon.front_sprite} />
-                                        <p className='boxpkmnname'>{toTitleCase(pokemon.name)}</p>
-                                        {/* <p>{index}</p> */}
-                                    </div>
-                                </div>
-                            )}
-                            {!loading && showBox && data?.Me?.team?.length < 30 && emptyBoxSlots()}
+                        <div className='menudiv'>
+                            <div className='btndiv'>
+                                <button className='boxbtn' onClick={() => {
+                                    if (showBox) {
+                                        setShowBox(false)
+                                        setSelectedBoxSpot(null)
+                                        toggleBtnText('Show Box')
+                                    } else {
+                                        setShowBox(true)
+                                        toggleBtnText('Hide Box')
+                                    }
+                                }
+                                }>{btntext}</button>
+                                {selectedPartySpot !== null && <button className='boxbtn' onClick={() => {
+                                    removePkmn()
+                                }}
+                                >Add to Box</button>}
+                                {selectedBoxSpot !== null && data?.Me?.team?.length < 6 && <button className='boxbtn' onClick={() => {
+                                    addPkmn()
+                                }}
+                                >Add To Team</button>
+                                }
+                                {selectedBoxSpot !== null && <button className='boxbtn' onClick={() => {
+                                    releasePokemon()
+                                }}
+                                >Release</button>
+                                }
+                            </div>
                         </div>
+                        {showBox &&
+                            <div className="party-container">
+                                <h2>My Box</h2>
+                                <div className='box'>
+                                    {!loading && data.Me.box.map((pokemon: any, index: number) =>
+                                        <div className="boxslot">
+                                            <div onClick={() => setSelectedBoxSpot(index)}
+                                                className={selectedBoxSpot === index ? 'boxslot selected' : 'boxslot'} >
+                                                <img src={pokemon.front_sprite} />
+                                                <p className='boxpkmnname'>{toTitleCase(pokemon.name)}</p>
+                                                {/* <p>{index}</p> */}
+                                            </div>
+                                        </div>
+                                    )}
+                                    {!loading && data?.Me?.team?.length < 30 && emptyBoxSlots()}
+                                </div>
+                            </div>
+                        }
+
                     </div>
                 </>
             }

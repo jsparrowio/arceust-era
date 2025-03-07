@@ -197,7 +197,7 @@ export const Cave = () => {
                     {/* {clicked && <h1>{narration2}</h1>} */}
 
                     <div className="biomediv">
-                        <img className="biomeimg" src={cavebckgrnd} />
+                        <img className="biomeimg" src={cavebckgrnd} alt="cave" />
                         {!loading && poke && !isShiny && <img className='wildpokeimg' src={poke?.sprites?.front_default} alt={poke.name} />}
                         {!loading && poke && isShiny && <img className='wildpokeimg' src={poke?.sprites?.front_shiny} alt={poke.name} />}
                         {/* {!loading && data.Me && <img className='mypokemon' src={data.Me.team[0].back_sprite} />} */}

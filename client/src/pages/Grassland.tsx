@@ -9,6 +9,7 @@ import Auth from "../utils/auth";
 import '../assets/biome.css'
 import { useLocation, useNavigate } from "react-router-dom"
 import { Card } from "antd"
+import grassimg from "../assets/grass.png";
 
 // Function found at https://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript
 function toTitleCase(str: string) {
@@ -193,7 +194,7 @@ export const Grassland = () => {
             {clicked && <h1>{narration}</h1>}
             {/* {clicked && <h1>{narration2}</h1>} */}
             <div className="biomediv">
-                <img className="biomeimg" src='https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/fb8431de-9631-4ad2-b8fc-667b063d7471/d6dkaxe-15a2de20-5e6a-4284-bf8d-cffd2827ee75.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2ZiODQzMWRlLTk2MzEtNGFkMi1iOGZjLTY2N2IwNjNkNzQ3MVwvZDZka2F4ZS0xNWEyZGUyMC01ZTZhLTQyODQtYmY4ZC1jZmZkMjgyN2VlNzUucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.6T6EQtyjY2BSdMFQyAjdplBJVn_VMBrV2nX8vlpVqnM' />
+                <img className="biomeimg" src={grassimg} alt="grassland" />
                 {!loading && poke && !isShiny && <img className='wildpokeimg' src={poke?.sprites?.front_default} alt={poke.name} />}
                 {!loading && poke && isShiny && <img className='wildpokeimg' src={poke?.sprites?.front_shiny} alt={poke.name} />}
                 {!loading && data?.Me && <img className='mypokemon' src={data?.Me?.team[0]?.back_sprite} />}
