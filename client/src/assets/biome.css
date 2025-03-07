@@ -7,250 +7,270 @@ main {
 }
 
 .link {
-    color: black;
-    margin-left: 10px;
-    margin-right: 10px;
+  color: black;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .biomediv {
-    display: flex;
-    flex-direction: column;
-    background-image: 'https://cdnb.artstation.com/p/assets/images/images/019/585/585/large/ritesh-pawar-caveaa.jpg?1564145923';
-    max-width: 600px;
-    max-height: 400px;
-    min-width: 600px;
-    min-height: 400px;
-    margin: auto;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+  background-image: 'https://cdnb.artstation.com/p/assets/images/images/019/585/585/large/ritesh-pawar-caveaa.jpg?1564145923';
+  max-width: 600px;
+  max-height: 400px;
+  min-width: 600px;
+  min-height: 400px;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  text-align: center;
 
 }
 
 .btndiv {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    top: 425px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  top: 425px;
 }
-.priacndiv, .secacndiv {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+
+.priacndiv,
+.secacndiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
+
 .biomeimg {
-    position: absolute;
-    top: 20px;
-    min-width: 600px;
-    min-height: 400px;
-    max-width: 600px;
-    max-height: 400px;   
-    margin: auto;
-    border: 15px solid black
+  position: absolute;
+  top: 20px;
+  min-width: 600px;
+  min-height: 400px;
+  max-width: 600px;
+  max-height: 400px;
+  margin: auto;
+  border: 15px solid black
 }
 
 .itemimg {
-    bottom: 75px;
-    left: 270px;
-    position: absolute;
-    width: 125px;
-    height: auto;
+  bottom: 75px;
+  left: 270px;
+  position: absolute;
+  width: 125px;
+  height: auto;
 }
 
 .wildpokeimg {
-    bottom: 50px;
-    left: 270px;
-    position: absolute;
-    width: 200px;
-    height: auto;
+  bottom: 50px;
+  left: 270px;
+  position: absolute;
+  width: 200px;
+  height: auto;
 }
 
 .mypokemon {
-    bottom: 5px;
-    top: 150px;
-    left: 20px;
-    position: absolute;
-    width: 300px;
-    height: auto;
+  bottom: 5px;
+  top: 150px;
+  left: 20px;
+  position: absolute;
+  width: 300px;
+  height: auto;
 }
 
 .narration {
-    margin-left: auto;
-    margin-right: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .centered {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .user {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.modal{
-    background-color: rgba(0,0,0,0.5);
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    overflow: auto;
-    z-index: 99998;
-  }
-
-  .boxpkmn, .item {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    border: 3px solid black;
-    align-items: center;
-    min-width: 50px;
-    min-height: 75px;
-  }
-
-  .toast {
-    z-index: 99999;
-  }
-
-  .acnbtn {
-    z-index: 2;
-    max-height: 75px; 
-    color: #FFFFFF;
-    margin: 0.25rem;
-  }
-
-  .acnbtndiv {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: absolute;
-    justify-content: center;
-    top: 425px;
-    max-height: 80px;
-    max-width: 100px;
-  
+.modal {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  overflow: auto;
+  z-index: 99998;
 }
 
-  .secacndiv {
-    z-index: 3
+.boxpkmn,
+.item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 3px solid black;
+  align-items: center;
+  min-width: 50px;
+  min-height: 75px;
+}
+
+.toast {
+  z-index: 99999;
+}
+
+.acnbtn {
+  z-index: 2;
+  max-height: 75px;
+  color: #FFFFFF;
+  margin: 0.25rem;
+}
+
+.acnbtndiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  justify-content: center;
+  top: 425px;
+  max-height: 80px;
+  max-width: 100px;
+
+}
+
+.secacndiv {
+  z-index: 3
+}
+
+.boxdiv,
+.bagdiv {
+  display: flex;
+  position: relative;
+  max-width: 800px;
+  height: auto;
+  background-color: aliceblue;
+  border: 10px solid black;
+  flex-direction: row;
+  flex-wrap: wrap;
+  color: black;
+  justify-content: space-evenly;
+  margin: 0.25rem;
+}
+
+.bagdiv {
+  top: 50px;
+}
+
+.menudiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.inventory-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 3px solid black;
+  align-items: center;
+  min-width: 50px;
+  min-height: 75px;
+  padding: 0.25rem;
+}
+
+@media (max-width: 650px) {
+  h1 {
+    margin-top: 5rem;
+    font-size: 2rem;
   }
 
-  .boxdiv, .bagdiv {
-    display: flex;
-    position: relative;
-    /* top: 150px; */
-    width: 800px;
-    height: auto;
-    background-color: aliceblue;
-    border: 10px solid black;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    color: black;
-    justify-content: space-evenly
+  .biomeimg {
+    min-width: 85vw;
+    min-height: 70vw;
+    max-width: 85vw;
+    max-height: 70vw;
+  }
+
+  .biomediv {
+    min-width: 85vw;
+    min-height: 70vw;
+    max-width: 85vw;
+    max-height: 70vw;
+  }
+
+  .mypokemon {
+    bottom: 5px;
+    top: 150px;
+    left: 20px;
+    width: 150px;
+  }
+
+  .itemimg {
+    bottom: 40px;
+    left: 170px;
+    width: 75px;
+  }
+
+  .wildpokeimg {
+    bottom: 25px;
+    left: 170px;
+    width: 100px;
   }
 
   .bagdiv {
-    top: 50px; 
+    min-width: 125px;
+  }
+}
+
+@media screen and (max-height: 650px) {
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 0;
   }
 
-  .menudiv {
-    display: flex;
+  .biomeimg {
+    max-width: 400px;
+    max-height: 250px;
+    min-width: 400px;
+    min-height: 250px;
+  }
+
+  .biomediv {
+    max-width: 400px;
+    max-height: 250px;
+    min-width: 400px;
+    min-height: 250px;
+  }
+
+  .acnbtndiv {
+    top: 35vw;
     flex-direction: row;
-    justify-content: center;
   }
 
-  @media (max-width: 650px)
-  { 
-    h1 {
-      margin-top: 5rem;
-      font-size: 2rem;
-    }
-    .biomeimg {
-      min-width: 85vw;
-      min-height: 70vw;
-      max-width: 85vw;
-      max-height: 70vw;
-    }
-
-    .biomediv {
-      min-width: 85vw;
-      min-height: 70vw;
-      max-width: 85vw;
-      max-height: 70vw;
-    }
-
-    .mypokemon {
-      bottom: 5px;
-      top: 150px;
-      left: 20px;
-      width: 150px;
-    }
-
-    .itemimg {
-      bottom: 40px;
-      left: 170px;
-      width: 75px;
-  }
-  
-    .wildpokeimg {
-      bottom: 25px;
-      left: 170px;
-      width: 100px;
-  }
+  .mypokemon {
+    bottom: 5px;
+    top: 100px;
+    left: 20px;
+    width: 175px;
   }
 
-  @media screen and (max-height: 650px) {
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 0;
-    }
-    .biomeimg {
-      max-width: 400px;
-      max-height: 250px;
-      min-width: 400px;
-      min-height: 250px;
-    }
-
-    .biomediv {
-      max-width: 400px;
-      max-height: 250px;
-      min-width: 400px;
-      min-height: 250px;
-    }
-
-    .acnbtndiv {
-      top: 35vw;
-      flex-direction: row;
-    }
-
-    .mypokemon {
-      bottom: 5px;
-      top: 100px;
-      left: 20px;
-      width: 175px;
-    }
-
-    .itemimg {
-      bottom: 40px;
-      left: 225px;
-      width: 80px;
+  .itemimg {
+    bottom: 40px;
+    left: 225px;
+    width: 80px;
   }
-  
-    .wildpokeimg {
-      bottom: 25px;
-      left: 200px;
-      width: 120px;
+
+  .wildpokeimg {
+    bottom: 25px;
+    left: 200px;
+    width: 120px;
   }
-  }
+}

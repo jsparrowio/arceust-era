@@ -111,7 +111,7 @@ export const Party = () => {
               key={pokemon._id}
               id={`team-spot${index + 1}`}
               onClick={() => setSelectedPokemon(pokemon._id)}
-              className={selectedPokemon === pokemon._id ? "selected party-member" : "party-member"}
+              className={selectedPokemon === pokemon._id ? "team-selected party-member" : "party-member"}
             >
               <img src={pokemon.front_sprite} alt={pokemon.name} />
             </div>
@@ -123,7 +123,7 @@ export const Party = () => {
               key={pokemon._id}
               id={`team-spot${index + 4}`}
               onClick={() => setSelectedPokemon(pokemon._id)}
-              className={selectedPokemon === pokemon._id ? "selected" : ""}
+              className={selectedPokemon === pokemon._id ? "team-selected party-member" : "party-member"}
             >
               <img src={pokemon.front_sprite} alt={pokemon.name} />
             </div>

@@ -74,7 +74,7 @@ export const Pokecenter = () => {
         for (let i = 0; i < 6 - data.Me.team.length; i++) {
             console.log('Generating empty party slot')
             const slot = (
-                <div className='partyslot'>
+                <div className='partyslot' key={`emptypartyslot.${i}`}>
                 </div>
             )
             slots.push(slot)
@@ -87,7 +87,7 @@ export const Pokecenter = () => {
         for (let i = 0; i < 30 - data.Me.box.length || i < 0; i++) {
             console.log('Generating empty box slot')
             const slot = (
-                <div className="boxslot">
+                <div className="boxslot" key={`emptyboxslot.${i}`}>
                 </div>
             )
             slots.push(slot)
@@ -140,9 +140,11 @@ export const Pokecenter = () => {
                             <h2>My Party</h2>
                             <div className='party'>
                                 {!loading && data.Me.team.map((pokemon: any, index: number) =>
-                                    <div className='partyslot'>
+                                    <div className='partyslot' key={`party.${index}`}>
                                         <div onClick={() => setSelectedPartySpot(index)}
-                                            className={selectedPartySpot === index ? 'partyslot selected' : 'partyslot'} >
+                                            className={selectedPartySpot === index ? 'partyslot selected' : 'partyslot'} 
+                                            key={`party.${pokemon.name}`}
+                                            >
                                             <img className='partypkmn' src={pokemon.front_sprite} />
                                             <p className='partypkmnname'>{toTitleCase(pokemon.name)}</p>
                                             {/* <p>{index}</p> */}
@@ -187,9 +189,11 @@ export const Pokecenter = () => {
                                 <h2>My Box</h2>
                                 <div className='box'>
                                     {!loading && data.Me.box.map((pokemon: any, index: number) =>
-                                        <div className="boxslot">
+                                        <div className="boxslot" key={`box.${index}`}>
                                             <div onClick={() => setSelectedBoxSpot(index)}
-                                                className={selectedBoxSpot === index ? 'boxslot selected' : 'boxslot'} >
+                                                className={selectedBoxSpot === index ? 'boxslot selected' : 'boxslot'} 
+                                                key={`box.${pokemon.name}`}
+                                                >
                                                 <img src={pokemon.front_sprite} />
                                                 <p className='boxpkmnname'>{toTitleCase(pokemon.name)}</p>
                                                 {/* <p>{index}</p> */}
