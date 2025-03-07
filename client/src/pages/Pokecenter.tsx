@@ -10,8 +10,6 @@ import Auth from "../utils/auth";
 import { useLocation, useNavigate } from "react-router-dom"
 import { Card } from "antd";
 import { useMutation } from "@apollo/client";
-
-// import '../assets/biome.css'
 import '../assets/pokecenter.css'
 
 // Function found at https://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript
@@ -142,9 +140,9 @@ export const Pokecenter = () => {
                                 {!loading && data.Me.team.map((pokemon: any, index: number) =>
                                     <div className='partyslot' key={`party.${index}`}>
                                         <div onClick={() => setSelectedPartySpot(index)}
-                                            className={selectedPartySpot === index ? 'partyslot selected' : 'partyslot'} 
+                                            className={selectedPartySpot === index ? 'partyslot selected' : 'partyslot'}
                                             key={`party.${pokemon.name}`}
-                                            >
+                                        >
                                             <img className='partypkmn' src={pokemon.front_sprite} />
                                             <p className='partypkmnname'>{toTitleCase(pokemon.name)}</p>
                                             {/* <p>{index}</p> */}
@@ -191,9 +189,9 @@ export const Pokecenter = () => {
                                     {!loading && data.Me.box.map((pokemon: any, index: number) =>
                                         <div className="boxslot" key={`box.${index}`}>
                                             <div onClick={() => setSelectedBoxSpot(index)}
-                                                className={selectedBoxSpot === index ? 'boxslot selected' : 'boxslot'} 
+                                                className={selectedBoxSpot === index ? 'boxslot selected' : 'boxslot'}
                                                 key={`box.${pokemon.name}`}
-                                                >
+                                            >
                                                 <img src={pokemon.front_sprite} />
                                                 <p className='boxpkmnname'>{toTitleCase(pokemon.name)}</p>
                                                 {/* <p>{index}</p> */}

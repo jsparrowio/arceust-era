@@ -41,10 +41,15 @@ const App: React.FC = () => {
   const [mobile, setMobile] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-
+  const [domLoad, setDomLoad] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   useEffect(() => {
+    setDomLoad(false);
+    if (window.innerWidth <= 768) {
+      setMobile(true);
+    }
+    setDomLoad(true);
     const handleResize = () => setMobile(window.innerWidth <= 768);
 
     window.addEventListener("resize", handleResize);
@@ -70,90 +75,92 @@ const App: React.FC = () => {
 
   return (
     <ApolloProvider client={client}>
-      <ConfigProvider
-        theme={{
-          components: {
-            Layout: {
-              triggerBg: "#682222",
-            },
-            Card: {
+      {domLoad &&
+        <ConfigProvider
+          theme={{
+            components: {
+              Layout: {
+                triggerBg: "#682222",
+              },
+              Card: {
 
+              },
+              Button: {
+                defaultBg: "#682222",
+                defaultHoverBg: "#FFFFFF",
+                defaultHoverBorderColor: "#FFFFFF",
+                defaultHoverColor: "#000000"
+              },
             },
-            Button: {
-              defaultBg: "#682222",
-              defaultHoverBg: "#FFFFFF",
-              defaultHoverBorderColor: "#FFFFFF",
-              defaultHoverColor: "#000000"
-            },
-          },
-          token: {
-            colorBgContainer: "#000000",
-            colorText: "#FFFFFF"
-          }
-        }}
-      >
-        <Layout style={{ minHeight: '100vh' }} >
-          {mobile ? 
-          <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} style={{ background: "black" }} theme="dark" breakpoint="md" collapsedWidth={0} zeroWidthTriggerStyle={{ background: "#682222", marginTop: "1rem"}}>
-            <img src={arecuestlogo} alt="Areuest Era" style={{ width: "4rem", height: "4rem", margin: "1rem" }} />
-            {isLoggedIn && !collapsed &&
-              <>
-                <User />
-                <Button
-                  key="logout"
-                  variant="solid"
-                  style={{ marginLeft: "0.5rem" }}
-                  onClick={() => logout()}
-                >
-                  <LogoutOutlined /> Logout
-                </Button>
-              </>
+            token: {
+              colorBgContainer: "#000000",
+              colorText: "#FFFFFF",
             }
-            <NavOptions />
-          </Sider>
-          :
-          <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} style={{ background: "black" }} theme="dark">
-          <img src={arecuestlogo} alt="Areuest Era" style={{ width: "4rem", height: "4rem", margin: "1rem" }} />
-          {isLoggedIn && !collapsed &&
-            <>
-              <User />
-              <Button
-                key="logout"
-                variant="solid"
-                style={{ marginLeft: "0.5rem" }}
-                onClick={() => logout()}
-              >
-                <LogoutOutlined /> Logout
-              </Button>
-            </>
-          }
-          {isLoggedIn && collapsed &&
-              <>
-                <User />
-                <Button
-                  key="logout"
-                  variant="solid"
-                  style={{ marginLeft: "0.5rem" }}
-                  onClick={() => logout()}
-                >
-                  <LogoutOutlined />
-                </Button>
-              </>
+          }}
+        >
+          <Layout style={{ minHeight: '100vh' }} >
+            {mobile ?
+              <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} style={!collapsed ? { background: "black", padding: "1rem" } : { background: "black" }} theme="dark" breakpoint="md" collapsedWidth={0} zeroWidthTriggerStyle={{ background: "#682222", marginTop: "1rem" }}>
+                <img src={arecuestlogo} alt="Areuest Era" style={{ width: "4rem", height: "4rem", margin: "1rem" }} />
+                {isLoggedIn && !collapsed &&
+                  <>
+                    <User />
+                    <Button
+                      key="logout"
+                      variant="solid"
+                      style={{ marginLeft: "0.5rem" }}
+                      onClick={() => logout()}
+                    >
+                      <LogoutOutlined /> Logout
+                    </Button>
+                  </>
+                }
+                <NavOptions />
+              </Sider>
+              :
+              <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} style={{ background: "black" }} theme="dark">
+                <img src={arecuestlogo} alt="Areuest Era" style={{ width: "4rem", height: "4rem", margin: "1rem" }} />
+                {isLoggedIn && !collapsed &&
+                  <>
+                    <User />
+                    <Button
+                      key="logout"
+                      variant="solid"
+                      style={{ marginLeft: "0.5rem" }}
+                      onClick={() => logout()}
+                    >
+                      <LogoutOutlined /> Logout
+                    </Button>
+                  </>
+                }
+                {isLoggedIn && collapsed &&
+                  <>
+                    <User />
+                    <Button
+                      key="logout"
+                      variant="solid"
+                      style={{ marginLeft: "0.5rem" }}
+                      onClick={() => logout()}
+                    >
+                      <LogoutOutlined />
+                    </Button>
+                  </>
+                }
+                <NavOptions />
+              </Sider>
             }
-          <NavOptions />
-        </Sider>
-          }
-          <Layout>
-            <Content style={{ margin: '0' }}>
-              <Outlet />
-            </Content>
-            <Footer style={{ background: "black", color: "white", textAlign: 'center', padding: 0, paddingBottom: "1rem" }}>
-              Arceust Era © 2025 - {new Date().getFullYear()} <br />
-              Created with love by <a href="https://github.com/jsparrowio">jsparrowio</a>, <a href="https://github.com/zlacore">zlacore</a>, <a href="https://github.com/k3strl">k3strl</a>, and <a href="https://github.com/KTek4">KTek4</a>
-            </Footer>
+            <Layout>
+              <Content style={{ margin: '0' }}>
+                <Outlet />
+              </Content>
+              <Footer style={{ background: "black", color: "white", textAlign: 'center', padding: 0, paddingBottom: "1rem" }}>
+                Arceust Era © 2025 - {new Date().getFullYear()} <br />
+                Created with love by <a href="https://github.com/jsparrowio">jsparrowio</a>, <a href="https://github.com/zlacore">zlacore</a>, <a href="https://github.com/k3strl">k3strl</a>, and <a href="https://github.com/KTek4">KTek4</a>
+              </Footer>
+            </Layout>
           </Layout>
-        </Layout>
-      </ConfigProvider>
+        </ConfigProvider>
+      }
     </ApolloProvider>
 
   );

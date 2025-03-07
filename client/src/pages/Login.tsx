@@ -376,8 +376,8 @@ export default function LoginPage() {
                             onChange={handleInputChange}
                             onBlur={handlePasswordConfirmBlur}
                         />
-                       <div style={{ margin: "3px" }}></div>
-                       <Button size="large" variant="solid" color="default" htmlType="submit">Sign Up!</Button>
+                        <div style={{ margin: "3px" }}></div>
+                        <Button size="large" variant="solid" color="default" htmlType="submit">Sign Up!</Button>
                     </form>}
             </Card>
         </div>

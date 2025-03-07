@@ -8,10 +8,10 @@ export const Home = () => {
                 <div>
                     <img src={arceustlogo} alt="Arceust Era" style={{ height: "20vw", width: "20vw" }} />
                     <h1>
-                        Welcome to the Poké-safari! 
+                        Welcome to the Poké-safari!
                     </h1>
-                    <h2>    
-                    Sign-up for an account with us to play our Pokémon minigame!
+                    <h2>
+                        Sign-up for an account with us to play our Pokémon minigame!
                         <br />
                         With our game you can:
                         <ul>
@@ -24,5 +24,4 @@ export const Home = () => {
             </Card>
         </div>
     )
-
 }
